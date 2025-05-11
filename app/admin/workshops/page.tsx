@@ -22,52 +22,8 @@ export default function AdminWorkshopsPage() {
     { id: 1, title: "팀 빌딩 워크샵", seller: "김판매자", status: "공개", createdAt: "2024-05-01" },
     { id: 2, title: "창의력 개발 워크샵", seller: "이판매자", status: "비공개", createdAt: "2024-05-10" },
   ]
-  const [workshops, setWorkshops] = useState<Workshop[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
-  const [actionLoading, setActionLoading] = useState<number | null>(null)
   const [selectedWorkshop, setSelectedWorkshop] = useState<Workshop | null>(null)
   const [detailOpen, setDetailOpen] = useState(false)
-
-  const fetchWorkshops = async () => {
-    try {
-      setLoading(true)
-      const res = await fetch("/api/workshops")
-      if (!res.ok) throw new Error("워크샵 데이터를 불러오지 못했습니다.")
-      const data = await res.json()
-      setWorkshops(data)
-    } catch (e: any) {
-      setError(e.message || "에러 발생")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    fetchWorkshops()
-  }, [])
-
-  const handleStatusChange = async (id: number, status: string) => {
-    setActionLoading(id)
-    setError("")
-    try {
-      const res = await fetch(`/api/workshops/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status }),
-      })
-      if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error || "상태 변경 실패")
-      }
-      // 성공 시 리스트 갱신
-      await fetchWorkshops()
-    } catch (e: any) {
-      setError(e.message || "상태 변경 중 오류 발생")
-    } finally {
-      setActionLoading(null)
-    }
-  }
 
   const handleView = (id: number) => {
     const ws = workshops.find((w) => w.id === id)

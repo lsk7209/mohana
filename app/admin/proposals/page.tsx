@@ -133,89 +133,113 @@ export default function ProposalsPage() {
   }
 
   return (
-    <AdminLayout>
-      <div className="flex-1 space-y-4 p-4 md:p-8">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold tracking-tight">제안서 관리</h1>
-        </div>
+    <div className="flex-1 space-y-4 p-4 md:p-8">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold tracking-tight">제안서 관리</h1>
+      </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="relative w-full md:w-auto flex-1">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-            <Input
-              placeholder="회사명, 담당자, 이메일로 검색"
-              className="pl-9"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div className="w-full md:w-auto">
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full md:w-[180px]">
-                <SelectValue placeholder="상태 필터" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">전체</SelectItem>
-                <SelectItem value="신규">신규</SelectItem>
-                <SelectItem value="검토중">검토중</SelectItem>
-                <SelectItem value="판매자 연결">판매자 연결</SelectItem>
-                <SelectItem value="제안 발송">제안 발송</SelectItem>
-                <SelectItem value="완료">완료</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="relative w-full md:w-auto flex-1">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+          <Input
+            placeholder="회사명, 담당자, 이메일로 검색"
+            className="pl-9"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
+        <div className="w-full md:w-auto">
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <SelectTrigger className="w-full md:w-[180px]">
+              <SelectValue placeholder="상태 필터" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">전체</SelectItem>
+              <SelectItem value="신규">신규</SelectItem>
+              <SelectItem value="검토중">검토중</SelectItem>
+              <SelectItem value="판매자 연결">판매자 연결</SelectItem>
+              <SelectItem value="제안 발송">제안 발송</SelectItem>
+              <SelectItem value="완료">완료</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
 
-        <div className="border rounded-md">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>회사명</TableHead>
-                <TableHead>담당자</TableHead>
-                <TableHead>이메일</TableHead>
-                <TableHead>유형</TableHead>
-                <TableHead>인원</TableHead>
-                <TableHead>상태</TableHead>
-                <TableHead>요청일</TableHead>
-                <TableHead className="text-right">관리</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredProposals.map((proposal) => (
-                <TableRow key={proposal.id}>
-                  <TableCell>{proposal.id}</TableCell>
-                  <TableCell>{proposal.company}</TableCell>
-                  <TableCell>{proposal.contact}</TableCell>
-                  <TableCell>{proposal.email}</TableCell>
-                  <TableCell>{proposal.type}</TableCell>
-                  <TableCell>{proposal.participants}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant="outline"
-                      className={
-                        proposal.status === "신규"
-                          ? "bg-blue-100 text-blue-800"
-                          : proposal.status === "검토중"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : proposal.status === "판매자 연결"
-                          ? "bg-purple-100 text-purple-800"
-                          : proposal.status === "제안 발송"
-                          ? "bg-orange-100 text-orange-800"
-                          : "bg-green-100 text-green-800"
-                      }
-                    >
-                      {proposal.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>{proposal.date}</TableCell>
-                  <TableCell className="text-right">
-                    <DropdownMenu>
+      <div className="border rounded-md">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>ID</TableHead>
+              <TableHead>회사명</TableHead>
+              <TableHead>담당자</TableHead>
+              <TableHead>이메일</TableHead>
+              <TableHead>유형</TableHead>
+              <TableHead>인원</TableHead>
+              <TableHead>상태</TableHead>
+              <TableHead>요청일</TableHead>
+              <TableHead className="text-right">관리</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredProposals.map((proposal) => (
+              <TableRow key={proposal.id}>
+                <TableCell>{proposal.id}</TableCell>
+                <TableCell>{proposal.company}</TableCell>
+                <TableCell>{proposal.contact}</TableCell>
+                <TableCell>{proposal.email}</TableCell>
+                <TableCell>{proposal.type}</TableCell>
+                <TableCell>{proposal.participants}</TableCell>
+                <TableCell>
+                  <Badge
+                    variant="outline"
+                    className={
+                      proposal.status === "신규"
+                        ? "bg-blue-100 text-blue-800"
+                        : proposal.status === "검토중"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : proposal.status === "판매자 연결"
+                        ? "bg-purple-100 text-purple-800"
+                        : proposal.status === "제안 발송"
+                        ? "bg-orange-100 text-orange-800"
+                        : "bg-green-100 text-green-800"
+                    }
+                  >
+                    {proposal.status}
+                  </Badge>
+                </TableCell>
+                <TableCell>{proposal.date}</TableCell>
+                <TableCell className="text-right">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>작업</DropdownMenuLabel>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                          onClick={() => handleViewDetails(proposal)}
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
+                      <DropdownMenuContent>
                         <DropdownMenuLabel>작업</DropdownMenuLabel>
-                        <Drop\
+                        <DropdownMenuItem onClick={() => handleViewDetails(proposal)}>상세보기</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleStatusChange("제안 발송")}>응답 발송</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenuTrigger>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  )
+}
