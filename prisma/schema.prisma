@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Workshop {
+  id           Int      @id @default(autoincrement())
+  title        String
+  summary      String
+  image        String?
+  type         String
+  duration     String
+  participants String
+  price        String
+  description  String
+  seller       String
+  status       String   @default("검수요청")
+  createdAt    DateTime @default(now())
+}
+
+model Inquiry {
+  id        Int      @id @default(autoincrement())
+  company   String
+  name      String
+  email     String
+  message   String
+  status    String   @default("미처리")
+  date      DateTime @default(now())
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("USER") // ADMIN, SELLER, USER
+  createdAt DateTime @default(now())
+} 
