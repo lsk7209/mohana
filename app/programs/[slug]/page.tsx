@@ -747,6 +747,26 @@ function getProgram(slug: string) {
   return programs[slug] || null
 }
 
+export const dynamic = 'force-static'
+
+// 정적 내보내기를 위한 generateStaticParams
+export async function generateStaticParams() {
+  // 모든 프로그램 slug 반환
+  return [
+    { slug: 'communication-skill' },
+    { slug: 'leadership' },
+    { slug: 'teambuilding' },
+    { slug: 'innovation' },
+    { slug: 'healing' },
+    { slug: 'digital' },
+    { slug: 'art-therapy' },
+    { slug: 'cooking' },
+    { slug: 'growth' },
+    { slug: 'wellness' },
+    { slug: 'music' },
+  ]
+}
+
 export default async function ProgramDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const program = getProgram(slug)

@@ -2,6 +2,8 @@
  * 클릭 트래킹 리디렉트
  */
 
+export const dynamic = 'force-static'
+
 export async function GET(request: Request) {
   const workerUrl = process.env.WORKER_URL || 'http://localhost:8787'
   const url = new URL(request.url)
