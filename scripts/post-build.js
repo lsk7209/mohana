@@ -46,7 +46,25 @@ if (existsSync(tempLeadsIdDir) && !existsSync(leadsIdDir)) {
 const nextOutDir = join(__dirname, '..', '.next', 'out')
 const vercelOutputDir = join(__dirname, '..', '.vercel', 'output', 'static')
 
-if (existsSync(nextOutDir)) {
+// 디렉토리 존재 확인 및 대기 (빌드가 완료되기 전에 실행될 수 있음)
+let retries = 0
+const maxRetries = 5
+const retryDelay = 1000 // 1초
+
+function waitForDirectory(dir, callback) {
+  if (existsSync(dir)) {
+    callback()
+  } else if (retries < maxRetries) {
+    retries++
+    console.log(`Waiting for ${dir} to be created... (attempt ${retries}/${maxRetries})`)
+    setTimeout(() => waitForDirectory(dir, callback), retryDelay)
+  } else {
+    console.warn(`Warning: ${dir} directory not found after ${maxRetries} attempts.`)
+    console.warn('This may be normal if the build output is in a different location.')
+  }
+}
+
+waitForDirectory(nextOutDir, () => {
   // .vercel/output 디렉토리 생성
   const vercelOutputParent = join(__dirname, '..', '.vercel', 'output')
   if (!existsSync(vercelOutputParent)) {
@@ -67,7 +85,5 @@ if (existsSync(nextOutDir)) {
     console.error('Error copying build output:', error)
     process.exit(1)
   }
-} else {
-  console.warn('Warning: .next/out directory not found. Build may have failed.')
-}
+})
 
