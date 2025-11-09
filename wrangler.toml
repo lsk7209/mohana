@@ -7,19 +7,23 @@ compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".next/out"
 
 # D1 Database
-[[d1_databases]]
-binding = "DB"
-database_name = "healingwork-db"
-database_id = "" # 배포 시 생성된 ID로 교체
+# Pages 빌드에서는 필요하지 않으므로 주석 처리
+# Workers 배포 시 아래 주석을 해제하고 ID를 입력하세요
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "healingwork-db"
+# database_id = "" # 배포 시 생성된 ID로 교체
 
 # KV Namespaces
-[[kv_namespaces]]
-binding = "CACHE"
-id = "" # 배포 시 생성된 ID로 교체
+# Pages 빌드에서는 필요하지 않으므로 주석 처리
+# Workers 배포 시 아래 주석을 해제하고 ID를 입력하세요
+# [[kv_namespaces]]
+# binding = "CACHE"
+# id = "" # 배포 시 생성된 ID로 교체
 
-[[kv_namespaces]]
-binding = "RATE_LIMIT"
-id = "" # 배포 시 생성된 ID로 교체
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT"
+# id = "" # 배포 시 생성된 ID로 교체
 
 # Queues
 [[queues.producers]]
