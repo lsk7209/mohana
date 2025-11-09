@@ -3,7 +3,6 @@
  */
 
 export const dynamic = 'force-static'
-export const runtime = 'edge'
 
 export async function GET(
   request: Request,
