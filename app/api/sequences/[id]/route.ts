@@ -9,6 +9,11 @@
 // API 라우트는 Cloudflare Workers로 프록시됩니다.
 export const dynamic = 'force-static'
 
+// Next.js 정적 내보내기에서 동적 라우트를 위해 필요 (빈 배열 반환)
+export async function generateStaticParams() {
+  return []
+}
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
