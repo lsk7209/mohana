@@ -63,11 +63,18 @@ export function ScrollAnimate({
     return `${baseClasses} scroll-animate-visible`
   }
 
+  // ref를 children의 첫 번째 요소에 직접 전달할 수 없으므로,
+  // 래퍼 div를 사용하되 레이아웃에 최소한의 영향만 주도록 설정
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       className={`${getAnimationClasses()} ${className}`}
-      style={{ transitionDelay: delay > 0 ? `${delay}ms` : undefined }}
+      style={{ 
+        transitionDelay: delay > 0 ? `${delay}ms` : undefined,
+        // 레이아웃에 영향을 주지 않도록 설정
+        width: '100%',
+        height: 'auto',
+      }}
     >
       {children}
     </div>

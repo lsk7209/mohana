@@ -12,22 +12,22 @@ export default function Home() {
   return (
     <PublicLayout>
       <HeroSection />
-      <ScrollAnimate animation="slide-up" delay={0}>
+      <ScrollAnimate animation="slide-up" delay={0} className="w-full">
         <PainPointsSection />
       </ScrollAnimate>
-      <ScrollAnimate animation="slide-up" delay={100}>
+      <ScrollAnimate animation="slide-up" delay={100} className="w-full">
         <SolutionSection />
       </ScrollAnimate>
-      <ScrollAnimate animation="fade" delay={200}>
+      <ScrollAnimate animation="fade" delay={200} className="w-full">
         <ProgramsSection />
       </ScrollAnimate>
-      <ScrollAnimate animation="scale" delay={100}>
+      <ScrollAnimate animation="scale" delay={100} className="w-full">
         <DataSection />
       </ScrollAnimate>
-      <ScrollAnimate animation="slide-up" delay={200}>
+      <ScrollAnimate animation="slide-up" delay={200} className="w-full">
         <TestimonialSection />
       </ScrollAnimate>
-      <ScrollAnimate animation="fade" delay={100}>
+      <ScrollAnimate animation="fade" delay={100} className="w-full">
         <FinalCTASection />
       </ScrollAnimate>
     </PublicLayout>
