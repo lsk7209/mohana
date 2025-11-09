@@ -2,7 +2,7 @@
  * 빌드 후 스크립트: API 라우트와 동적 페이지 복원 + 출력 디렉토리 설정
  */
 
-import { existsSync, renameSync, mkdirSync, cpSync } from 'fs'
+import { existsSync, renameSync, mkdirSync, cpSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
@@ -66,7 +66,6 @@ function waitForDirectory(dir, callback) {
     const nextDir = join(__dirname, '..', '.next')
     if (existsSync(nextDir)) {
       console.log('Checking .next directory contents...')
-      const { readdirSync } = await import('fs')
       try {
         const contents = readdirSync(nextDir)
         console.log(`.next directory contains: ${contents.join(', ')}`)
