@@ -168,8 +168,8 @@ export function ProgramDetailClient({ program }: { program: any }) {
               </div>
             )}
 
-            {/* Tab Section */}
-            <div className="sticky top-[64px] z-40 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark shadow-md -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+            {/* Tab Section - 헤더 아래에 고정 */}
+            <div className="sticky top-[57px] z-40 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark shadow-md -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 backdrop-blur-sm">
               <div className="flex border-b border-border-light dark:border-border-dark sm:gap-2 overflow-x-auto">
                 <button
                   onClick={() => scrollToSection('overview')}
