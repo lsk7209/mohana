@@ -104,16 +104,17 @@ export default function AboutPage() {
           </section>
 
           {/* Vision & Solution */}
-          <section className="space-y-8">
-            <div className="text-center space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold text-text-light-primary dark:text-text-dark-primary">
-                우리는 '회복이 성과를 만든다'는 믿음으로 시작했습니다.
-              </h2>
-              <p className="text-base md:text-lg text-text-light-secondary dark:text-text-dark-secondary max-w-3xl mx-auto">
-                힐링워크는 조직이 겪는 정서적 피로를 해결하기 위해<br />
-                <strong className="text-text-light-primary dark:text-text-dark-primary">심리학·코칭·명상·팀빌딩 전문가</strong>들이 함께 만든 브랜드입니다.
-              </p>
-            </div>
+          <ScrollAnimate animation="slide-up" delay={100}>
+            <section className="space-y-8">
+              <div className="text-center space-y-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-text-light-primary dark:text-text-dark-primary">
+                  우리는 '회복이 성과를 만든다'는 믿음으로 시작했습니다.
+                </h2>
+                <p className="text-base md:text-lg text-text-light-secondary dark:text-text-dark-secondary max-w-3xl mx-auto">
+                  힐링워크는 조직이 겪는 정서적 피로를 해결하기 위해<br />
+                  <strong className="text-text-light-primary dark:text-text-dark-primary">심리학·코칭·명상·팀빌딩 전문가</strong>들이 함께 만든 브랜드입니다.
+                </p>
+              </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
               {[
                 {
