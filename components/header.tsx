@@ -21,7 +21,7 @@ export function Header() {
       </div>
       <div className="hidden md:flex flex-1 justify-end items-center gap-8">
         <div className="flex items-center gap-8">
-          <Link href="#about" className="text-sm font-medium leading-normal text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors">
+          <Link href="/about" className="text-sm font-medium leading-normal text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors">
             소개
           </Link>
           <Link href="/programs" className="text-sm font-medium leading-normal text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors">
@@ -52,7 +52,7 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark p-4">
           <div className="flex flex-col gap-4">
-            <Link href="#about" className="text-sm font-medium text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>소개</Link>
+            <Link href="/about" className="text-sm font-medium text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>소개</Link>
             <Link href="/programs" className="text-sm font-medium text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>프로그램</Link>
             <Link href="#reviews" className="text-sm font-medium text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>고객후기</Link>
             <Link href="#partners" className="text-sm font-medium text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>파트너</Link>
