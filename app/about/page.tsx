@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { PublicLayout } from '@/components/public-layout'
 import { Heart, Users, TrendingUp, CheckCircle2, Sparkles, Handshake, Target, ArrowRight } from 'lucide-react'
+import { ScrollAnimate } from '@/components/scroll-animate'
 
 /**
  * 소개 페이지 컴포넌트
@@ -18,7 +19,8 @@ export default function AboutPage() {
       <main className="flex flex-1 justify-center py-8 md:py-12">
         <div className="layout-content-container flex flex-col max-w-[960px] flex-1 px-4 sm:px-6 lg:px-8 space-y-16 md:space-y-20">
           {/* Hero Section */}
-          <section className="text-center space-y-6">
+          <ScrollAnimate animation="fade">
+            <section className="text-center space-y-6">
             <div className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">
               조직 힐링 파트너
             </div>
@@ -33,10 +35,12 @@ export default function AboutPage() {
             <p className="text-base md:text-lg text-text-light-secondary dark:text-text-dark-secondary max-w-2xl mx-auto">
               힐링워크는 기업이 사람 중심으로 다시 숨 쉴 수 있도록 돕는 <strong className="text-primary">조직 힐링 파트너</strong>입니다.
             </p>
-          </section>
+            </section>
+          </ScrollAnimate>
 
           {/* 서브카피 - 핵심 미션 */}
-          <section className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-8 md:p-12 text-center border border-primary/20">
+          <ScrollAnimate animation="slide-up" delay={100}>
+            <section className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-8 md:p-12 text-center border border-primary/20">
             <blockquote className="text-xl md:text-2xl font-bold text-text-light-primary dark:text-text-dark-primary leading-relaxed mb-4">
               "일의 성과는 결국 사람에게서 나오고,<br />
               사람의 성과는 '심리적 회복력'에서 시작됩니다."
@@ -46,16 +50,18 @@ export default function AboutPage() {
               서로의 마음을 이해하며,<br />
               조직이 다시 '한 팀'으로 연결되는 순간을 디자인합니다.
             </p>
-          </section>
+            </section>
+          </ScrollAnimate>
 
           {/* Pain Point Section */}
-          <section className="space-y-8">
-            <div className="text-center space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold text-text-light-primary dark:text-text-dark-primary">
-                요즘 조직, 이런 고민 많지 않으신가요?
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <ScrollAnimate animation="slide-up" delay={200}>
+            <section className="space-y-8">
+              <div className="text-center space-y-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-text-light-primary dark:text-text-dark-primary">
+                  요즘 조직, 이런 고민 많지 않으신가요?
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 {
                   icon: '😶',
@@ -142,15 +148,17 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
-            <div className="text-center pt-8">
-              <blockquote className="text-xl font-bold text-text-light-primary dark:text-text-dark-primary italic">
-                "한 번의 워크샵이 조직의 방향을 바꿀 수 있습니다."
-              </blockquote>
-            </div>
-          </section>
+              <div className="text-center pt-8">
+                <blockquote className="text-xl font-bold text-text-light-primary dark:text-text-dark-primary italic">
+                  "한 번의 워크샵이 조직의 방향을 바꿀 수 있습니다."
+                </blockquote>
+              </div>
+            </section>
+          </ScrollAnimate>
 
           {/* How We Work */}
-          <section className="space-y-8">
+          <ScrollAnimate animation="slide-up" delay={200}>
+            <section className="space-y-8">
             <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold text-text-light-primary dark:text-text-dark-primary">
                 복잡한 과정 없이, 단 세 단계로
@@ -192,18 +200,20 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
-            <div className="text-center pt-4">
-              <p className="text-lg font-bold text-primary">
-                100% 맞춤형 설계
-              </p>
-              <p className="text-base text-text-light-secondary dark:text-text-dark-secondary mt-2">
-                기업마다 다른 문제를 해결합니다.
-              </p>
-            </div>
-          </section>
+              <div className="text-center pt-4">
+                <p className="text-lg font-bold text-primary">
+                  100% 맞춤형 설계
+                </p>
+                <p className="text-base text-text-light-secondary dark:text-text-dark-secondary mt-2">
+                  기업마다 다른 문제를 해결합니다.
+                </p>
+              </div>
+            </section>
+          </ScrollAnimate>
 
           {/* Results & Proof */}
-          <section className="space-y-8">
+          <ScrollAnimate animation="scale" delay={100}>
+            <section className="space-y-8">
             <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold text-text-light-primary dark:text-text-dark-primary">
                 수치로 확인되는 변화
@@ -229,18 +239,20 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
-            <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl p-8 text-center border border-primary/20">
-              <blockquote className="text-lg md:text-xl font-bold text-text-light-primary dark:text-text-dark-primary italic mb-2">
-                "워크샵 이후 팀 분위기가 눈에 띄게 달라졌습니다."
-              </blockquote>
-              <p className="text-sm text-text-light-secondary dark:text-text-dark-secondary">
-                – ○○기업 HR팀장 후기
-              </p>
-            </div>
-          </section>
+              <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl p-8 text-center border border-primary/20">
+                <blockquote className="text-lg md:text-xl font-bold text-text-light-primary dark:text-text-dark-primary italic mb-2">
+                  "워크샵 이후 팀 분위기가 눈에 띄게 달라졌습니다."
+                </blockquote>
+                <p className="text-sm text-text-light-secondary dark:text-text-dark-secondary">
+                  – ○○기업 HR팀장 후기
+                </p>
+              </div>
+            </section>
+          </ScrollAnimate>
 
           {/* Our Story */}
-          <section className="space-y-8 bg-surface-light dark:bg-surface-dark rounded-2xl p-8 md:p-12 border border-border-light dark:border-border-dark">
+          <ScrollAnimate animation="slide-up" delay={200}>
+            <section className="space-y-8 bg-surface-light dark:bg-surface-dark rounded-2xl p-8 md:p-12 border border-border-light dark:border-border-dark">
             <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold text-text-light-primary dark:text-text-dark-primary">
                 "우리도 처음엔 '워크샵'이란 단어가 식상했습니다."
@@ -268,10 +280,12 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
-          </section>
+            </section>
+          </ScrollAnimate>
 
           {/* Core Values */}
-          <section className="space-y-8">
+          <ScrollAnimate animation="slide-up" delay={100}>
+            <section className="space-y-8">
             <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold text-text-light-primary dark:text-text-dark-primary">
                 우리의 핵심 가치
@@ -324,7 +338,8 @@ export default function AboutPage() {
           </section>
 
           {/* CTA Section */}
-          <section className="bg-gradient-to-br from-primary to-primary/80 rounded-2xl p-8 md:p-12 text-center text-white space-y-8">
+          <ScrollAnimate animation="fade" delay={200}>
+            <section className="bg-gradient-to-br from-primary to-primary/80 rounded-2xl p-8 md:p-12 text-center text-white space-y-8">
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-black leading-tight">
                 이제, 당신의 팀도 회복을 시작할 시간입니다.
@@ -355,7 +370,8 @@ export default function AboutPage() {
                 다음은 <strong>당신의 팀</strong>입니다.
               </p>
             </div>
-          </section>
+            </section>
+          </ScrollAnimate>
         </div>
       </main>
     </PublicLayout>
