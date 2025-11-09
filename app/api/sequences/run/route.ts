@@ -2,6 +2,8 @@
  * Next.js API Route - 시퀀스 실행
  */
 
+export const dynamic = 'force-static'
+
 export async function POST(request: Request) {
   const workerUrl = process.env.WORKER_URL || 'http://localhost:8787'
   const body = await request.json()

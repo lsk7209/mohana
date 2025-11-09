@@ -3,6 +3,8 @@
  * Cloudflare Workers로 프록시
  */
 
+export const dynamic = 'force-static'
+
 export async function POST(request: Request) {
   // Cloudflare Workers API로 프록시
   // 로컬 개발 시: http://localhost:8787/api/leads

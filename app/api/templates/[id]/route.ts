@@ -2,6 +2,8 @@
  * Next.js API Route - 템플릿 상세
  */
 
+export const dynamic = 'force-static'
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }

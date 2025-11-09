@@ -2,6 +2,8 @@
  * Next.js API Route - 시퀀스 성과 분석
  */
 
+export const dynamic = 'force-static'
+
 export async function GET(request: Request) {
   const workerUrl = process.env.WORKER_URL || 'http://localhost:8787'
   const url = new URL(request.url)

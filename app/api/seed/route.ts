@@ -2,6 +2,8 @@
  * Next.js API Route - 시드 데이터 생성 (개발용)
  */
 
+export const dynamic = 'force-static'
+
 export async function POST(request: Request) {
   const workerUrl = process.env.WORKER_URL || 'http://localhost:8787'
 

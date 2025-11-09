@@ -2,6 +2,8 @@
  * Next.js API Route - 메시지 상세
  */
 
+export const dynamic = 'force-static'
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ messageId: string }> }
