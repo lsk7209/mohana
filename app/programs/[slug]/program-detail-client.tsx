@@ -169,7 +169,7 @@ export function ProgramDetailClient({ program }: { program: any }) {
             )}
 
             {/* Tab Section */}
-            <div className="sticky top-16 z-30 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark shadow-sm">
+            <div className="sticky top-[64px] z-40 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark shadow-md -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
               <div className="flex border-b border-border-light dark:border-border-dark sm:gap-2 overflow-x-auto">
                 <button
                   onClick={() => scrollToSection('overview')}
