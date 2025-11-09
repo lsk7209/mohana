@@ -42,25 +42,39 @@ if (existsSync(tempLeadsIdDir) && !existsSync(leadsIdDir)) {
 }
 
 // Cloudflare Pages를 위한 출력 디렉토리 설정
-// Next.js는 .next/out에 생성하지만, Cloudflare Pages는 .vercel/output/static을 찾을 수 있음
+// Next.js는 .next/out에 생성하지만, Cloudflare Pages는 .vercel/output/static 또는 .next/out을 찾을 수 있음
 const nextOutDir = join(__dirname, '..', '.next', 'out')
 const vercelOutputDir = join(__dirname, '..', '.vercel', 'output', 'static')
 
 // 디렉토리 존재 확인 및 대기 (빌드가 완료되기 전에 실행될 수 있음)
 let retries = 0
-const maxRetries = 5
-const retryDelay = 1000 // 1초
+const maxRetries = 10
+const retryDelay = 2000 // 2초
 
 function waitForDirectory(dir, callback) {
   if (existsSync(dir)) {
+    console.log(`Found build output directory: ${dir}`)
     callback()
   } else if (retries < maxRetries) {
     retries++
     console.log(`Waiting for ${dir} to be created... (attempt ${retries}/${maxRetries})`)
     setTimeout(() => waitForDirectory(dir, callback), retryDelay)
   } else {
-    console.warn(`Warning: ${dir} directory not found after ${maxRetries} attempts.`)
-    console.warn('This may be normal if the build output is in a different location.')
+    console.error(`Error: ${dir} directory not found after ${maxRetries} attempts.`)
+    console.error('Build may have failed or output is in a different location.')
+    // .next 디렉토리 확인
+    const nextDir = join(__dirname, '..', '.next')
+    if (existsSync(nextDir)) {
+      console.log('Checking .next directory contents...')
+      const { readdirSync } = await import('fs')
+      try {
+        const contents = readdirSync(nextDir)
+        console.log(`.next directory contains: ${contents.join(', ')}`)
+      } catch (err) {
+        console.error('Error reading .next directory:', err)
+      }
+    }
+    process.exit(1)
   }
 }
 
