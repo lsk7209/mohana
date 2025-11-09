@@ -1,5 +1,8 @@
 /**
  * Next.js API Route - 메시지 상세
+ * 
+ * Note: API 라우트는 정적 내보내기에서 지원되지 않습니다.
+ * 이 파일은 Cloudflare Workers로 프록시되므로 빌드에서 제외됩니다.
  */
 
 export const dynamic = 'force-static'
