@@ -4,6 +4,7 @@
 [build]
 command = "npm run build"
 cwd = "."
+output_directory = ".next/out"
 
 [build.environment_variables]
 NODE_VERSION = "22"
