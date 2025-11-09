@@ -27,12 +27,6 @@ export function Header() {
           <Link href="/programs" className="text-sm font-medium leading-normal text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors">
             프로그램
           </Link>
-          <Link href="#reviews" className="text-sm font-medium leading-normal text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors">
-            고객후기
-          </Link>
-          <Link href="#partners" className="text-sm font-medium leading-normal text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors">
-            파트너
-          </Link>
         </div>
         <Link href="/contact">
           <Button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-primary-foreground text-sm font-bold leading-normal tracking-[0.015em] hover:brightness-90 transition-all">
@@ -54,8 +48,6 @@ export function Header() {
           <div className="flex flex-col gap-4">
             <Link href="/about" className="text-sm font-medium text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>소개</Link>
             <Link href="/programs" className="text-sm font-medium text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>프로그램</Link>
-            <Link href="#reviews" className="text-sm font-medium text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>고객후기</Link>
-            <Link href="#partners" className="text-sm font-medium text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>파트너</Link>
             <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
               <Button className="w-full rounded-lg h-10 px-4 bg-primary text-primary-foreground text-sm font-bold">
                 무료 제안서 받기
