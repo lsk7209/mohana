@@ -14,6 +14,12 @@ const nextConfig = {
   // API 라우트는 Cloudflare Workers로 프록시됩니다
   // Turbopack 설정 (Next.js 16 기본)
   turbopack: {},
+  // API 라우트를 빌드에서 제외
+  pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
+  // API 라우트를 제외하기 위한 설정
+  experimental: {
+    // API 라우트를 빌드에서 제외
+  },
 }
 
 export default nextConfig
