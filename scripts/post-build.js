@@ -1,8 +1,8 @@
 /**
- * 빌드 후 스크립트: API 라우트와 동적 페이지 복원
+ * 빌드 후 스크립트: API 라우트와 동적 페이지 복원 + 출력 디렉토리 설정
  */
 
-import { existsSync, renameSync, mkdirSync } from 'fs'
+import { existsSync, renameSync, mkdirSync, cpSync } from 'fs'
 import { join } from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
@@ -39,5 +39,22 @@ if (existsSync(tempLeadsIdDir) && !existsSync(leadsIdDir)) {
     mkdirSync(parentDir, { recursive: true })
   }
   renameSync(tempLeadsIdDir, leadsIdDir)
+}
+
+// Cloudflare Pages를 위한 출력 디렉토리 설정
+// Next.js는 .next/out에 생성하지만, Cloudflare Pages는 .vercel/output/static을 찾을 수 있음
+const nextOutDir = join(__dirname, '..', '.next', 'out')
+const vercelOutputDir = join(__dirname, '..', '.vercel', 'output', 'static')
+
+if (existsSync(nextOutDir)) {
+  // .vercel/output/static 디렉토리 생성
+  if (!existsSync(vercelOutputDir)) {
+    mkdirSync(vercelOutputDir, { recursive: true })
+  }
+  
+  // .next/out의 내용을 .vercel/output/static으로 복사
+  console.log('Copying build output to .vercel/output/static for Cloudflare Pages...')
+  cpSync(nextOutDir, vercelOutputDir, { recursive: true, force: true })
+  console.log('Build output copied successfully!')
 }
 
