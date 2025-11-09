@@ -7,7 +7,6 @@
 
 export const dynamic = 'force-static'
 
-// Next.js 정적 내보내기에서 동적 라우트를 위해 필요 (빈 배열 반환)
 export async function generateStaticParams() {
   return []
 }

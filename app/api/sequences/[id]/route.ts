@@ -5,11 +5,8 @@
  * 이 파일은 Cloudflare Workers로 프록시되므로 빌드에서 제외됩니다.
  */
 
-// 정적 내보내기 모드에서는 API 라우트가 빌드되지 않습니다.
-// API 라우트는 Cloudflare Workers로 프록시됩니다.
 export const dynamic = 'force-static'
 
-// Next.js 정적 내보내기에서 동적 라우트를 위해 필요 (빈 배열 반환)
 export async function generateStaticParams() {
   return []
 }
@@ -51,4 +48,3 @@ export async function PUT(
   const data = await response.json()
   return Response.json(data, { status: response.status })
 }
-
