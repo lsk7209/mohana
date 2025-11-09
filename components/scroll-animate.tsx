@@ -40,7 +40,7 @@ export function ScrollAnimate({
   const { ref, isVisible } = useScrollAnimation({ threshold, rootMargin, once })
 
   const getAnimationClasses = () => {
-    const baseClasses = 'transition-all duration-600 ease-out'
+    const baseClasses = 'transition-all duration-[600ms] ease-out'
     
     if (!isVisible) {
       switch (animation) {
@@ -67,7 +67,7 @@ export function ScrollAnimate({
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       className={`${getAnimationClasses()} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ transitionDelay: delay > 0 ? `${delay}ms` : undefined }}
     >
       {children}
     </div>

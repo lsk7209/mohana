@@ -25,7 +25,7 @@ export function useScrollAnimation(options: {
 } = {}) {
   const { threshold = 0.1, rootMargin = '0px 0px -100px 0px', once = true } = options
   const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const element = ref.current
