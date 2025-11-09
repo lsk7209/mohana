@@ -1,0 +1,3 @@
+# Cloudflare Pages Redirects
+/api/*  https://healingwork-platform.your-subdomain.workers.dev/api/:splat  200
+

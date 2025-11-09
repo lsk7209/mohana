@@ -92,9 +92,15 @@ pnpm deploy
 2. "Create a project" → "Connect to Git"
 3. GitHub 저장소 연결
 4. Build settings:
-   - Framework preset: Next.js
-   - Build command: `pnpm build`
-   - Build output directory: `.next`
+   - Framework preset: **Static HTML** (Next.js 자동 감지 실패 시)
+   - Build command: `npm run build` 또는 `pnpm build`
+   - Build output directory: `.next/out` (정적 내보내기 사용 시) 또는 `.next` (SSR 사용 시)
+   - Root directory: `/` (기본값)
+
+**중요**: 
+- `next.config.mjs`에 `output: 'export'`가 설정되어 있으면 정적 내보내기 모드입니다.
+- 이 경우 Build output directory는 `.next/out`으로 설정하세요.
+- SSR이 필요한 경우 `@cloudflare/next-on-pages` 사용을 고려하세요.
 
 ## 이메일 전달성 설정
 

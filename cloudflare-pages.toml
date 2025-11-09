@@ -1,0 +1,13 @@
+# Cloudflare Pages 설정 파일
+# wrangler.toml과 별도로 Pages 전용 설정
+
+[build]
+command = "npm run build"
+cwd = "."
+
+[build.environment_variables]
+NODE_VERSION = "22"
+
+# Pages Functions (선택사항)
+# functions_dir = "functions"
+
