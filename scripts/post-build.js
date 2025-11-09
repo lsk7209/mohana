@@ -42,21 +42,28 @@ if (existsSync(tempLeadsIdDir) && !existsSync(leadsIdDir)) {
 }
 
 // Cloudflare Pages를 위한 출력 디렉토리 설정
-// Next.js는 .next/out에 생성하지만, 실제로는 다른 위치에 생성될 수 있음
-const nextOutDir = join(__dirname, '..', '.next', 'out')
+// Next.js의 output: 'export'는 프로젝트 루트의 'out' 디렉토리에 생성됩니다
+const rootOutDir = join(__dirname, '..', 'out') // Next.js가 실제로 생성하는 위치
+const nextOutDir = join(__dirname, '..', '.next', 'out') // Cloudflare Pages가 찾는 위치
 const nextStaticDir = join(__dirname, '..', '.next', 'static')
 const vercelOutputDir = join(__dirname, '..', '.vercel', 'output', 'static')
 const finalOutputDir = join(__dirname, '..', '.next', 'out')
 
 // 실제 출력 디렉토리 찾기
 function findOutputDirectory() {
-  // 1. .next/out 확인
+  // 1. 프로젝트 루트의 'out' 디렉토리 확인 (Next.js output: 'export'의 기본 위치)
+  if (existsSync(rootOutDir)) {
+    console.log(`Found build output at: ${rootOutDir}`)
+    return rootOutDir
+  }
+  
+  // 2. .next/out 확인 (일부 설정에서 사용될 수 있음)
   if (existsSync(nextOutDir)) {
     console.log(`Found build output at: ${nextOutDir}`)
     return nextOutDir
   }
   
-  // 2. export-detail.json 확인하여 실제 출력 위치 파악
+  // 3. export-detail.json 확인하여 실제 출력 위치 파악
   const exportDetailPath = join(__dirname, '..', '.next', 'export-detail.json')
   if (existsSync(exportDetailPath)) {
     try {
@@ -70,22 +77,6 @@ function findOutputDirectory() {
       }
     } catch (err) {
       console.warn('Could not read export-detail.json:', err.message)
-    }
-  }
-  
-  // 3. .next/static이 있는 경우, 이를 기반으로 out 디렉토리 생성
-  if (existsSync(nextStaticDir)) {
-    console.log('Found .next/static directory, creating .next/out from static files...')
-    // static 디렉토리의 내용을 out으로 복사
-    if (!existsSync(finalOutputDir)) {
-      mkdirSync(finalOutputDir, { recursive: true })
-    }
-    try {
-      cpSync(nextStaticDir, finalOutputDir, { recursive: true, force: true })
-      console.log(`Created build output at: ${finalOutputDir}`)
-      return finalOutputDir
-    } catch (err) {
-      console.error('Error copying static to out:', err)
     }
   }
   
