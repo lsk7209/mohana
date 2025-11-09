@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Heart, Users, MessageSquare, GraduationCap, Palette, UtensilsCrossed, Lightbulb, TrendingUp, Shield, Music } from "lucide-react"
 import Link from "next/link"
 import { PublicLayout } from "@/components/public-layout"
+import { ScrollAnimate } from "@/components/scroll-animate"
 
 const programs = [
   {
@@ -217,20 +218,22 @@ export default function ProgramsPage() {
   return (
     <PublicLayout>
       {/* Hero Section */}
-        <section className="py-16 sm:py-24">
-          <div className="container mx-auto px-4">
-            <div className="flex min-h-[400px] flex-col items-center justify-center gap-8 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 p-8 text-center">
-              <div className="flex flex-col gap-4">
-                <h2 className="text-4xl font-extrabold tracking-tight text-text-light-primary dark:text-text-dark-primary sm:text-5xl">
-                  우리 팀에 맞는 최적의 워크샵 프로그램을 찾아보세요.
-                </h2>
-                <p className="max-w-2xl mx-auto text-lg text-text-light-secondary dark:text-text-dark-secondary">
-                  전문 강사진이 진행하는 다양한 테마의 프로그램을 만나보실 수 있습니다.
-                </p>
+        <ScrollAnimate animation="fade">
+          <section className="py-16 sm:py-24">
+            <div className="container mx-auto px-4">
+              <div className="flex min-h-[400px] flex-col items-center justify-center gap-8 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 p-8 text-center">
+                <div className="flex flex-col gap-4">
+                  <h2 className="text-4xl font-extrabold tracking-tight text-text-light-primary dark:text-text-dark-primary sm:text-5xl">
+                    우리 팀에 맞는 최적의 워크샵 프로그램을 찾아보세요.
+                  </h2>
+                  <p className="max-w-2xl mx-auto text-lg text-text-light-secondary dark:text-text-dark-secondary">
+                    전문 강사진이 진행하는 다양한 테마의 프로그램을 만나보실 수 있습니다.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </ScrollAnimate>
 
         {/* Sticky Filter Bar */}
         <div className="sticky top-16 z-40 bg-background-light dark:bg-background-dark py-4 shadow-sm border-b border-border-light dark:border-border-dark">
@@ -288,14 +291,14 @@ export default function ProgramsPage() {
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {filteredPrograms.map((program) => {
+              {filteredPrograms.map((program, index) => {
                 const Icon = program.icon
                 return (
-                  <Link
-                    key={program.id}
-                    href={`/programs/${program.slug}`}
-                    className="flex flex-col overflow-hidden rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer"
-                  >
+                  <ScrollAnimate key={program.id} animation="slide-up" delay={index * 50}>
+                    <Link
+                      href={`/programs/${program.slug}`}
+                      className="flex flex-col overflow-hidden rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer"
+                    >
                     <div
                       className="aspect-video w-full bg-cover bg-center"
                       style={{ backgroundImage: `url('${program.image}')` }}
@@ -332,6 +335,7 @@ export default function ProgramsPage() {
                       </div>
                     </div>
                   </Link>
+                  </ScrollAnimate>
                 )
               })}
             </div>
@@ -339,31 +343,34 @@ export default function ProgramsPage() {
         </section>
 
         {/* Mid-page CTA Section */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="rounded-xl bg-gradient-to-r from-secondary to-blue-800 p-12 text-center text-white">
-              <h2 className="text-3xl font-bold">고민은 그만, 무료로 우리 팀에 맞는 맞춤 제안서를 받아보세요.</h2>
-              <p className="mt-4 max-w-2xl mx-auto text-lg text-white/80">
-                전문 컨설턴트가 최적의 프로그램을 구성하여 제안해 드립니다.
-              </p>
-              <div className="mt-8">
-                <Link href="/contact">
-                  <button className="flex h-12 min-w-[160px] cursor-pointer items-center justify-center overflow-hidden rounded-full bg-primary px-6 text-base font-bold text-white hover:bg-primary/90 mx-auto">
-                    무료 제안서 받기
-                  </button>
-                </Link>
+        <ScrollAnimate animation="fade" delay={100}>
+          <section className="py-16">
+            <div className="container mx-auto px-4">
+              <div className="rounded-xl bg-gradient-to-r from-secondary to-blue-800 p-12 text-center text-white">
+                <h2 className="text-3xl font-bold">고민은 그만, 무료로 우리 팀에 맞는 맞춤 제안서를 받아보세요.</h2>
+                <p className="mt-4 max-w-2xl mx-auto text-lg text-white/80">
+                  전문 컨설턴트가 최적의 프로그램을 구성하여 제안해 드립니다.
+                </p>
+                <div className="mt-8">
+                  <Link href="/contact">
+                    <button className="flex h-12 min-w-[160px] cursor-pointer items-center justify-center overflow-hidden rounded-full bg-primary px-6 text-base font-bold text-white hover:bg-primary/90 mx-auto">
+                      무료 제안서 받기
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </ScrollAnimate>
 
         {/* FAQ Section */}
-        <section className="py-16">
-          <div className="container mx-auto max-w-4xl px-4">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-text-light-primary dark:text-text-dark-primary">자주 묻는 질문</h2>
-              <p className="mt-2 text-text-light-secondary dark:text-text-dark-secondary">프로그램에 대해 더 궁금한 점이 있으신가요?</p>
-            </div>
+        <ScrollAnimate animation="slide-up" delay={200}>
+          <section className="py-16">
+            <div className="container mx-auto max-w-4xl px-4">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-text-light-primary dark:text-text-dark-primary">자주 묻는 질문</h2>
+                <p className="mt-2 text-text-light-secondary dark:text-text-dark-secondary">프로그램에 대해 더 궁금한 점이 있으신가요?</p>
+              </div>
             <div className="mt-12 space-y-4">
               <details className="group rounded-lg bg-surface-light dark:bg-surface-dark p-6 border border-border-light dark:border-border-dark" open>
                 <summary className="flex cursor-pointer items-center justify-between font-medium text-text-light-primary dark:text-text-dark-primary">
@@ -395,6 +402,7 @@ export default function ProgramsPage() {
             </div>
           </div>
         </section>
+        </ScrollAnimate>
     </PublicLayout>
   )
 }

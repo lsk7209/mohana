@@ -7,6 +7,7 @@ import * as z from 'zod'
 import { Button } from '@/components/ui/button'
 import { toast } from '@/hooks/use-toast'
 import { PublicLayout } from '@/components/public-layout'
+import { ScrollAnimate } from '@/components/scroll-animate'
 
 const contactFormSchema = z.object({
   // Step 1
@@ -122,14 +123,16 @@ export default function ContactPage() {
     <PublicLayout>
       <main className="flex flex-1 justify-center py-10 sm:py-16 px-4">
           <div className="layout-content-container flex flex-col w-full max-w-2xl flex-1 gap-8 sm:gap-10">
-            <div className="flex flex-col text-center gap-3 sm:gap-4">
-              <h1 className="text-text-light-primary dark:text-text-dark-primary text-3xl sm:text-4xl font-black leading-tight tracking-[-0.033em]">
-                맞춤 제안서 요청
-              </h1>
-              <p className="text-text-light-secondary dark:text-text-dark-secondary text-sm sm:text-base font-normal leading-relaxed max-w-xl mx-auto">
-                기업의 목적과 예산에 맞는 최적의 워크샵 프로그램을 제안해 드립니다.
-              </p>
-            </div>
+            <ScrollAnimate animation="fade">
+              <div className="flex flex-col text-center gap-3 sm:gap-4">
+                <h1 className="text-text-light-primary dark:text-text-dark-primary text-3xl sm:text-4xl font-black leading-tight tracking-[-0.033em]">
+                  맞춤 제안서 요청
+                </h1>
+                <p className="text-text-light-secondary dark:text-text-dark-secondary text-sm sm:text-base font-normal leading-relaxed max-w-xl mx-auto">
+                  기업의 목적과 예산에 맞는 최적의 워크샵 프로그램을 제안해 드립니다.
+                </p>
+              </div>
+            </ScrollAnimate>
 
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between text-sm">
@@ -146,8 +149,9 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm p-6 sm:p-8 lg:p-10 border border-border-light dark:border-border-dark">
-              {step === 1 ? (
+            <ScrollAnimate animation="slide-up" delay={100}>
+              <div className="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm p-6 sm:p-8 lg:p-10 border border-border-light dark:border-border-dark">
+                {step === 1 ? (
                 <form onSubmit={handleStep1Next} className="flex flex-col gap-6 sm:gap-8">
                   <div className="space-y-5 sm:space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
@@ -413,7 +417,8 @@ export default function ContactPage() {
                   </div>
                 </form>
               )}
-            </div>
+              </div>
+            </ScrollAnimate>
           </div>
         </main>
     </PublicLayout>
