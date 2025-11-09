@@ -3,11 +3,7 @@
  */
 
 export const dynamic = 'force-static'
-
-// 정적 내보내기를 위한 빈 generateStaticParams
-export async function generateStaticParams() {
-  return []
-}
+export const runtime = 'edge'
 
 export async function GET(
   request: Request,
