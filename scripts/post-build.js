@@ -47,6 +47,12 @@ const nextOutDir = join(__dirname, '..', '.next', 'out')
 const vercelOutputDir = join(__dirname, '..', '.vercel', 'output', 'static')
 
 if (existsSync(nextOutDir)) {
+  // .vercel/output 디렉토리 생성
+  const vercelOutputParent = join(__dirname, '..', '.vercel', 'output')
+  if (!existsSync(vercelOutputParent)) {
+    mkdirSync(vercelOutputParent, { recursive: true })
+  }
+  
   // .vercel/output/static 디렉토리 생성
   if (!existsSync(vercelOutputDir)) {
     mkdirSync(vercelOutputDir, { recursive: true })
@@ -54,7 +60,14 @@ if (existsSync(nextOutDir)) {
   
   // .next/out의 내용을 .vercel/output/static으로 복사
   console.log('Copying build output to .vercel/output/static for Cloudflare Pages...')
-  cpSync(nextOutDir, vercelOutputDir, { recursive: true, force: true })
-  console.log('Build output copied successfully!')
+  try {
+    cpSync(nextOutDir, vercelOutputDir, { recursive: true, force: true })
+    console.log('Build output copied successfully!')
+  } catch (error) {
+    console.error('Error copying build output:', error)
+    process.exit(1)
+  }
+} else {
+  console.warn('Warning: .next/out directory not found. Build may have failed.')
 }
 
