@@ -4,10 +4,11 @@
 [build]
 command = "npm run build"
 cwd = "."
-output_directory = ".next/out"
+output_directory = "out"
 
 [build.environment_variables]
 NODE_VERSION = "22"
+NODE_OPTIONS = "--max-old-space-size=4096"
 
 # Pages Functions (선택사항)
 # functions_dir = "functions"
