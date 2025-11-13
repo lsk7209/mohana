@@ -58,7 +58,8 @@ router.get('/api/sequences', handleSequences.list)
 router.get('/api/sequences/:id', handleSequences.getSequence)
 router.post('/api/sequences', handleSequences.create)
 router.put('/api/sequences/:id', handleSequences.update)
-router.get('/api/admin/sequences/performance', handleSequences.getPerformance)
+// TODO: getPerformance 함수 구현 필요
+// router.get('/api/admin/sequences/performance', handleSequences.getPerformance)
 
 // Tracking Routes
 router.get('/t/o', handleTracking.open)
@@ -86,9 +87,9 @@ export default {
   async queue(batch: MessageBatch, env: Env): Promise<void> {
     // 큐 이름으로 분기
     if (batch.queue === 'email-dispatch') {
-      await handleEmailQueue(batch as MessageBatch<any>, env)
+      await handleEmailQueue(batch, env)
     } else if (batch.queue === 'sms-dispatch') {
-      await handleSMSQueue(batch as MessageBatch<any>, env)
+      await handleSMSQueue(batch, env)
     }
   },
 }

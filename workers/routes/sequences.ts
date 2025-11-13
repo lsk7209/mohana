@@ -10,10 +10,10 @@ export async function run(request: Request, env: Env): Promise<Response> {
   }
 
   try {
-    const body = await request.json<{
+    const body = await request.json() as {
       lead_id: string
       sequence_id: string
-    }>()
+    }
 
     // 시퀀스 조회
     const sequence = await env.DB.prepare('SELECT * FROM sequences WHERE id = ?')
@@ -95,7 +95,7 @@ export async function create(request: Request, env: Env): Promise<Response> {
   }
 
   try {
-    const body = await request.json<{
+    const body = await request.json() as {
       name: string
       steps: Array<{
         delay_hours: number
@@ -106,7 +106,7 @@ export async function create(request: Request, env: Env): Promise<Response> {
           if_not_clicked?: boolean
         }
       }>
-    }>()
+    }
 
     const id = crypto.randomUUID()
     const now = Date.now()
@@ -155,7 +155,7 @@ export async function update(request: Request, env: Env): Promise<Response> {
   }
 
   try {
-    const body = await request.json<{
+    const body = await request.json() as {
       name?: string
       steps?: Array<{
         delay_hours: number
@@ -166,10 +166,10 @@ export async function update(request: Request, env: Env): Promise<Response> {
           if_not_clicked?: boolean
         }
       }>
-    }>()
+    }
 
     const updates: string[] = []
-    const params: any[] = []
+    const params: (string | number | null)[] = []
 
     if (body.name !== undefined) {
       updates.push('name = ?')

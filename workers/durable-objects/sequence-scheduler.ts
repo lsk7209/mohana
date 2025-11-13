@@ -3,11 +3,13 @@
  * 시퀀스 스텝의 지연 발송 및 중복 방지 관리
  */
 
+import type { Env, Lead } from '../types'
+
 export class SequenceScheduler {
   private state: DurableObjectState
-  private env: any
+  private env: Env
 
-  constructor(state: DurableObjectState, env: any) {
+  constructor(state: DurableObjectState, env: Env) {
     this.state = state
     this.env = env
   }
@@ -25,13 +27,13 @@ export class SequenceScheduler {
   }
 
   private async handleSchedule(request: Request): Promise<Response> {
-    const body = await request.json<{
+    const body = await request.json() as {
       runId: string
       leadId: string
       sequenceId: string
       stepIndex: number
       delayHours: number
-    }>()
+    }
 
     const scheduledAt = Date.now() + body.delayHours * 60 * 60 * 1000
 
@@ -62,12 +64,12 @@ export class SequenceScheduler {
   }
 
   private async handleExecute(request: Request): Promise<Response> {
-    const body = await request.json<{
+    const body = await request.json() as {
       runId: string
       leadId: string
       sequenceId: string
       stepIndex: number
-    }>()
+    }
 
     await this.executeStep(
       body.runId,
@@ -274,14 +276,14 @@ export class SequenceScheduler {
     return false
   }
 
-  private renderTemplate(template: string, lead: any, variables?: string): string {
+  private renderTemplate(template: string, lead: Lead, variables?: string): string {
     // 템플릿 렌더러 사용
     const { renderTemplate } = require('../lib/template-renderer')
     
-    let customVars: any = {}
+    let customVars: Record<string, unknown> = {}
     if (variables) {
       try {
-        customVars = JSON.parse(variables)
+        customVars = JSON.parse(variables) as Record<string, unknown>
       } catch (e) {
         console.error('Error parsing variables:', e)
       }

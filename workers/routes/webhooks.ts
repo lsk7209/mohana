@@ -10,12 +10,12 @@ export async function handleBounce(request: Request, env: Env): Promise<Response
   }
 
   try {
-    const body = await request.json<{
+    const body = await request.json() as {
       messageId?: string
       email?: string
       reason?: string
       type?: 'bounce' | 'complaint' | 'delivery'
-    }>()
+    }
 
     // 메시지 ID로 찾기
     let messageId = body.messageId
@@ -80,10 +80,10 @@ export async function handleDelivery(request: Request, env: Env): Promise<Respon
   }
 
   try {
-    const body = await request.json<{
+    const body = await request.json() as {
       messageId?: string
       email?: string
-    }>()
+    }
 
     let messageId = body.messageId
 

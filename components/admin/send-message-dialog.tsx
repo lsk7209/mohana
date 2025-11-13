@@ -220,7 +220,7 @@ export function SendMessageDialog({
                 className="font-mono text-sm"
               />
               <p className="text-xs text-muted-foreground">
-                변수 사용: {`{{lead.name}}`, `{{company}}`, `{{email}}`}
+                변수 사용: {[`{{lead.name}}`, `{{company}}`, `{{email}}`].join(', ')}
               </p>
             </div>
           </TabsContent>

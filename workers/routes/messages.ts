@@ -11,13 +11,13 @@ async function sendEmail(request: Request, env: Env): Promise<Response> {
   }
 
   try {
-    const body = await request.json<{
+    const body = await request.json() as {
       lead_id: string
       template_id?: string
       subject: string
       body: string
       to: string
-    }>()
+    }
 
     // 구독 해지 확인
     const unsubscribed = await isUnsubscribed(env, body.to)
@@ -65,12 +65,12 @@ async function sendSMS(request: Request, env: Env): Promise<Response> {
   }
 
   try {
-    const body = await request.json<{
+    const body = await request.json() as {
       lead_id: string
       template_id?: string
       body: string
       to: string
-    }>()
+    }
 
     // 메시지 생성
     const message = await createMessage(env, {

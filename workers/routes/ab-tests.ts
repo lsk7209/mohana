@@ -22,7 +22,7 @@ export async function getABTests(request: Request, env: Env): Promise<Response> 
       WHERE t.ab_key IS NOT NULL
     `
 
-    const params: any[] = []
+    const params: string[] = []
 
     if (abKey) {
       query += ' AND t.ab_key = ?'
@@ -33,7 +33,15 @@ export async function getABTests(request: Request, env: Env): Promise<Response> 
 
     const results = await env.DB.prepare(query).bind(...params).all()
 
-    const tests = (results.results as any[]).map((row) => {
+    interface ABTestRow {
+      ab_key: string
+      template_id: string
+      sent: number
+      opened: number
+      clicked: number
+    }
+
+    const tests = (results.results as ABTestRow[]).map((row) => {
       const sent = row.sent || 0
       const opened = row.opened || 0
       const clicked = row.clicked || 0

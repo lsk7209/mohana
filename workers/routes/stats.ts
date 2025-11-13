@@ -66,11 +66,16 @@ export async function getDailyStats(request: Request, env: Env): Promise<Respons
     }>()
 
     // 모든 날짜 수집
+    interface DateCountRow {
+      date: string
+      count: number
+    }
+
     const allDates = new Set<string>()
-    leadsByDate.results.forEach((r: any) => allDates.add(r.date))
-    messagesByDate.results.forEach((r: any) => allDates.add(r.date))
-    opensByDate.results.forEach((r: any) => allDates.add(r.date))
-    clicksByDate.results.forEach((r: any) => allDates.add(r.date))
+    leadsByDate.results.forEach((r: DateCountRow) => allDates.add(r.date))
+    messagesByDate.results.forEach((r: DateCountRow) => allDates.add(r.date))
+    opensByDate.results.forEach((r: DateCountRow) => allDates.add(r.date))
+    clicksByDate.results.forEach((r: DateCountRow) => allDates.add(r.date))
 
     // 날짜별 데이터 초기화
     allDates.forEach(date => {
@@ -84,22 +89,22 @@ export async function getDailyStats(request: Request, env: Env): Promise<Respons
     })
 
     // 데이터 채우기
-    leadsByDate.results.forEach((r: any) => {
+    leadsByDate.results.forEach((r: DateCountRow) => {
       const entry = dateMap.get(r.date)
       if (entry) entry.leads = r.count
     })
 
-    messagesByDate.results.forEach((r: any) => {
+    messagesByDate.results.forEach((r: DateCountRow) => {
       const entry = dateMap.get(r.date)
       if (entry) entry.emails = r.count
     })
 
-    opensByDate.results.forEach((r: any) => {
+    opensByDate.results.forEach((r: DateCountRow) => {
       const entry = dateMap.get(r.date)
       if (entry) entry.opens = r.count
     })
 
-    clicksByDate.results.forEach((r: any) => {
+    clicksByDate.results.forEach((r: DateCountRow) => {
       const entry = dateMap.get(r.date)
       if (entry) entry.clicks = r.count
     })

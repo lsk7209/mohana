@@ -2,8 +2,8 @@
  * Admin API (리드 관리)
  */
 
-import { getLead, updateLeadStatus } from '../lib/db'
-import type { Env } from '../types'
+import { getLead as getLeadFromDb, updateLeadStatus } from '../lib/db'
+import type { Env, Lead } from '../types'
 
 export async function getLead(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url)
@@ -14,7 +14,7 @@ export async function getLead(request: Request, env: Env): Promise<Response> {
   }
 
   try {
-    const lead = await getLead(env, leadId)
+    const lead = await getLeadFromDb(env, leadId)
 
     if (!lead) {
       return new Response(
@@ -68,7 +68,7 @@ export async function listLeads(request: Request, env: Env): Promise<Response> {
 
   try {
     let query = 'SELECT * FROM leads WHERE 1=1'
-    const params: any[] = []
+    const params: (string | number)[] = []
 
     if (status && status !== 'all') {
       query += ' AND status = ?'
@@ -86,7 +86,7 @@ export async function listLeads(request: Request, env: Env): Promise<Response> {
 
     // 전체 개수 조회 (페이징용)
     let countQuery = 'SELECT COUNT(*) as total FROM leads WHERE 1=1'
-    const countParams: any[] = []
+    const countParams: (string | number)[] = []
 
     if (status && status !== 'all') {
       countQuery += ' AND status = ?'
@@ -130,15 +130,15 @@ export async function updateLead(request: Request, env: Env): Promise<Response> 
   }
 
   try {
-    const body = await request.json<{
+    const body = await request.json() as {
       status?: string
       owner?: string
       memo?: string
       tags?: string
-    }>()
+    }
 
     if (body.status) {
-      await updateLeadStatus(env, leadId, body.status as any, body.owner)
+      await updateLeadStatus(env, leadId, body.status as Lead['status'], body.owner)
     }
 
     if (body.memo || body.tags) {
@@ -147,7 +147,7 @@ export async function updateLead(request: Request, env: Env): Promise<Response> 
       ).bind(body.memo || null, body.tags || null, Date.now(), leadId).run()
     }
 
-    const updated = await getLead(env, leadId)
+    const updated = await getLeadFromDb(env, leadId)
 
     return new Response(
       JSON.stringify({ success: true, lead: updated }),

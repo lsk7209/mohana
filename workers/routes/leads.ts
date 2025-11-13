@@ -32,7 +32,7 @@ export async function handleLeads(request: Request, env: Env): Promise<Response>
   }
 
   try {
-    const body = await request.json<{
+    const body = await request.json() as {
       company?: string
       name?: string
       email: string
@@ -40,7 +40,7 @@ export async function handleLeads(request: Request, env: Env): Promise<Response>
       headcount?: number
       theme?: string
       memo?: string
-    }>()
+    }
 
     // 입력 검증 및 정제
     try {
@@ -100,7 +100,7 @@ export async function handleLeads(request: Request, env: Env): Promise<Response>
             lead_id: lead.id,
             sequence_id: welcomeSequence.id,
           }),
-        }).catch((err) => {
+        }).catch((err: unknown) => {
           console.error('Error starting welcome sequence:', err)
         })
       }

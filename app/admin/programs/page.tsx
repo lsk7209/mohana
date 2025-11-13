@@ -105,7 +105,7 @@ export default function AdminProgramsPage() {
                   <img
                     className="aspect-[16/9] w-full object-cover"
                     alt={program.title || 'Program image'}
-                    src={program.image || 'https://via.placeholder.com/400x225'}
+                    src={'https://via.placeholder.com/400x225'}
                   />
                   <span
                     className={`absolute top-3 right-3 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${

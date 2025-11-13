@@ -2,12 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import type { Instructor } from '@/workers/types'
-
-interface InstructorWithStats extends Instructor {
-  programCount?: number
-  status?: 'active' | 'pending' | 'suspended'
-}
+import type { InstructorWithStats } from '@/workers/types'
 
 export default function InstructorsPage() {
   const [instructors, setInstructors] = useState<InstructorWithStats[]>([])
@@ -21,11 +16,18 @@ export default function InstructorsPage() {
     setLoading(false)
   }, [])
 
+  // is_active를 기반으로 status 계산 헬퍼 함수
+  const getInstructorStatus = (instructor: InstructorWithStats): 'active' | 'pending' | 'suspended' => {
+    if (instructor.is_active === 1) return 'active'
+    if (instructor.is_active === 0) return 'pending'
+    return 'suspended'
+  }
+
   const filteredInstructors = instructors.filter((instructor) => {
     const matchesSearch = !searchQuery || 
       instructor.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       instructor.skills?.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesStatus = statusFilter === 'all' || instructor.status === statusFilter
+    const matchesStatus = statusFilter === 'all' || getInstructorStatus(instructor) === statusFilter
     return matchesSearch && matchesStatus
   })
 
@@ -175,11 +177,11 @@ export default function InstructorsPage() {
                           {instructor.career || '-'}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                          {instructor.status === 'active' ? (
+                          {getInstructorStatus(instructor) === 'active' ? (
                             <span className="inline-flex items-center rounded-full bg-success/10 px-2 py-1 text-xs font-medium text-success ring-1 ring-inset ring-success/20">
                               활동 중
                             </span>
-                          ) : instructor.status === 'pending' ? (
+                          ) : getInstructorStatus(instructor) === 'pending' ? (
                             <span className="inline-flex items-center rounded-full bg-warning/10 px-2 py-1 text-xs font-medium text-warning ring-1 ring-inset ring-warning/20">
                               승인 대기
                             </span>
@@ -190,7 +192,7 @@ export default function InstructorsPage() {
                           )}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                          {instructor.programCount || 0}
+                          {instructor.program_count || 0}
                         </td>
                         <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium">
                           <a className="text-primary hover:text-primary/80" href="#">
@@ -231,7 +233,7 @@ export default function InstructorsPage() {
               <div className="flex items-center gap-2 mb-2">
                 <p className="text-sm font-semibold">전문 분야:</p>
                 <div className="flex flex-wrap gap-2">
-                  {selectedInstructor.skills?.split(',').map((skill, idx) => (
+                  {selectedInstructor.skills?.split(',').map((skill: string, idx: number) => (
                     <span
                       key={idx}
                       className="inline-flex items-center rounded-md bg-blue-50 dark:bg-blue-900/50 px-2 py-1 text-xs font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10"

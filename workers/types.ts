@@ -2,6 +2,8 @@
  * Cloudflare Workers 환경 타입 정의
  */
 
+/// <reference types="@cloudflare/workers-types" />
+
 export interface Env {
   // D1 Database
   DB: D1Database
@@ -95,5 +97,53 @@ export interface Sequence {
   steps: SequenceStep[]
   created_at: number
   updated_at: number
+}
+
+export interface Template {
+  id: string
+  channel: 'email' | 'sms'
+  name: string
+  subject?: string
+  body: string
+  variables?: string
+  ab_key?: string
+  created_at: number
+  updated_at: number
+}
+
+export interface Instructor {
+  id: string
+  name: string
+  title?: string
+  photo?: string
+  bio?: string
+  career?: string
+  skills?: string
+  email?: string
+  phone?: string
+  is_active: number
+  created_at?: number
+  updated_at?: number
+}
+
+export interface InstructorWithStats extends Instructor {
+  program_count?: number
+  total_leads?: number
+}
+
+export interface Program {
+  id: string
+  slug: string
+  title: string
+  summary?: string
+  duration?: number
+  price_hint?: string
+  theme?: string
+  instructor_id?: string
+  outcomes?: string
+  faq?: string
+  is_published: number
+  created_at?: number
+  updated_at?: number
 }
 

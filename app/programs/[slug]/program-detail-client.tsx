@@ -14,7 +14,7 @@ export function ProgramDetailClient({ program }: { program: any }) {
   const faqRef = useRef<HTMLDivElement>(null)
 
   const scrollToSection = (section: string) => {
-    let targetRef: React.RefObject<HTMLDivElement> | null = null
+    let targetRef: React.RefObject<HTMLDivElement | null> | null = null
     
     switch (section) {
       case 'overview':

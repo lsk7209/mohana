@@ -10,7 +10,7 @@ export async function listTemplates(request: Request, env: Env): Promise<Respons
 
   try {
     let query = 'SELECT * FROM templates WHERE 1=1'
-    const params: any[] = []
+    const params: string[] = []
 
     if (channel) {
       query += ' AND channel = ?'
@@ -76,14 +76,14 @@ export async function createTemplate(request: Request, env: Env): Promise<Respon
   }
 
   try {
-    const body = await request.json<{
+    const body = await request.json() as {
       channel: 'email' | 'sms'
       name: string
       subject?: string
       body: string
       variables?: string
       ab_key?: string
-    }>()
+    }
 
     const id = crypto.randomUUID()
     const now = Date.now()
@@ -136,16 +136,16 @@ export async function updateTemplate(request: Request, env: Env): Promise<Respon
   }
 
   try {
-    const body = await request.json<{
+    const body = await request.json() as {
       name?: string
       subject?: string
       body?: string
       variables?: string
       ab_key?: string
-    }>()
+    }
 
     const updates: string[] = []
-    const params: any[] = []
+    const params: (string | number | null)[] = []
 
     if (body.name !== undefined) {
       updates.push('name = ?')

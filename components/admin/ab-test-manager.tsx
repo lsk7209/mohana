@@ -35,7 +35,7 @@ export function ABTestManager() {
       
       const response = await fetch(url)
       if (response.ok) {
-        const data = await response.json()
+        const data = await response.json() as { tests?: ABTestResult[] }
         setTests(data.tests || [])
       }
     } catch (error) {

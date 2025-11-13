@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false, // 타입 안정성을 위해 빌드 에러 확인
+    tsconfigPath: './tsconfig.json',
   },
   images: {
     unoptimized: true,
@@ -10,8 +11,6 @@ const nextConfig = {
   output: 'export',
   // distDir은 기본값 사용 (.next)
   trailingSlash: true,
-  // 빌드 최적화
-  swcMinify: true,
   // API 라우트는 빌드 전 스크립트에서 임시로 제외됩니다
   // API 라우트는 Cloudflare Workers로 프록시됩니다
 }

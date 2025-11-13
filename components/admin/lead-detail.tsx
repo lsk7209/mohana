@@ -41,7 +41,7 @@ export function LeadDetail({ leadId }: { leadId: string }) {
         if (!response.ok) {
           throw new Error('Failed to fetch lead')
         }
-        const result = await response.json()
+        const result = await response.json() as LeadDetailData
         setData(result)
         setStatus(result.lead.status)
         setMemo(result.lead.memo || '')

@@ -2,19 +2,23 @@
  * 에러 핸들링 및 로깅 유틸리티
  */
 
+export interface AppErrorDetails {
+  [key: string]: unknown
+}
+
 export interface AppError {
   code: string
   message: string
   statusCode: number
-  details?: any
+  details?: AppErrorDetails
 }
 
 export class AppError extends Error {
   code: string
   statusCode: number
-  details?: any
+  details?: AppErrorDetails
 
-  constructor(code: string, message: string, statusCode: number = 500, details?: any) {
+  constructor(code: string, message: string, statusCode: number = 500, details?: AppErrorDetails) {
     super(message)
     this.name = 'AppError'
     this.code = code
@@ -62,7 +66,7 @@ export function handleError(error: unknown): Response {
   )
 }
 
-export function logError(context: string, error: unknown, metadata?: Record<string, any>): void {
+export function logError(context: string, error: unknown, metadata?: Record<string, unknown>): void {
   const errorInfo = {
     context,
     timestamp: new Date().toISOString(),
