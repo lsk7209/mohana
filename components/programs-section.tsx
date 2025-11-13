@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { VideoWithFallback } from './video-with-fallback'
 
 interface Program {
@@ -57,10 +58,13 @@ export function ProgramsSection() {
               className="group relative flex flex-col gap-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden shadow-md transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
             >
               <div className="relative w-full aspect-video overflow-hidden">
-                <img
+                <Image
                   alt={`${program.title} 일러스트`}
-                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-100 group-hover:opacity-0 z-10"
                   src={program.image}
+                  fill
+                  className="object-cover transition-opacity duration-500 opacity-100 group-hover:opacity-0 z-10"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  priority={false}
                 />
                 <div className="absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-100 z-20">
                   <VideoWithFallback

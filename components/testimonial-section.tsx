@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export function TestimonialSection() {
   return (
     <section id="reviews" className="px-4 py-16 sm:py-24 bg-white dark:bg-gray-900">
@@ -13,11 +15,15 @@ export function TestimonialSection() {
             <div className="absolute -top-5 -left-5 text-7xl text-primary/20 dark:text-primary/30">
               <span className="material-symbols-outlined text-7xl">format_quote</span>
             </div>
-            <img
-              className="w-20 h-20 rounded-full object-cover"
-              alt="Photo of a female manager smiling"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCPWcawrZcctLmNYXBnUS5jvHNb_MOVc5NluXZh5yBqg1-0m_6lOYrKk59RMLdWiu4Im_5slgbgMYa5P136qVIcgpnu3RGI6GIhxxaLhegsnACyrpXs3kKSXzcdRSdEbu_pC6mofT_McmRoTf-064A_2E84CZgihnoUPOm3kW2iRdRyAeyQIqpt7shgHFzfSraATfmqNJzlYoAND0fFd0sbFVTKneUbVWlXIJmTGcDdcTw5K8q0B1juY2keS0JnzRbMWrS92VeXT6z"
-            />
+            <div className="relative w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
+              <Image
+                alt="Photo of a female manager smiling"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCPWcawrZcctLmNYXBnUS5jvHNb_MOVc5NluXZh5yBqg1-0m_6lOYrKk59RMLdWiu4Im_5slgbgMYa5P136qVIcgpnu3RGI6GIhxxaLhegsnACyrpXs3kKSXzcdRSdEbu_pC6mofT_McmRoTf-064A_2E84CZgihnoUPOm3kW2iRdRyAeyQIqpt7shgHFzfSraATfmqNJzlYoAND0fFd0sbFVTKneUbVWlXIJmTGcDdcTw5K8q0B1juY2keS0JnzRbMWrS92VeXT6z"
+                fill
+                className="object-cover"
+                sizes="80px"
+              />
+            </div>
             <div className="flex flex-col gap-4 text-center">
               <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
                 "단순한 회식이 아니라, 팀원들이 서로의 마음을 이해하고 공감하는 시간이었습니다. 모하나 덕분에 정말 의미있는 워크샵을 진행할 수 있었어요."

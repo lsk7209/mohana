@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 interface Review {
   id: string
   company: string
@@ -44,11 +46,15 @@ export function ReviewsSection() {
         {reviews.map((review) => (
           <div key={review.id} className="flex flex-col gap-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark p-6">
             <div className="flex items-center gap-4">
-              <img
-                className="h-10 w-10 rounded-full"
-                alt={`${review.company} logo`}
-                src={review.logo}
-              />
+              <div className="relative h-10 w-10 rounded-full overflow-hidden flex-shrink-0">
+                <Image
+                  alt={`${review.company} logo`}
+                  src={review.logo}
+                  fill
+                  className="object-cover"
+                  sizes="40px"
+                />
+              </div>
               <div>
                 <h4 className="font-bold text-dark-slate-gray dark:text-white">{review.company}</h4>
                 <p className="text-sm text-gray-500 dark:text-gray-400">{review.position}</p>

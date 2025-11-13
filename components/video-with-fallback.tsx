@@ -13,6 +13,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
 interface VideoWithFallbackProps {
@@ -81,12 +82,16 @@ export function VideoWithFallback({
   // 에러 발생 시 fallback 이미지 표시
   if (hasError) {
     return (
-      <img
-        src={fallbackImage}
-        alt={alt}
-        className={cn('w-full h-full object-cover', className)}
-        aria-label={`${alt} (비디오 로딩 실패로 이미지로 대체)`}
-      />
+      <div className={cn('relative w-full h-full', className)}>
+        <Image
+          src={fallbackImage}
+          alt={alt}
+          fill
+          className="object-cover"
+          sizes="100vw"
+          aria-label={`${alt} (비디오 로딩 실패로 이미지로 대체)`}
+        />
+      </div>
     )
   }
 
@@ -114,7 +119,9 @@ export function VideoWithFallback({
       >
         <source src={src} type="video/mp4" />
         {/* 브라우저가 비디오를 지원하지 않을 경우 fallback */}
-        <img src={fallbackImage} alt={alt} className="w-full h-full object-cover" />
+        <div className="absolute inset-0">
+          <Image src={fallbackImage} alt={alt} fill className="object-cover" sizes="100vw" />
+        </div>
       </video>
     </div>
   )

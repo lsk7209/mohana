@@ -1,11 +1,38 @@
+import dynamic from 'next/dynamic'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { LeadsBoard } from '@/components/admin/leads-board'
 import { StatsOverview } from '@/components/admin/stats-overview'
-import { StatsChart } from '@/components/admin/stats-chart'
 import { QuickActions } from '@/components/admin/quick-actions'
-import { ABTestManager } from '@/components/admin/ab-test-manager'
-import { SequencePerformance } from '@/components/admin/sequence-performance'
+
+// 무거운 컴포넌트들을 동적 로드 (코드 스플리팅)
+// static export 환경에서는 ssr 옵션이 필요 없습니다
+const StatsChart = dynamic(
+  () => import('@/components/admin/stats-chart').then((mod) => ({ default: mod.StatsChart })),
+  {
+    loading: () => <div className="text-center py-8 text-muted-foreground">차트 로딩 중...</div>,
+  }
+)
+
+const LeadsBoard = dynamic(
+  () => import('@/components/admin/leads-board').then((mod) => ({ default: mod.LeadsBoard })),
+  {
+    loading: () => <div className="text-center py-8 text-muted-foreground">리드 목록 로딩 중...</div>,
+  }
+)
+
+const ABTestManager = dynamic(
+  () => import('@/components/admin/ab-test-manager').then((mod) => ({ default: mod.ABTestManager })),
+  {
+    loading: () => <div className="text-center py-8 text-muted-foreground">A/B 테스트 데이터 로딩 중...</div>,
+  }
+)
+
+const SequencePerformance = dynamic(
+  () => import('@/components/admin/sequence-performance').then((mod) => ({ default: mod.SequencePerformance })),
+  {
+    loading: () => <div className="text-center py-8 text-muted-foreground">시퀀스 성과 로딩 중...</div>,
+  }
+)
 
 export default function AdminDashboard() {
   return (

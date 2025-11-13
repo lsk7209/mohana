@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 export function DataSection() {
   const partnerLogos = Array.from({ length: 6 })
 
@@ -26,21 +28,25 @@ export function DataSection() {
             <div className="flex animate-scroll gap-16 items-center" style={{ animationDuration: '40s', width: 'max-content' }}>
               {/* First set of logos */}
               {partnerLogos.map((_, i) => (
-                <div key={`first-${i}`} className="flex-shrink-0">
-                  <img
-                    className="h-10 opacity-60 dark:invert"
+                <div key={`first-${i}`} className="flex-shrink-0 relative h-10 w-40 opacity-60 dark:invert">
+                  <Image
                     alt={`Partner logo ${i + 1}`}
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvrfJgXporTOCKptXVyGzMqxT7lKrxVRhbHV9HRIAhPb1Kz1ODIVY6p4YyjjPWX9_xjB9BHj5wYIvK_mANKn0-S1EiCjnL-rV95GYIwGvkgBu7XqK9dvgxjNKfWGbLbBvGAH8nM-gYpEOCceF32eAkWrV6gAeO5crCyoETt5shkK7R1v_hMnZUVcv4cubzHocfmm4nqNH9SXNkrgnaU2LmIErxHIdX9XXNI2t-KmVf3MST9vf7qR-OtnebO9uapFxyT1mNJCqlGQHO"
+                    fill
+                    className="object-contain"
+                    sizes="160px"
                   />
                 </div>
               ))}
               {/* Duplicate set for seamless loop */}
               {partnerLogos.map((_, i) => (
-                <div key={`second-${i}`} className="flex-shrink-0">
-                  <img
-                    className="h-10 opacity-60 dark:invert"
+                <div key={`second-${i}`} className="flex-shrink-0 relative h-10 w-40 opacity-60 dark:invert">
+                  <Image
                     alt={`Partner logo ${i + 1}`}
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvrfJgXporTOCKptXVyGzMqxT7lKrxVRhbHV9HRIAhPb1Kz1ODIVY6p4YyjjPWX9_xjB9BHj5wYIvK_mANKn0-S1EiCjnL-rV95GYIwGvkgBu7XqK9dvgxjNKfWGbLbBvGAH8nM-gYpEOCceF32eAkWrV6gAeO5crCyoETt5shkK7R1v_hMnZUVcv4cubzHocfmm4nqNH9SXNkrgnaU2LmIErxHIdX9XXNI2t-KmVf3MST9vf7qR-OtnebO9uapFxyT1mNJCqlGQHO"
+                    fill
+                    className="object-contain"
+                    sizes="160px"
                   />
                 </div>
               ))}

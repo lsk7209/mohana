@@ -5,7 +5,17 @@ const nextConfig = {
     tsconfigPath: './tsconfig.json',
   },
   images: {
-    unoptimized: true,
+    unoptimized: true, // Cloudflare Pages static export 제약
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+      },
+    ],
   },
   // Cloudflare Pages 호환성 - 정적 내보내기
   output: 'export',

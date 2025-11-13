@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export function SolutionSection() {
   return (
     <section className="bg-white dark:bg-gray-900 px-4 pt-48 sm:pt-56 lg:pt-64 pb-16 sm:pb-24">
@@ -47,11 +49,15 @@ export function SolutionSection() {
             </div>
           </div>
           <div className="flex items-center justify-center p-4">
-            <img
-              alt="A team collaborating happily in a workshop."
-              className="rounded-xl object-cover w-full max-w-sm"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuADziTGgAnE37DlsQ_gp_uKQcrpVZFDMlSFznkK_adk1tyXWo-ao2tzrtkntpaIuYv74uYUNEW9AgDLd0bWe-IZis6P4UUqwzuoXTWNB1YqY2aVIxr8lg6OzR3KwLIdIb8OfIXFJCdsbYbwGZFUfdhaqFLEihzcFlFVZEWWQ7dAC-eNJmeJ-TNH0-eNHKbDuPpWduUGGnTU_vh4Ek_NsJAyZMl3YEna-Hfjh77okcAxRsqTf_nWGjOQLyDB_O4E2drdE7ioB4q0c9mK"
-            />
+            <div className="relative w-full max-w-sm aspect-[4/3] rounded-xl overflow-hidden">
+              <Image
+                alt="A team collaborating happily in a workshop."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuADziTGgAnE37DlsQ_gp_uKQcrpVZFDMlSFznkK_adk1tyXWo-ao2tzrtkntpaIuYv74uYUNEW9AgDLd0bWe-IZis6P4UUqwzuoXTWNB1YqY2aVIxr8lg6OzR3KwLIdIb8OfIXFJCdsbYbwGZFUfdhaqFLEihzcFlFVZEWWQ7dAC-eNJmeJ-TNH0-eNHKbDuPpWduUGGnTU_vh4Ek_NsJAyZMl3YEna-Hfjh77okcAxRsqTf_nWGjOQLyDB_O4E2drdE7ioB4q0c9mK"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 384px"
+              />
+            </div>
           </div>
         </div>
       </div>
