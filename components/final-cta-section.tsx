@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button"
 
 export function FinalCTASection() {
   return (
-    <section className="px-4 py-24 sm:py-32">
+    <section className="px-4 py-24 sm:py-32" aria-label="최종 행동 유도 섹션">
       <div className="w-full max-w-5xl mx-auto">
         <div
           className="flex flex-col gap-8 rounded-xl items-center justify-center p-8 sm:p-12 text-center"
           style={{
             backgroundImage: 'linear-gradient(135deg, #13ece5 0%, #2A4D69 100%)',
           }}
+          role="region"
         >
           <div className="flex flex-col gap-4 max-w-3xl">
             <h2 className="text-white text-3xl sm:text-4xl font-black leading-tight tracking-normal">
@@ -22,7 +23,10 @@ export function FinalCTASection() {
             </p>
           </div>
           <Link href="/contact">
-            <Button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-white text-gray-900 text-base font-bold leading-normal tracking-[0.015em] hover:bg-gray-200 transition-all">
+            <Button 
+              className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-white text-gray-900 text-base font-bold leading-normal tracking-[0.015em] hover:bg-gray-200 transition-all"
+              aria-label="무료 제안서 받기 - 문의 페이지로 이동"
+            >
               <span className="truncate">무료 제안서 받기</span>
             </Button>
           </Link>

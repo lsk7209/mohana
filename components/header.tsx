@@ -19,42 +19,62 @@ export function Header() {
           <h2 className="text-lg font-bold tracking-[-0.015em]">모하나</h2>
         </Link>
       </div>
-      <div className="hidden md:flex flex-1 justify-end items-center gap-8">
+      <nav className="hidden md:flex flex-1 justify-end items-center gap-8" aria-label="주요 네비게이션">
         <div className="flex items-center gap-8">
-          <Link href="/about" className="text-sm font-medium leading-normal text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors">
+          <Link 
+            href="/about" 
+            className="text-sm font-medium leading-normal text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors"
+            aria-label="회사 소개 페이지로 이동"
+          >
             소개
           </Link>
-          <Link href="/programs" className="text-sm font-medium leading-normal text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors">
+          <Link 
+            href="/programs" 
+            className="text-sm font-medium leading-normal text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors"
+            aria-label="프로그램 목록 페이지로 이동"
+          >
             프로그램
           </Link>
         </div>
         <Link href="/contact">
-          <Button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-primary-foreground text-sm font-bold leading-normal tracking-[0.015em] hover:brightness-90 transition-all">
+          <Button 
+            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-primary-foreground text-sm font-bold leading-normal tracking-[0.015em] hover:brightness-90 transition-all"
+            aria-label="무료 제안서 받기 - 문의 페이지로 이동"
+          >
             <span className="truncate">무료 제안서 받기</span>
           </Button>
         </Link>
-      </div>
+      </nav>
       <div className="md:hidden">
         <button
           className="text-text-light-primary dark:text-text-dark-primary"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="메뉴 열기"
+          aria-label={mobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-menu"
         >
-          <span className="material-symbols-outlined">{mobileMenuOpen ? 'close' : 'menu'}</span>
+          <span className="material-symbols-outlined" aria-hidden="true">{mobileMenuOpen ? 'close' : 'menu'}</span>
         </button>
       </div>
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark p-4">
+        <nav 
+          id="mobile-menu"
+          className="md:hidden absolute top-full left-0 right-0 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark p-4"
+          aria-label="모바일 네비게이션"
+        >
           <div className="flex flex-col gap-4">
             <Link href="/about" className="text-sm font-medium text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>소개</Link>
             <Link href="/programs" className="text-sm font-medium text-text-light-secondary dark:text-text-dark-secondary hover:text-text-light-primary dark:hover:text-text-dark-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>프로그램</Link>
             <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
-              <Button className="w-full rounded-lg h-10 px-4 bg-primary text-primary-foreground text-sm font-bold">
+              <Button 
+                className="w-full rounded-lg h-10 px-4 bg-primary text-primary-foreground text-sm font-bold"
+                aria-label="무료 제안서 받기 - 문의 페이지로 이동"
+              >
                 무료 제안서 받기
               </Button>
             </Link>
           </div>
-        </div>
+        </nav>
       )}
     </header>
   )

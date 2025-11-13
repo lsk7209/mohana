@@ -10,6 +10,7 @@ export function HeroSection() {
       style={{
         backgroundImage: 'linear-gradient(135deg, rgba(168, 216, 215, 0.4) 0%, rgba(42, 77, 105, 0.4) 100%)',
       }}
+      aria-label="히어로 섹션"
     >
       <div className="w-full max-w-5xl mx-auto flex flex-col items-center justify-center text-center gap-24">
         <div className="flex flex-col gap-8 pt-24 sm:pt-32 lg:pt-40 items-center min-h-[480px] justify-center">
@@ -22,7 +23,10 @@ export function HeroSection() {
             </h2>
           </div>
           <Link href="/contact">
-            <Button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-gray-900 text-base font-bold leading-normal tracking-[0.015em] hover:brightness-90 transition-all">
+            <Button 
+              className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-gray-900 text-base font-bold leading-normal tracking-[0.015em] hover:brightness-90 transition-all"
+              aria-label="무료 제안서 받기 - 문의 페이지로 이동"
+            >
               <span className="truncate">무료 제안서 받기</span>
             </Button>
           </Link>

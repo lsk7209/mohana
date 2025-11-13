@@ -41,7 +41,7 @@ export async function getABTests(request: Request, env: Env): Promise<Response> 
       clicked: number
     }
 
-    const tests = (results.results as ABTestRow[]).map((row) => {
+    const tests = (results.results as unknown as ABTestRow[]).map((row) => {
       const sent = row.sent || 0
       const opened = row.opened || 0
       const clicked = row.clicked || 0

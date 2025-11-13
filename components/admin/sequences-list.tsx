@@ -40,7 +40,7 @@ export function SequencesList() {
     try {
       const response = await fetch('/api/sequences')
       if (response.ok) {
-        const data = await response.json()
+        const data = await response.json() as { sequences?: Sequence[] }
         setSequences(data.sequences || [])
       }
     } catch (error) {

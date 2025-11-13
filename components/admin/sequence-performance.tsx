@@ -35,7 +35,7 @@ export function SequencePerformance() {
       
       const response = await fetch(url)
       if (response.ok) {
-        const data = await response.json()
+        const data = await response.json() as { performance?: SequencePerformance[] }
         setPerformance(data.performance || [])
       }
     } catch (error) {

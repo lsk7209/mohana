@@ -60,7 +60,7 @@ export function LeadForm({ onSuccess, defaultTheme, className }: LeadFormProps) 
       })
 
       if (!response.ok) {
-        const error = await response.json()
+        const error = await response.json() as { error?: string }
         throw new Error(error.error || '제출에 실패했습니다')
       }
 
@@ -195,6 +195,7 @@ export function LeadForm({ onSuccess, defaultTheme, className }: LeadFormProps) 
           size="lg"
           className="w-full rounded-full"
           disabled={isSubmitting}
+          aria-label={isSubmitting ? '제출 중입니다' : '무료 상담 신청하기'}
         >
           {isSubmitting ? '제출 중...' : '무료 상담 신청하기'}
         </Button>

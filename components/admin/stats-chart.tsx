@@ -26,9 +26,9 @@ export function StatsChart() {
       try {
         const response = await fetch('/api/admin/stats/daily?days=7')
         if (response.ok) {
-          const result = await response.json()
+          const result = await response.json() as { data?: DailyStats[] }
           // 날짜 포맷팅
-          const formattedData = result.data.map((item: any) => ({
+          const formattedData: DailyStats[] = (result.data || []).map((item) => ({
             ...item,
             date: new Date(item.date).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' }),
           }))

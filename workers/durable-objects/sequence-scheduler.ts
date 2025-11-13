@@ -184,14 +184,16 @@ export class SequenceScheduler {
     }
 
     // 리드 정보 조회
-    const lead = await this.env.DB.prepare('SELECT * FROM leads WHERE id = ?')
+    const leadResult = await this.env.DB.prepare('SELECT * FROM leads WHERE id = ?')
       .bind(leadId)
       .first()
 
-    if (!lead) {
+    if (!leadResult) {
       console.error('Lead not found:', leadId)
       return
     }
+
+    const lead = leadResult as unknown as Lead
 
     // 템플릿 렌더링
     const rendered = this.renderTemplate(template.body as string, lead, template.variables as string | undefined)

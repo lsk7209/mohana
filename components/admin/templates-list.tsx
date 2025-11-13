@@ -35,7 +35,7 @@ export function TemplatesList() {
     try {
       const response = await fetch(`/api/templates?channel=${channel}`)
       if (response.ok) {
-        const data = await response.json()
+        const data = await response.json() as { templates?: Template[] }
         setTemplates(data.templates || [])
       }
     } catch (error) {

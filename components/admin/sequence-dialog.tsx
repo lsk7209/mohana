@@ -17,6 +17,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Card } from '@/components/ui/card'
 import { Plus, Trash2, Loader2 } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
+import type { Template } from '@/workers/types'
 
 interface SequenceStep {
   delay_hours: number
@@ -79,12 +80,12 @@ export function SequenceDialog({
       const emailResponse = await fetch('/api/templates?channel=email')
       const smsResponse = await fetch('/api/templates?channel=sms')
       
-      const emailData = await emailResponse.json()
-      const smsData = await smsResponse.json()
+      const emailData = await emailResponse.json() as { templates?: Template[] }
+      const smsData = await smsResponse.json() as { templates?: Template[] }
       
       setTemplates([
-        ...(emailData.templates || []).map((t: any) => ({ ...t, channel: 'email' })),
-        ...(smsData.templates || []).map((t: any) => ({ ...t, channel: 'sms' })),
+        ...(emailData.templates || []).map((t) => ({ ...t, channel: 'email' as const })),
+        ...(smsData.templates || []).map((t) => ({ ...t, channel: 'sms' as const })),
       ])
     } catch (error) {
       console.error('Error loading templates:', error)
@@ -174,7 +175,7 @@ export function SequenceDialog({
       })
 
       if (!response.ok) {
-        const error = await response.json()
+        const error = await response.json() as { error?: string }
         throw new Error(error.error || '저장 실패')
       }
 

@@ -19,6 +19,19 @@ import { handleSMSQueue } from './queues/sms'
 import { SequenceScheduler } from './durable-objects/sequence-scheduler'
 import type { Env } from './types'
 
+interface EmailQueueMessage {
+  messageId: string
+  to: string
+  subject: string
+  body: string
+}
+
+interface SMSQueueMessage {
+  messageId: string
+  to: string
+  body: string
+}
+
 const router = Router()
 
 // API Routes
@@ -87,9 +100,9 @@ export default {
   async queue(batch: MessageBatch, env: Env): Promise<void> {
     // 큐 이름으로 분기
     if (batch.queue === 'email-dispatch') {
-      await handleEmailQueue(batch, env)
+      await handleEmailQueue(batch as MessageBatch<EmailQueueMessage>, env)
     } else if (batch.queue === 'sms-dispatch') {
-      await handleSMSQueue(batch, env)
+      await handleSMSQueue(batch as MessageBatch<SMSQueueMessage>, env)
     }
   },
 }

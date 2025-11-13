@@ -104,7 +104,7 @@ export function LeadDetail({ leadId }: { leadId: string }) {
     try {
       const response = await fetch(`/api/admin/leads/${leadId}`)
       if (response.ok) {
-        const result = await response.json()
+        const result = await response.json() as LeadDetailData
         setData(result)
       }
     } catch (error) {

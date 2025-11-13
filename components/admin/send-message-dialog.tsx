@@ -17,6 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Mail, MessageSquare, Loader2 } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
+import type { Template } from '@/workers/types'
 
 interface SendMessageDialogProps {
   open: boolean
@@ -51,7 +52,7 @@ export function SendMessageDialog({
     try {
       const response = await fetch(`/api/templates?channel=${channel}`)
       if (response.ok) {
-        const data = await response.json()
+        const data = await response.json() as { templates?: Template[] }
         setTemplates(data.templates || [])
       }
     } catch (error) {
@@ -74,7 +75,7 @@ export function SendMessageDialog({
     try {
       const response = await fetch(`/api/templates/${templateId}`)
       if (response.ok) {
-        const template = await response.json()
+        const template = await response.json() as Template
         setSubject(template.subject || '')
         setBody(template.body || '')
       }
@@ -127,7 +128,7 @@ export function SendMessageDialog({
       })
 
       if (!response.ok) {
-        const error = await response.json()
+        const error = await response.json() as { error?: string }
         throw new Error(error.error || '발송 실패')
       }
 

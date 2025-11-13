@@ -20,8 +20,8 @@ export function MessageDetail({ messageId }: MessageDetailProps) {
       try {
         const response = await fetch(`/api/messages/${messageId}`)
         if (response.ok) {
-          const data = await response.json()
-          setMessage(data.message)
+          const data = await response.json() as { message?: Message; events?: MessageEvent[] }
+          setMessage(data.message || null)
           setEvents(data.events || [])
         } else {
           throw new Error('Failed to fetch message')

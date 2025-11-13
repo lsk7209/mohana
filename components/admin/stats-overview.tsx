@@ -29,7 +29,7 @@ export function StatsOverview() {
       try {
         const response = await fetch('/api/admin/stats/overview')
         if (response.ok) {
-          const data = await response.json()
+          const data = await response.json() as Stats
           setStats(data)
         } else {
           throw new Error('Failed to fetch stats')

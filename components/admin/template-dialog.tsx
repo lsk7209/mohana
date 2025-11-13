@@ -94,7 +94,7 @@ export function TemplateDialog({
       })
 
       if (!response.ok) {
-        const error = await response.json()
+        const error = await response.json() as { error?: string }
         throw new Error(error.error || '저장 실패')
       }
 

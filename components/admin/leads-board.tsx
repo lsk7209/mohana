@@ -65,7 +65,7 @@ export function LeadsBoard() {
 
         const url = `/api/admin/leads${params.toString() ? '?' + params.toString() : ''}`
         const response = await fetch(url)
-        const data = await response.json()
+        const data = await response.json() as { leads?: Lead[]; total?: number }
         setLeads(data.leads || [])
         setTotalPages(Math.ceil((data.total || 0) / 100))
       } catch (error) {
