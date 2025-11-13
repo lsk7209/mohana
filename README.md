@@ -49,6 +49,18 @@ pnpm db:migrate
 
 ### 3. 환경 변수 설정
 
+자세한 내용은 [환경 변수 설정 가이드](./docs/ENV_SETUP.md)를 참고하세요.
+
+#### Next.js 환경 변수
+`.env.local` 파일을 생성하고 다음 내용을 추가하세요:
+
+```bash
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
+#### Cloudflare Workers 환경 변수
+`.dev.vars` 파일을 생성하고 `env.example.txt`를 참고하여 설정하세요.
+
 `.dev.vars` 파일 생성:
 
 ```env
@@ -117,6 +129,8 @@ pnpm deploy
 - [FEATURES.md](./FEATURES.md) - 기능 명세서
 - [CHANGELOG.md](./CHANGELOG.md) - 변경 이력
 - [COMPLETION_SUMMARY.md](./COMPLETION_SUMMARY.md) - 개발 완료 요약
+- [docs/ENV_SETUP.md](./docs/ENV_SETUP.md) - 환경 변수 설정 가이드
+- [docs/DEPLOYMENT_CHECKLIST.md](./docs/DEPLOYMENT_CHECKLIST.md) - 배포 체크리스트
 
 ## 🎉 개발 완료!
 

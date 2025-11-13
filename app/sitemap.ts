@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next'
 export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://mohana.kr'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mohana.kr'
   
   return [
     {
