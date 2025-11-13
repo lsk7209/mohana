@@ -117,30 +117,46 @@ async function processSequenceSteps(env: Env): Promise<void> {
       }
 
       try {
-        // Durable Object로 처리 요청
+        // Durable Object로 처리 요청 (타임아웃 30초)
         const schedulerId = env.SEQUENCE_SCHEDULER.idFromName('scheduler')
         const scheduler = env.SEQUENCE_SCHEDULER.get(schedulerId)
         
-        const response = await scheduler.fetch('http://internal/execute', {
-          method: 'POST',
-          body: JSON.stringify({
-            runId: run.id,
-            leadId: run.lead_id,
-            sequenceId: run.sequence_id,
-            stepIndex: run.step_index,
-          }),
-        })
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 30000) // 30초 타임아웃
 
-        if (!response.ok) {
-          throw new Error(`Scheduler returned ${response.status}`)
+        try {
+          const response = await scheduler.fetch('http://internal/execute', {
+            method: 'POST',
+            body: JSON.stringify({
+              runId: run.id,
+              leadId: run.lead_id,
+              sequenceId: run.sequence_id,
+              stepIndex: run.step_index,
+            }),
+            signal: controller.signal,
+          })
+
+          clearTimeout(timeoutId)
+
+          if (!response.ok) {
+            const errorText = await response.text().catch(() => 'Unknown error')
+            throw new Error(`Scheduler returned ${response.status}: ${errorText}`)
+          }
+
+          processedCount++
+        } catch (fetchError) {
+          clearTimeout(timeoutId)
+          if (fetchError instanceof Error && fetchError.name === 'AbortError') {
+            throw new Error('Scheduler request timeout after 30 seconds')
+          }
+          throw fetchError
         }
-
-        processedCount++
       } catch (error) {
         logError('processSequenceSteps - individual step', error, {
           runId: run.id,
           leadId: run.lead_id,
           sequenceId: run.sequence_id,
+          stepIndex: run.step_index,
         })
         // 개별 스텝 실패는 계속 진행
       }

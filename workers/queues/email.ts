@@ -16,22 +16,47 @@ export async function handleEmailQueue(
   batch: MessageBatch<EmailQueueMessage>,
   env: Env
 ): Promise<void> {
+  const { logError } = await import('../lib/error-handler')
+  
+  let successCount = 0
+  let retryCount = 0
+  let failureCount = 0
+
   for (const message of batch.messages) {
     try {
       await sendEmail(message.body, env)
       message.ack()
+      successCount++
     } catch (error) {
-      console.error('Error sending email:', error)
-      // 재시도 로직 (최대 3회)
-      const retryCount = message.attempts || 0
-      if (retryCount < 3) {
+      const retryAttempts = message.attempts || 0
+      const maxRetries = 3
+
+      logError('handleEmailQueue - sendEmail failed', error, {
+        messageId: message.body.messageId,
+        to: message.body.to,
+        attempt: retryAttempts + 1,
+        maxRetries,
+      })
+
+      if (retryAttempts < maxRetries) {
         message.retry()
+        retryCount++
       } else {
-        // 실패 상태로 업데이트
-        await markMessageAsFailed(env, message.body.messageId, String(error))
+        // 최대 재시도 횟수 초과 - 실패 상태로 업데이트
+        const errorMessage = error instanceof Error ? error.message : String(error)
+        await markMessageAsFailed(env, message.body.messageId, errorMessage)
         message.ack()
+        failureCount++
+        
+        // Dead Letter Queue에 추가할 수 있음 (향후 구현)
+        // await env.DLQ.send({ ...message.body, error: errorMessage, attempts: retryAttempts })
       }
     }
+  }
+
+  // 배치 처리 결과 로깅
+  if (retryCount > 0 || failureCount > 0) {
+    console.log(`Email queue batch processed: ${successCount} success, ${retryCount} retries, ${failureCount} failures`)
   }
 }
 

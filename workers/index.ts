@@ -97,11 +97,23 @@ export default {
   },
 
   async queue(batch: MessageBatch, env: Env): Promise<void> {
-    // 큐 이름으로 분기
-    if (batch.queue === 'email-dispatch') {
-      await handleEmailQueue(batch as MessageBatch<EmailQueueMessage>, env)
-    } else if (batch.queue === 'sms-dispatch') {
-      await handleSMSQueue(batch as MessageBatch<SMSQueueMessage>, env)
+    const { logError } = await import('./lib/error-handler')
+    
+    try {
+      // 큐 이름으로 분기
+      if (batch.queue === 'email-dispatch') {
+        await handleEmailQueue(batch as MessageBatch<EmailQueueMessage>, env)
+      } else if (batch.queue === 'sms-dispatch') {
+        await handleSMSQueue(batch as MessageBatch<SMSQueueMessage>, env)
+      } else {
+        console.warn(`Unknown queue: ${batch.queue}`)
+      }
+    } catch (error) {
+      logError('queue handler', error, {
+        queue: batch.queue,
+        messageCount: batch.messages.length,
+      })
+      // 에러를 다시 throw하지 않음 - 개별 메시지 처리는 이미 완료됨
     }
   },
 }

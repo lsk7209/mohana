@@ -44,19 +44,39 @@ export async function run(request: Request, env: Env): Promise<Response> {
          VALUES (?, ?, ?, ?, ?, ?, ?)`
       ).bind(runId, body.lead_id, body.sequence_id, 0, 'pending', scheduledAt, scheduledAt).run()
 
-      // Durable Object로 스케줄링
+      // Durable Object로 스케줄링 (타임아웃 30초)
       const schedulerId = env.SEQUENCE_SCHEDULER.idFromName('scheduler')
       const scheduler = env.SEQUENCE_SCHEDULER.get(schedulerId)
-      await scheduler.fetch('http://internal/schedule', {
-        method: 'POST',
-        body: JSON.stringify({
-          runId,
-          leadId: body.lead_id,
-          sequenceId: body.sequence_id,
-          stepIndex: 0,
-          delayHours: 0,
-        }),
-      })
+      
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 30000) // 30초 타임아웃
+
+      try {
+        const response = await scheduler.fetch('http://internal/schedule', {
+          method: 'POST',
+          body: JSON.stringify({
+            runId,
+            leadId: body.lead_id,
+            sequenceId: body.sequence_id,
+            stepIndex: 0,
+            delayHours: 0,
+          }),
+          signal: controller.signal,
+        })
+
+        clearTimeout(timeoutId)
+
+        if (!response.ok) {
+          const errorText = await response.text().catch(() => 'Unknown error')
+          throw new Error(`Scheduler returned ${response.status}: ${errorText}`)
+        }
+      } catch (fetchError) {
+        clearTimeout(timeoutId)
+        if (fetchError instanceof Error && fetchError.name === 'AbortError') {
+          throw new Error('Scheduler request timeout after 30 seconds')
+        }
+        throw fetchError
+      }
     }
 
     return new Response(
