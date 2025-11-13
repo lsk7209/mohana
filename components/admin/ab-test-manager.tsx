@@ -21,6 +21,7 @@ export function ABTestManager() {
   const [tests, setTests] = useState<ABTestResult[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedKey, setSelectedKey] = useState<string>('')
+  const [availableKeys, setAvailableKeys] = useState<string[]>([])
 
   useEffect(() => {
     fetchABTests()
@@ -36,7 +37,12 @@ export function ABTestManager() {
       const response = await fetch(url)
       if (response.ok) {
         const data = await response.json() as { tests?: ABTestResult[] }
-        setTests(data.tests || [])
+        const fetchedTests = data.tests || []
+        setTests(fetchedTests)
+        
+        // 고유한 ab_key 목록 추출
+        const uniqueKeys = Array.from(new Set(fetchedTests.map((test) => test.ab_key)))
+        setAvailableKeys(uniqueKeys)
       }
     } catch (error) {
       console.error('Error fetching AB tests:', error)
@@ -60,7 +66,11 @@ export function ABTestManager() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="">전체</SelectItem>
-              {/* TODO: 실제 AB 키 목록 로드 */}
+              {availableKeys.map((key) => (
+                <SelectItem key={key} value={key}>
+                  {key}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>

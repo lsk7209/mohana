@@ -6,7 +6,16 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  // TODO: Cloudflare Access 인증 확인
+  /**
+   * Cloudflare Access 인증
+   * 
+   * 프로덕션 환경에서는 Cloudflare Access를 통해 Admin 페이지 접근을 제어합니다.
+   * Cloudflare Dashboard에서 Access 애플리케이션을 생성하고 /admin/* 경로를 보호하세요.
+   * 
+   * 로컬 개발 환경에서는 이 검증을 비활성화할 수 있습니다.
+   * 
+   * @see https://developers.cloudflare.com/cloudflare-one/policies/access/
+   */
   // const isAuthenticated = checkAccess(request)
   // if (!isAuthenticated) {
   //   redirect('/login')

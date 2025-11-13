@@ -11,7 +11,27 @@ export default function AdminProgramsPage() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 
   useEffect(() => {
-    // TODO: API에서 프로그램 목록 가져오기
+    /**
+     * 프로그램 목록 API 연동
+     * 
+     * 현재는 정적 데이터를 사용하고 있습니다.
+     * 실제 API 연동 시 아래와 같이 구현하세요:
+     * 
+     * async function fetchPrograms() {
+     *   try {
+     *     const response = await fetch('/api/admin/programs')
+     *     if (response.ok) {
+     *       const data = await response.json()
+     *       setPrograms(data.programs || [])
+     *     }
+     *   } catch (error) {
+     *     console.error('Error fetching programs:', error)
+     *   } finally {
+     *     setLoading(false)
+     *   }
+     * }
+     * fetchPrograms()
+     */
     setLoading(false)
   }, [])
 

@@ -1,7 +1,24 @@
 import { notFound } from 'next/navigation'
 import { ProgramDetailClient } from './program-detail-client'
 
-// TODO: 실제 데이터베이스에서 프로그램 정보 가져오기
+/**
+ * 프로그램 정보 조회
+ * 
+ * 현재는 정적 데이터를 사용하고 있습니다.
+ * 실제 API 연동 시 아래와 같이 구현하세요:
+ * 
+ * async function getProgram(slug: string) {
+ *   try {
+ *     const response = await fetch(`/api/programs/${slug}`)
+ *     if (!response.ok) return null
+ *     const data = await response.json()
+ *     return data.program
+ *   } catch (error) {
+ *     console.error('Error fetching program:', error)
+ *     return null
+ *   }
+ * }
+ */
 function getProgram(slug: string) {
   // 임시 데이터
   const programs: Record<string, any> = {

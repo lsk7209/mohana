@@ -17,14 +17,33 @@ interface SequencePerformance {
   conversion_rate: number
 }
 
+interface Sequence {
+  id: string
+  name: string
+}
+
 export function SequencePerformance() {
   const [performance, setPerformance] = useState<SequencePerformance[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedSequence, setSelectedSequence] = useState<string>('')
+  const [availableSequences, setAvailableSequences] = useState<Sequence[]>([])
 
   useEffect(() => {
+    fetchSequences()
     fetchPerformance()
   }, [selectedSequence])
+
+  async function fetchSequences() {
+    try {
+      const response = await fetch('/api/sequences')
+      if (response.ok) {
+        const data = await response.json() as { sequences?: Sequence[] }
+        setAvailableSequences(data.sequences || [])
+      }
+    } catch (error) {
+      console.error('Error fetching sequences:', error)
+    }
+  }
 
   async function fetchPerformance() {
     setLoading(true)
@@ -60,7 +79,11 @@ export function SequencePerformance() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="">전체</SelectItem>
-              {/* TODO: 실제 시퀀스 목록 로드 */}
+              {availableSequences.map((seq) => (
+                <SelectItem key={seq.id} value={seq.id}>
+                  {seq.name}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>

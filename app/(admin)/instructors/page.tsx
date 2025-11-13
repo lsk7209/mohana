@@ -12,7 +12,27 @@ export default function InstructorsPage() {
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'pending' | 'suspended'>('all')
 
   useEffect(() => {
-    // TODO: API에서 강사 목록 가져오기
+    /**
+     * 강사 목록 API 연동
+     * 
+     * 현재는 정적 데이터를 사용하고 있습니다.
+     * 실제 API 연동 시 아래와 같이 구현하세요:
+     * 
+     * async function fetchInstructors() {
+     *   try {
+     *     const response = await fetch('/api/admin/instructors')
+     *     if (response.ok) {
+     *       const data = await response.json()
+     *       setInstructors(data.instructors || [])
+     *     }
+     *   } catch (error) {
+     *     console.error('Error fetching instructors:', error)
+     *   } finally {
+     *     setLoading(false)
+     *   }
+     * }
+     * fetchInstructors()
+     */
     setLoading(false)
   }, [])
 
