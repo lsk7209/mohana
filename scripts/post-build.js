@@ -116,37 +116,30 @@ function waitForOutput(callback) {
 }
 
 waitForOutput((outputDir) => {
-  // .vercel/output 디렉토리 생성
-  const vercelOutputParent = join(__dirname, '..', '.vercel', 'output')
-  if (!existsSync(vercelOutputParent)) {
-    mkdirSync(vercelOutputParent, { recursive: true })
-  }
+  // _redirects 및 _headers 파일을 out 디렉토리로 복사
+  const rootDir = join(__dirname, '..')
+  const redirectsSource = join(rootDir, '_redirects')
+  const headersSource = join(rootDir, '_headers')
+  const redirectsDest = join(outputDir, '_redirects')
+  const headersDest = join(outputDir, '_headers')
   
-  // .vercel/output/static 디렉토리 생성
-  if (!existsSync(vercelOutputDir)) {
-    mkdirSync(vercelOutputDir, { recursive: true })
-  }
-  
-  // 출력 디렉토리의 내용을 .vercel/output/static으로 복사
-  console.log(`Copying build output from ${outputDir} to .vercel/output/static for Cloudflare Pages...`)
   try {
-    cpSync(outputDir, vercelOutputDir, { recursive: true, force: true })
-    console.log('Build output copied successfully!')
+    if (existsSync(redirectsSource)) {
+      cpSync(redirectsSource, redirectsDest, { force: true })
+      console.log('_redirects file copied to output directory')
+    }
+    
+    if (existsSync(headersSource)) {
+      cpSync(headersSource, headersDest, { force: true })
+      console.log('_headers file copied to output directory')
+    }
   } catch (error) {
-    console.error('Error copying build output:', error)
-    process.exit(1)
+    console.warn('Warning: Could not copy _redirects or _headers:', error.message)
   }
   
-  // .next/out이 없으면 생성 (Cloudflare Pages가 찾을 수 있도록)
-  if (!existsSync(finalOutputDir) && outputDir !== finalOutputDir) {
-    console.log('Creating .next/out directory for Cloudflare Pages...')
-    mkdirSync(finalOutputDir, { recursive: true })
-    try {
-      cpSync(outputDir, finalOutputDir, { recursive: true, force: true })
-      console.log('.next/out directory created successfully!')
-    } catch (error) {
-      console.warn('Warning: Could not create .next/out directory:', error.message)
-    }
-  }
+  // Cloudflare Pages는 'out' 디렉토리를 직접 사용하므로 추가 복사 불필요
+  // cloudflare-pages.toml에서 output_directory = "out"으로 설정되어 있음
+  console.log(`Build output ready at: ${outputDir}`)
+  console.log('Cloudflare Pages will use this directory as the output directory.')
 })
 

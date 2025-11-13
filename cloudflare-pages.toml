@@ -1,10 +1,11 @@
 # Cloudflare Pages 설정 파일
 # wrangler.toml과 별도로 Pages 전용 설정
+# 참고: Cloudflare Pages Dashboard에서도 이 설정을 확인하세요
 
 [build]
 command = "npm run build"
 cwd = "."
-output_directory = "out"
+output_directory = "out"  # Next.js output: 'export'가 생성하는 디렉토리
 
 [build.environment_variables]
 NODE_VERSION = "22"
@@ -12,4 +13,9 @@ NODE_OPTIONS = "--max-old-space-size=4096"
 
 # Pages Functions (선택사항)
 # functions_dir = "functions"
+
+# 참고: 
+# - Next.js는 output: 'export' 설정으로 인해 프로젝트 루트의 'out' 디렉토리에 빌드 출력을 생성합니다
+# - post-build.js 스크립트가 _redirects와 _headers 파일을 out 디렉토리로 복사합니다
+# - Cloudflare Pages Dashboard에서 Build output directory를 'out'으로 설정해야 합니다
 
