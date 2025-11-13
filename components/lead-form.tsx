@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { toast } from '@/hooks/use-toast'
+import { handleNetworkError, handleFetchError } from '@/lib/error-handler'
 
 const leadFormSchema = z.object({
   company: z.string().min(1, '회사명을 입력해주세요'),
@@ -48,6 +49,9 @@ export function LeadForm({ onSuccess, defaultTheme, className }: LeadFormProps) 
   async function onSubmit(data: LeadFormValues) {
     setIsSubmitting(true)
     try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 30000) // 30초 타임아웃
+
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: {
@@ -57,11 +61,14 @@ export function LeadForm({ onSuccess, defaultTheme, className }: LeadFormProps) 
           ...data,
           headcount: data.headcount ? parseInt(data.headcount) : undefined,
         }),
+        signal: controller.signal,
       })
 
+      clearTimeout(timeoutId)
+
       if (!response.ok) {
-        const error = await response.json() as { error?: string }
-        throw new Error(error.error || '제출에 실패했습니다')
+        const errorMessage = await handleFetchError(response)
+        throw new Error(errorMessage)
       }
 
       toast({
@@ -72,9 +79,11 @@ export function LeadForm({ onSuccess, defaultTheme, className }: LeadFormProps) 
       form.reset()
       onSuccess?.()
     } catch (error) {
+      const networkError = handleNetworkError(error)
+      
       toast({
-        title: '오류 발생',
-        description: error instanceof Error ? error.message : '다시 시도해주세요',
+        title: networkError.isNetworkError ? '네트워크 오류' : '오류 발생',
+        description: networkError.message,
         variant: 'destructive',
       })
     } finally {

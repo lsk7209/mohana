@@ -1,5 +1,7 @@
 'use client'
 
+import { VideoWithFallback } from './video-with-fallback'
+
 export function ProgramsSection() {
   const programs = [
     {
@@ -42,21 +44,24 @@ export function ProgramsSection() {
               key={index}
               className="group relative flex flex-col gap-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden shadow-md transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
             >
-              <div className="relative w-full aspect-video">
+              <div className="relative w-full aspect-video overflow-hidden">
                 <img
                   alt={`${program.title} 일러스트`}
-                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-100 group-hover:opacity-0"
+                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-100 group-hover:opacity-0 z-10"
                   src={program.image}
                 />
-                <video
-                  autoPlay
-                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-0 group-hover:opacity-100"
-                  loop
-                  muted
-                  playsInline
-                >
-                  <source src={program.video} type="video/mp4" />
-                </video>
+                <div className="absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-100 z-20">
+                  <VideoWithFallback
+                    src={program.video}
+                    fallbackImage={program.image}
+                    alt={`${program.title} 비디오`}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full"
+                  />
+                </div>
               </div>
               <div className="p-6 flex flex-col gap-2">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white">{program.title}</h3>

@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
 import { RootStructuredData } from "./structured-data"
+import { ErrorBoundary } from "@/components/error-boundary"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -94,7 +95,9 @@ export default function RootLayout({
       </head>
       <body className={`font-sans antialiased`}>
         <RootStructuredData />
-        {children}
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
         <Analytics />
       </body>
     </html>

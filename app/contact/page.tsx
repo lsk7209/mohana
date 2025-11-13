@@ -9,12 +9,15 @@ import { useState, useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from '@/hooks/use-toast'
+import { handleNetworkError, handleFetchError } from '@/lib/error-handler'
+import { useRouter } from 'next/navigation'
 import { PublicLayout } from '@/components/public-layout'
 import { ScrollAnimate } from '@/components/scroll-animate'
 import { StepIndicator, Step1Form, Step2Form } from './components'
 import { contactFormSchema, type ContactFormValues } from './types'
 
 export default function ContactPage() {
+  const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [step, setStep] = useState(1)
 
@@ -70,6 +73,9 @@ export default function ContactPage() {
     async (data: ContactFormValues) => {
       setIsSubmitting(true)
       try {
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 30000) // 30초 타임아웃
+
         const response = await fetch('/api/leads', {
           method: 'POST',
           headers: {
@@ -89,11 +95,14 @@ export default function ContactPage() {
               inquiry: data.inquiry,
             },
           }),
+          signal: controller.signal,
         })
 
+        clearTimeout(timeoutId)
+
         if (!response.ok) {
-          const error = await response.json() as { error?: string }
-          throw new Error(error.error || '제출에 실패했습니다')
+          const errorMessage = await handleFetchError(response)
+          throw new Error(errorMessage)
         }
 
         toast({
@@ -103,17 +112,24 @@ export default function ContactPage() {
 
         form.reset()
         setStep(1)
+
+        // 성공 후 2초 뒤 홈페이지로 리다이렉트
+        setTimeout(() => {
+          router.push('/')
+        }, 2000)
       } catch (error) {
+        const networkError = handleNetworkError(error)
+        
         toast({
-          title: '오류 발생',
-          description: error instanceof Error ? error.message : '다시 시도해주세요',
+          title: networkError.isNetworkError ? '네트워크 오류' : '오류 발생',
+          description: networkError.message,
           variant: 'destructive',
         })
       } finally {
         setIsSubmitting(false)
       }
     },
-    [form]
+    [form, router]
   )
 
   // 이전 단계로 이동 핸들러
