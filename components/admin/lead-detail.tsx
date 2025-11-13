@@ -73,7 +73,7 @@ export function LeadDetail({ leadId }: { leadId: string }) {
         throw new Error('Failed to update')
       }
 
-      const updated = await response.json()
+      const updated = await response.json() as LeadDetailData
       setData(prev => prev ? { ...prev, lead: updated.lead } : null)
       
       toast({

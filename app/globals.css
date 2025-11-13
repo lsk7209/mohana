@@ -209,29 +209,33 @@
 @layer utilities {
   /* 초기 상태 (애니메이션 전) */
   .scroll-animate-initial {
-    opacity: 0;
-    transform: translateY(2rem);
+    opacity: 0 !important;
+    transform: translateY(2rem) !important;
+    visibility: hidden;
   }
 
   .scroll-animate-initial-left {
-    opacity: 0;
-    transform: translateX(-2rem);
+    opacity: 0 !important;
+    transform: translateX(-2rem) !important;
+    visibility: hidden;
   }
 
   .scroll-animate-initial-right {
-    opacity: 0;
-    transform: translateX(2rem);
+    opacity: 0 !important;
+    transform: translateX(2rem) !important;
+    visibility: hidden;
   }
 
   .scroll-animate-initial-scale {
-    opacity: 0;
-    transform: scale(0.95);
+    opacity: 0 !important;
+    transform: scale(0.95) !important;
+    visibility: hidden;
   }
 
   /* 애니메이션 후 상태 */
   .scroll-animate-visible {
-    opacity: 1;
-    transform: translateY(0) translateX(0) scale(1);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    opacity: 1 !important;
+    transform: translateY(0) translateX(0) scale(1) !important;
+    visibility: visible;
   }
 }

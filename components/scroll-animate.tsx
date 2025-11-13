@@ -60,14 +60,15 @@ export function ScrollAnimate({
       }
     }
 
-    return `${baseClasses} scroll-animate-visible`
+    // visible 상태에서는 transition만 적용하고, transform과 opacity는 scroll-animate-visible 클래스에서 처리
+    return `scroll-animate-visible ${baseClasses}`
   }
 
   // ref를 children의 첫 번째 요소에 직접 전달할 수 없으므로,
   // 래퍼 div를 사용하되 레이아웃에 최소한의 영향만 주도록 설정
   return (
     <div
-      ref={ref as React.RefObject<HTMLDivElement>}
+      ref={ref}
       className={`${getAnimationClasses()} ${className}`}
       style={{ 
         transitionDelay: delay > 0 ? `${delay}ms` : undefined,
