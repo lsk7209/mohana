@@ -248,11 +248,91 @@ export async function getSequence(request: Request, env: Env): Promise<Response>
   }
 }
 
+export async function getPerformance(request: Request, env: Env): Promise<Response> {
+  try {
+    const url = new URL(request.url)
+    const sequenceId = url.searchParams.get('sequence_id')
+
+    let query = `
+      SELECT 
+        s.id as sequence_id,
+        s.name as sequence_name,
+        COUNT(DISTINCT sr.id) as total_runs,
+        COUNT(DISTINCT CASE WHEN sr.status = 'completed' THEN sr.id END) as completed,
+        COUNT(DISTINCT m.id) as total_messages,
+        COUNT(DISTINCT CASE WHEN me.type = 'open' THEN me.id END) as opened,
+        COUNT(DISTINCT CASE WHEN me.type = 'click' THEN me.id END) as clicked
+      FROM sequences s
+      LEFT JOIN sequence_runs sr ON sr.sequence_id = s.id
+      LEFT JOIN messages m ON m.lead_id = sr.lead_id AND m.template_id IN (
+        SELECT json_extract(value, '$.template_id')
+        FROM json_each(s.steps)
+      )
+      LEFT JOIN message_events me ON me.message_id = m.id
+    `
+
+    const params: string[] = []
+
+    if (sequenceId) {
+      query += ' WHERE s.id = ?'
+      params.push(sequenceId)
+    }
+
+    query += ' GROUP BY s.id, s.name ORDER BY total_runs DESC'
+
+    const results = await env.DB.prepare(query).bind(...params).all()
+
+    interface PerformanceRow {
+      sequence_id: string
+      sequence_name: string
+      total_runs: number
+      completed: number
+      total_messages: number
+      opened: number
+      clicked: number
+    }
+
+    const performance = (results.results as unknown as PerformanceRow[]).map((row) => {
+      const totalRuns = row.total_runs || 0
+      const completed = row.completed || 0
+      const totalMessages = row.total_messages || 0
+      const opened = row.opened || 0
+      const clicked = row.clicked || 0
+
+      // 전환율 계산: 클릭한 리드 수 / 총 실행 수
+      const conversionRate = totalRuns > 0 ? (clicked / totalRuns) * 100 : 0
+
+      return {
+        sequence_id: row.sequence_id,
+        sequence_name: row.sequence_name,
+        total_runs: totalRuns,
+        completed,
+        total_messages: totalMessages,
+        opened,
+        clicked,
+        conversion_rate: Math.round(conversionRate * 10) / 10,
+      }
+    })
+
+    return new Response(
+      JSON.stringify({ performance }),
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+  } catch (error) {
+    console.error('Error fetching sequence performance:', error)
+    return new Response(
+      JSON.stringify({ error: 'Internal server error' }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    )
+  }
+}
+
 export const handleSequences = {
   run,
   list,
   create,
   update,
   getSequence,
+  getPerformance,
 }
 

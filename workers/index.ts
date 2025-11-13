@@ -71,8 +71,7 @@ router.get('/api/sequences', handleSequences.list)
 router.get('/api/sequences/:id', handleSequences.getSequence)
 router.post('/api/sequences', handleSequences.create)
 router.put('/api/sequences/:id', handleSequences.update)
-// TODO: getPerformance 함수 구현 필요
-// router.get('/api/admin/sequences/performance', handleSequences.getPerformance)
+router.get('/api/admin/sequences/performance', handleSequences.getPerformance)
 
 // Tracking Routes
 router.get('/t/o', handleTracking.open)
