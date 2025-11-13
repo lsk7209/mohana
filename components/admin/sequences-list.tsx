@@ -150,11 +150,15 @@ export function SequencesList() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  {sequence.steps.slice(0, 3).map((step, index) => (
-                    <div key={index} className="text-sm text-muted-foreground">
-                      {index === 0 ? '즉시' : `+${step.delay_hours}시간`}: {step.channel === 'email' ? '이메일' : 'SMS'}
-                    </div>
-                  ))}
+                  {sequence.steps.slice(0, 3).map((step, index) => {
+                    // 고유 key 생성: delay_hours + template_id + channel 조합
+                    const stepKey = `${sequence.id}-step-${step.delay_hours}-${step.template_id}-${step.channel}-${index}`
+                    return (
+                      <div key={stepKey} className="text-sm text-muted-foreground">
+                        {index === 0 ? '즉시' : `+${step.delay_hours}시간`}: {step.channel === 'email' ? '이메일' : 'SMS'}
+                      </div>
+                    )
+                  })}
                   {sequence.steps.length > 3 && (
                     <div className="text-sm text-muted-foreground">
                       +{sequence.steps.length - 3}개 더...

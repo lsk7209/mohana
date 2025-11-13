@@ -72,8 +72,11 @@ export function ABTestManager() {
           </div>
         ) : (
           <div className="space-y-4">
-            {tests.map((test, index) => (
-              <div key={index} className="border rounded-lg p-4">
+            {tests.map((test) => {
+              // 고유 key 생성: ab_key + variant 조합
+              const testKey = `${test.ab_key}-${test.variant}`
+              return (
+                <div key={testKey} className="border rounded-lg p-4">
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <h3 className="font-semibold">{test.ab_key}</h3>
@@ -122,7 +125,8 @@ export function ABTestManager() {
                   </div>
                 </div>
               </div>
-            ))}
+              )
+            })}
           </div>
         )}
       </CardContent>

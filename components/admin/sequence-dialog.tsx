@@ -232,11 +232,14 @@ export function SequenceDialog({
             </div>
 
             <div className="space-y-4">
-              {steps.map((step, index) => (
-                <Card key={index} className="p-4">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-medium">스텝 {index + 1}</h4>
+              {steps.map((step, index) => {
+                // 고유 key 생성: delay_hours + template_id + channel 조합
+                const stepKey = `step-${step.delay_hours}-${step.template_id}-${step.channel}-${index}`
+                return (
+                  <Card key={stepKey} className="p-4">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-medium">스텝 {index + 1}</h4>
                       {steps.length > 1 && (
                         <Button
                           type="button"
@@ -343,7 +346,8 @@ export function SequenceDialog({
                     )}
                   </div>
                 </Card>
-              ))}
+                )
+              })}
             </div>
           </div>
         </div>
