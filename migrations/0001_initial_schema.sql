@@ -136,10 +136,16 @@ CREATE INDEX IF NOT EXISTS idx_leads_email ON leads(email);
 CREATE INDEX IF NOT EXISTS idx_leads_created ON leads(created_at);
 CREATE INDEX IF NOT EXISTS idx_messages_lead ON messages(lead_id);
 CREATE INDEX IF NOT EXISTS idx_messages_status ON messages(status);
+-- 복합 인덱스: status와 created_at을 함께 사용하는 쿼리 최적화 (retryFailedMessages 등)
+CREATE INDEX IF NOT EXISTS idx_messages_status_created ON messages(status, created_at);
 CREATE INDEX IF NOT EXISTS idx_events_message ON message_events(message_id);
 CREATE INDEX IF NOT EXISTS idx_events_type ON message_events(type);
+-- 타임스탬프 기반 쿼리 최적화 (일별 통계 집계 등)
+CREATE INDEX IF NOT EXISTS idx_events_type_ts ON message_events(type, ts);
 CREATE INDEX IF NOT EXISTS idx_sequence_runs_lead ON sequence_runs(lead_id);
 CREATE INDEX IF NOT EXISTS idx_sequence_runs_status ON sequence_runs(status);
+-- scheduled_at 기반 쿼리 최적화 (processSequenceSteps)
+CREATE INDEX IF NOT EXISTS idx_sequence_runs_status_scheduled ON sequence_runs(status, scheduled_at);
 CREATE INDEX IF NOT EXISTS idx_programs_slug ON programs(slug);
 CREATE INDEX IF NOT EXISTS idx_programs_published ON programs(is_published);
 
