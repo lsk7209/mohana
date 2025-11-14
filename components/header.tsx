@@ -34,9 +34,9 @@ export function Header() {
               서비스 소개
             </Link>
             <Link 
-              href="#programs" 
+              href="/programs" 
               className="text-sm font-medium leading-normal hover:text-primary transition-colors"
-              aria-label="프로그램으로 이동"
+              aria-label="프로그램 목록으로 이동"
             >
               프로그램
             </Link>
@@ -83,7 +83,7 @@ export function Header() {
           >
             <div className="flex flex-col gap-4">
               <Link href="#services" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>서비스 소개</Link>
-              <Link href="#programs" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>프로그램</Link>
+              <Link href="/programs" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>프로그램</Link>
               <Link href="#reviews" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>이용후기</Link>
               <Link href="/contact" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>문의하기</Link>
               <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
