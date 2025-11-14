@@ -92,8 +92,10 @@ export function LeadDetail({ leadId }: { leadId: string }) {
         description: '리드 정보가 업데이트되었습니다.',
       })
     } catch (error) {
+      const networkError = handleNetworkError(error)
       toast({
         title: '오류',
+        description: networkError.message,
         description: '저장에 실패했습니다.',
         variant: 'destructive',
       })
