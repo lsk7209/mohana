@@ -1,6 +1,7 @@
 'use client'
 
 import Image from "next/image"
+import { ScrollAnimate } from "@/components/scroll-animate"
 
 /**
  * 이용후기 섹션 컴포넌트
@@ -36,18 +37,20 @@ export function NewReviewsSection() {
 
   return (
     <section className="py-16 md:py-24" id="reviews" aria-labelledby="reviews-heading">
-      <div className="text-center px-4 pb-8 pt-5">
+      <ScrollAnimate animation="slide-up" className="text-center px-4 pb-8 pt-5">
         <h2 id="reviews-heading" className="text-dark-slate-gray dark:text-white text-3xl font-bold leading-tight tracking-[-0.015em]">
           이미 많은 기업들이 신뢰하고 있습니다
         </h2>
         <p className="text-primary text-lg font-medium mt-2">
           지난달 37개 기업 중 82% 재의뢰
         </p>
-      </div>
+      </ScrollAnimate>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
-        {reviews.map((review) => (
-          <div 
+        {reviews.map((review, index) => (
+          <ScrollAnimate 
             key={review.id}
+            animation="slide-up"
+            delay={index * 100}
             className="flex flex-col gap-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark p-6"
           >
             <div className="flex items-center gap-4">
@@ -72,7 +75,7 @@ export function NewReviewsSection() {
             <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
               {review.content}
             </p>
-          </div>
+          </ScrollAnimate>
         ))}
       </div>
     </section>

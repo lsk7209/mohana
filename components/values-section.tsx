@@ -1,5 +1,7 @@
 'use client'
 
+import { ScrollAnimate } from "@/components/scroll-animate"
+
 /**
  * 가치 섹션 컴포넌트
  * 힐링워크가 제공하는 특별한 가치를 소개하는 섹션
@@ -29,7 +31,7 @@ export function ValuesSection() {
   return (
     <section className="py-16 md:py-24 bg-neutral-gray dark:bg-black/20 rounded-lg" id="values" aria-labelledby="values-heading">
       <div className="flex flex-col gap-10 px-4 py-10">
-        <div className="text-center">
+        <ScrollAnimate animation="slide-up" className="text-center">
           <h2 
             id="values-heading"
             className="text-dark-slate-gray dark:text-white tracking-light text-3xl sm:text-4xl font-bold sm:font-black leading-tight sm:tracking-[-0.033em] max-w-[720px] mx-auto"
@@ -39,11 +41,13 @@ export function ValuesSection() {
           <p className="text-gray-600 dark:text-gray-400 text-base font-normal leading-relaxed max-w-[720px] mx-auto mt-4">
             단순한 워크샵을 넘어, 조직의 긍정적인 변화를 만드는 솔루션을 제공합니다.
           </p>
-        </div>
+        </ScrollAnimate>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-0">
-          {values.map((value) => (
-            <div 
+          {values.map((value, index) => (
+            <ScrollAnimate 
               key={value.id}
+              animation="scale"
+              delay={index * 100}
               className="flex flex-col flex-1 gap-4 rounded-lg bg-gradient-to-br from-white to-gray-50 dark:from-background-dark dark:to-black/30 p-8 items-center text-center shadow-sm border border-gray-200/50 dark:border-gray-700/50"
             >
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary">
@@ -63,7 +67,7 @@ export function ValuesSection() {
                   {value.description}
                 </p>
               </div>
-            </div>
+            </ScrollAnimate>
           ))}
         </div>
       </div>

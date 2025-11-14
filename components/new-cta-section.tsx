@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { ScrollAnimate } from "@/components/scroll-animate"
 
 /**
  * CTA 섹션 컴포넌트
@@ -10,10 +11,7 @@ import { Button } from "@/components/ui/button"
 export function NewCTASection() {
   return (
     <section className="py-20 md:py-28 my-16" aria-labelledby="cta-heading">
-      <div 
-        className="rounded-lg p-10 md:p-16 text-center" 
-        style={{ backgroundImage: 'linear-gradient(135deg, #B2C7E5 0%, #A8D8C9 100%)' }}
-      >
+      <ScrollAnimate animation="scale" className="rounded-lg p-10 md:p-16 text-center" style={{ backgroundImage: 'linear-gradient(135deg, #B2C7E5 0%, #A8D8C9 100%)' }}>
         <h2 id="cta-heading" className="text-dark-slate-gray text-3xl md:text-4xl font-bold mb-4">
           지금 바로 우리 팀을 위한<br/>최고의 솔루션을 만나보세요
         </h2>
@@ -28,7 +26,7 @@ export function NewCTASection() {
             <span className="truncate">무료 상담 신청하기</span>
           </Button>
         </Link>
-      </div>
+      </ScrollAnimate>
     </section>
   )
 }

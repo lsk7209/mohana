@@ -1,5 +1,7 @@
 'use client'
 
+import { ScrollAnimate } from "@/components/scroll-animate"
+
 /**
  * 대표 프로그램 섹션 컴포넌트
  * 힐링워크의 주요 프로그램을 소개하는 섹션
@@ -34,13 +36,17 @@ export function NewProgramsSection() {
 
   return (
     <section className="py-16 md:py-24" id="programs" aria-labelledby="programs-heading">
-      <h2 id="programs-heading" className="text-dark-slate-gray dark:text-white text-center text-3xl font-bold leading-tight tracking-[-0.015em] px-4 pb-8 pt-5">
-        대표 프로그램
-      </h2>
+      <ScrollAnimate animation="slide-up" className="px-4 pb-8 pt-5">
+        <h2 id="programs-heading" className="text-dark-slate-gray dark:text-white text-center text-3xl font-bold leading-tight tracking-[-0.015em]">
+          대표 프로그램
+        </h2>
+      </ScrollAnimate>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
-        {programs.map((program) => (
-          <div 
+        {programs.map((program, index) => (
+          <ScrollAnimate 
             key={program.id}
+            animation="slide-up"
+            delay={index * 100}
             className="flex flex-col items-center text-center p-6 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark gap-4"
           >
             <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
@@ -54,7 +60,7 @@ export function NewProgramsSection() {
             <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
               {program.description}
             </p>
-          </div>
+          </ScrollAnimate>
         ))}
       </div>
     </section>

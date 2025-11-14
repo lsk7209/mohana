@@ -1,6 +1,7 @@
 'use client'
 
 import Image from "next/image"
+import { ScrollAnimate } from "@/components/scroll-animate"
 
 /**
  * 고민 섹션 컴포넌트
@@ -33,13 +34,17 @@ export function ConcernsSection() {
 
   return (
     <section className="py-16 md:py-24" id="concerns" aria-labelledby="concerns-heading">
-      <h2 id="concerns-heading" className="text-dark-slate-gray dark:text-white text-center text-3xl font-bold leading-tight tracking-[-0.015em] px-4 pb-8 pt-5">
-        혹시 이런 고민이 있으신가요?
-      </h2>
+      <ScrollAnimate animation="slide-up" className="px-4 pb-8 pt-5">
+        <h2 id="concerns-heading" className="text-dark-slate-gray dark:text-white text-center text-3xl font-bold leading-tight tracking-[-0.015em]">
+          혹시 이런 고민이 있으신가요?
+        </h2>
+      </ScrollAnimate>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        {concerns.map((concern) => (
-          <div 
+        {concerns.map((concern, index) => (
+          <ScrollAnimate 
             key={concern.id}
+            animation="slide-up" 
+            delay={index * 100}
             className="flex flex-col flex-1 gap-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark p-6 text-center items-center"
           >
             <div className="w-40 h-40 flex items-center justify-center text-gray-400 relative">
@@ -59,7 +64,7 @@ export function ConcernsSection() {
                 {concern.description}
               </p>
             </div>
-          </div>
+          </ScrollAnimate>
         ))}
       </div>
     </section>
