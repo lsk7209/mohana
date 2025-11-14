@@ -2,7 +2,7 @@
  * 빌드 후 스크립트: API 라우트와 동적 페이지 복원 + 출력 디렉토리 설정
  */
 
-import { existsSync, renameSync, mkdirSync, cpSync, readdirSync, readFileSync, writeFileSync } from 'fs'
+import { existsSync, renameSync, mkdirSync, cpSync, readdirSync, readFileSync, writeFileSync, statSync } from 'fs'
 import { join } from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
@@ -81,6 +81,26 @@ function findOutputDirectory() {
   }
   
   return null
+}
+
+// 디렉토리 크기 계산 헬퍼 함수
+function getDirectorySize(dirPath) {
+  let totalSize = 0
+  try {
+    const files = readdirSync(dirPath)
+    for (const file of files) {
+      const filePath = join(dirPath, file)
+      const stats = statSync(filePath)
+      if (stats.isDirectory()) {
+        totalSize += getDirectorySize(filePath)
+      } else {
+        totalSize += stats.size
+      }
+    }
+  } catch (err) {
+    // 에러 무시
+  }
+  return totalSize
 }
 
 // 디렉토리 존재 확인 및 대기
@@ -202,6 +222,31 @@ waitForOutput((outputDir) => {
       console.warn('This may indicate a build issue.')
     } else {
       console.log('✓ index.html found in output directory')
+    }
+    
+    // 필수 정적 파일 확인
+    const requiredFiles = ['_redirects', '_headers']
+    const missingFiles = requiredFiles.filter(file => {
+      const filePath = join(outputDir, file)
+      return !existsSync(filePath)
+    })
+    
+    if (missingFiles.length > 0) {
+      console.warn(`⚠ Warning: Missing required files: ${missingFiles.join(', ')}`)
+    } else {
+      console.log('✓ All required static files present')
+    }
+    
+    // 빌드 출력 크기 확인 (경고만, 에러 아님)
+    try {
+      const stats = require('fs').statSync(outputDir)
+      const sizeInMB = (getDirectorySize(outputDir) / 1024 / 1024).toFixed(2)
+      console.log(`📊 Build output size: ${sizeInMB} MB`)
+      if (parseFloat(sizeInMB) > 100) {
+        console.warn('⚠ Warning: Build output is large. Consider optimizing assets.')
+      }
+    } catch (err) {
+      // 크기 확인 실패는 무시
     }
     
   } catch (error) {

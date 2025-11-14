@@ -765,6 +765,8 @@ function getProgram(slug: string) {
 }
 
 export const dynamic = 'force-static'
+// Cloudflare Pages 호환성: 정적으로 생성되지 않은 경로에 대한 동적 요청 비활성화
+export const dynamicParams = false
 
 // 정적 내보내기를 위한 generateStaticParams
 export async function generateStaticParams() {

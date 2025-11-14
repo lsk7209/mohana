@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 
+// Cloudflare Pages 호환성: 정적 생성 강제
 export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {

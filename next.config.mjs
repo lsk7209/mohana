@@ -23,6 +23,16 @@ const nextConfig = {
   trailingSlash: true,
   // API 라우트는 빌드 전 스크립트에서 임시로 제외됩니다
   // API 라우트는 Cloudflare Workers로 프록시됩니다
+  
+  // 빌드 최적화 설정
+  compress: true,
+  poweredByHeader: false,
+  
+  // Cloudflare Pages 호환성 강화
+  experimental: {
+    // 정적 내보내기 최적화
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+  },
 }
 
 export default nextConfig
