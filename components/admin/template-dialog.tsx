@@ -107,9 +107,10 @@ export function TemplateDialog({
       onSuccess?.()
       onOpenChange(false)
     } catch (error) {
+      const networkError = handleNetworkError(error)
       toast({
         title: '오류',
-        description: error instanceof Error ? error.message : '저장에 실패했습니다.',
+        description: networkError.message,
         variant: 'destructive',
       })
     } finally {

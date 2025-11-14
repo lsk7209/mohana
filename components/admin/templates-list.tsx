@@ -30,7 +30,8 @@ export function TemplatesList() {
 
   useEffect(() => {
     fetchTemplates()
-  }, [channel])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [channel]) // fetchTemplates는 안정적이므로 의존성 배열에서 제외
 
   async function fetchTemplates() {
     setLoading(true)
