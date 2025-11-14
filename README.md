@@ -94,6 +94,19 @@ pnpm deploy
 # Pages 배포는 Cloudflare Dashboard에서 연결
 ```
 
+**중요**: 배포 전에 [배포 체크리스트](./docs/DEPLOYMENT_CHECKLIST.md)와 [배포 문제 해결 가이드](./docs/DEPLOYMENT_TROUBLESHOOTING.md)를 확인하세요.
+
+### 필수 환경 변수
+
+Cloudflare Pages Dashboard에서 다음 환경 변수를 설정해야 합니다:
+
+- `NEXT_PUBLIC_SITE_URL`: 사이트 기본 URL (예: `https://mohana.kr`)
+- `WORKER_URL`: Cloudflare Workers 배포 URL (예: `https://healingwork-platform.your-account.workers.dev`)
+  - **중요**: 이 변수가 없으면 API 프록시가 작동하지 않습니다
+  - 빌드 시 `_redirects` 파일이 이 URL을 사용하여 동적으로 생성됩니다
+
+자세한 내용은 [환경 변수 설정 가이드](./docs/ENV_SETUP.md)를 참고하세요.
+
 ## 주요 기능
 
 - ✅ 리드 수집 및 CRM 관리 (필터링, 검색, 페이징, CSV 내보내기)

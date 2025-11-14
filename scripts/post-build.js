@@ -2,7 +2,7 @@
  * 빌드 후 스크립트: API 라우트와 동적 페이지 복원 + 출력 디렉토리 설정
  */
 
-import { existsSync, renameSync, mkdirSync, cpSync, readdirSync, readFileSync } from 'fs'
+import { existsSync, renameSync, mkdirSync, cpSync, readdirSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
@@ -116,25 +116,54 @@ function waitForOutput(callback) {
 }
 
 waitForOutput((outputDir) => {
-  // _redirects 및 _headers 파일을 out 디렉토리로 복사
+  // _redirects 및 _headers 파일을 out 디렉토리로 생성/복사
   const rootDir = join(__dirname, '..')
-  const redirectsSource = join(rootDir, '_redirects')
   const headersSource = join(rootDir, '_headers')
   const redirectsDest = join(outputDir, '_redirects')
   const headersDest = join(outputDir, '_headers')
   
   try {
-    if (existsSync(redirectsSource)) {
-      cpSync(redirectsSource, redirectsDest, { force: true })
-      console.log('_redirects file copied to output directory')
+    // _redirects 파일 동적 생성
+    // Worker URL은 환경 변수에서 가져오거나, 상대 경로 사용
+    const workerUrl = process.env.WORKER_URL || process.env.CLOUDFLARE_WORKER_URL
+    
+    let redirectsContent = ''
+    if (workerUrl) {
+      // Worker URL이 제공된 경우: API 요청을 Worker로 프록시
+      const cleanWorkerUrl = workerUrl.replace(/\/$/, '') // 끝의 슬래시 제거
+      redirectsContent = `# Cloudflare Pages Redirects\n/api/*  ${cleanWorkerUrl}/api/:splat  200\n`
+      console.log(`Generated _redirects with Worker URL: ${cleanWorkerUrl}`)
+    } else {
+      // Worker URL이 없는 경우: 상대 경로 사용 (Cloudflare Pages Functions 사용)
+      // 또는 사용자에게 환경 변수 설정 안내
+      redirectsContent = `# Cloudflare Pages Redirects\n# API 요청은 Cloudflare Pages Functions 또는 Workers로 처리됩니다\n# WORKER_URL 환경 변수를 설정하면 자동으로 프록시됩니다\n/api/*  /api/:splat  200\n`
+      console.warn('Warning: WORKER_URL not set. Using relative path for API routes.')
+      console.warn('To proxy API requests to Cloudflare Workers, set WORKER_URL environment variable.')
     }
     
+    // _redirects 파일 작성
+    writeFileSync(redirectsDest, redirectsContent, 'utf-8')
+    console.log('_redirects file generated in output directory')
+    
+    // _headers 파일 복사
     if (existsSync(headersSource)) {
       cpSync(headersSource, headersDest, { force: true })
       console.log('_headers file copied to output directory')
+    } else {
+      // _headers 파일이 없으면 기본 보안 헤더 생성
+      const defaultHeaders = `# Cloudflare Pages Headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+`
+      writeFileSync(headersDest, defaultHeaders, 'utf-8')
+      console.log('_headers file generated with default security headers')
     }
   } catch (error) {
-    console.warn('Warning: Could not copy _redirects or _headers:', error.message)
+    console.error('Error: Could not create _redirects or _headers:', error.message)
+    process.exit(1)
   }
   
   // Cloudflare Pages는 'out' 디렉토리를 직접 사용하므로 추가 복사 불필요

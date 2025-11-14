@@ -32,6 +32,9 @@
 
 ### Cloudflare Pages 환경 변수
 - [ ] `NEXT_PUBLIC_SITE_URL` 설정 (프로덕션 URL)
+- [ ] `WORKER_URL` 설정 (Cloudflare Workers 배포 URL, 예: `https://healingwork-platform.your-account.workers.dev`)
+  - **중요**: 이 변수가 없으면 API 프록시가 작동하지 않습니다
+  - Cloudflare Pages Dashboard → Settings → Environment Variables에서 설정
 
 ### Cloudflare Workers 환경 변수
 - [ ] `HMAC_SECRET` 설정 (강력한 랜덤 문자열)
@@ -175,4 +178,5 @@
 3. Pages의 빌드 로그 확인
 4. 브라우저 콘솔 에러 확인
 5. 네트워크 탭에서 API 요청 확인
+
 

@@ -25,9 +25,15 @@ Cloudflare Pages 대시보드에서 환경 변수를 설정하세요:
 
 ```
 NEXT_PUBLIC_SITE_URL=https://mohana.kr
+WORKER_URL=https://healingwork-platform.your-account.workers.dev
 ```
 
-**참고**: 프로덕션에서는 API 요청이 `_redirects` 파일을 통해 자동으로 Cloudflare Workers로 프록시되므로 `NEXT_PUBLIC_API_URL`은 필요하지 않습니다.
+**중요 사항**:
+- `WORKER_URL`: Cloudflare Workers 배포 URL (예: `https://healingwork-platform.your-account.workers.dev`)
+  - 이 변수가 없으면 API 프록시가 작동하지 않습니다
+  - 빌드 시 `_redirects` 파일이 이 URL을 사용하여 동적으로 생성됩니다
+- `NEXT_PUBLIC_SITE_URL`: 사이트 기본 URL
+- 프로덕션에서는 API 요청이 `_redirects` 파일을 통해 자동으로 Cloudflare Workers로 프록시됩니다
 
 ## Cloudflare Workers 환경 변수 설정
 
@@ -85,4 +91,5 @@ Cloudflare Dashboard → Workers & Pages → 프로젝트 선택 → Settings �
 1. **절대 `.env.local` 또는 `.dev.vars` 파일을 Git에 커밋하지 마세요**
 2. 모든 민감한 정보는 Cloudflare Dashboard의 Secrets로 관리하세요
 3. 프로덕션 환경 변수는 별도로 설정하고 테스트하세요
+
 

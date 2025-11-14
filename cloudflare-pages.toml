@@ -10,6 +10,8 @@ output_directory = "out"  # Next.js output: 'export'가 생성하는 디렉토�
 [build.environment_variables]
 NODE_VERSION = "22"
 NODE_OPTIONS = "--max-old-space-size=4096"
+# WORKER_URL은 Cloudflare Pages Dashboard에서 Secrets로 설정하세요
+# 예: https://healingwork-platform.your-account.workers.dev
 
 # Pages Functions (선택사항)
 # functions_dir = "functions"
