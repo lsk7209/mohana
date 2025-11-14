@@ -14,15 +14,13 @@ database_name = "mohana-db"
 database_id = "90b1045e-372e-417b-bdea-b77853138f93"
 
 # KV Namespaces
-# Pages 빌드에서는 필요하지 않으므로 주석 처리
-# Workers 배포 시 아래 주석을 해제하고 ID를 입력하세요
-# [[kv_namespaces]]
-# binding = "CACHE"
-# id = "" # 배포 시 생성된 ID로 교체
+[[kv_namespaces]]
+binding = "CACHE"
+id = "a532f5a721504b5381f32a18d5a77203"
 
-# [[kv_namespaces]]
-# binding = "RATE_LIMIT"
-# id = "" # 배포 시 생성된 ID로 교체
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "8b74ff8a9c9b408e9fbb357599c5ad2b"
 
 # Queues
 [[queues.producers]]

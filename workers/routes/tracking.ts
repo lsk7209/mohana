@@ -126,7 +126,14 @@ export async function unsubscribeHandler(request: Request, env: Env): Promise<Re
     return new Response('Email parameter required', { status: 400 })
   }
 
-  // TODO: 토큰 검증 (HMAC 기반)
+  // HMAC 서명 검증 (선택적 - 토큰이 제공된 경우에만)
+  const token = url.searchParams.get('token')
+  if (token) {
+    const isValid = await verifySignature(env, email, token)
+    if (!isValid) {
+      return new Response('Invalid token', { status: 403 })
+    }
+  }
 
   await unsubscribe(env, email, 'user_request')
 

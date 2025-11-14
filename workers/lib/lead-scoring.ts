@@ -26,8 +26,12 @@ export async function updateLeadScore(env: Env, leadId: string, delta: number): 
       await env.DB.prepare('UPDATE leads SET tags = ? WHERE id = ?')
         .bind(tags.join(','), leadId).run()
 
-      // TODO: Slack 알림 (webhook)
-      // await notifyHotLead(env, leadId)
+      // Slack 알림은 선택적 기능입니다
+      // 구현하려면 env.SLACK_WEBHOOK_URL 환경 변수를 설정하고
+      // 아래 함수를 구현하세요:
+      // if (env.SLACK_WEBHOOK_URL) {
+      //   await notifyHotLead(env, leadId)
+      // }
     }
   }
 }
