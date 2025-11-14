@@ -83,12 +83,12 @@
 
 **해결 방법**:
 
-1. **`wrangler.toml`에 Pages 설정 추가** (권장):
+1. **`cloudflare-pages.toml` 파일 확인**:
    ```toml
-   # Cloudflare Pages 설정 (BETA)
-   pages_build_output_dir = "out"
+   [build]
+   output_directory = "out"
    ```
-   이 설정이 가장 확실하게 인식됩니다.
+   프로젝트 루트에 `cloudflare-pages.toml` 파일이 있는지 확인하세요.
 
 2. **Cloudflare Pages Dashboard에서 설정**:
    - Cloudflare Dashboard → Pages → 프로젝트 선택
@@ -100,7 +100,7 @@
    - 로컬에서 `npm run build` 실행 후 `out` 디렉토리 확인
    - 빌드 로그에서 `Found build output at: .../out` 메시지 확인
 
-**참고**: `cloudflare-pages.toml` 파일도 있지만, `wrangler.toml`의 `pages_build_output_dir` 설정이 더 확실하게 작동합니다.
+**중요**: `wrangler.toml`은 Workers 전용 설정 파일입니다. Pages 설정은 `cloudflare-pages.toml` 파일을 사용하거나 Dashboard에서 설정해야 합니다. `wrangler.toml`에 `pages_build_output_dir`을 추가하면 에러가 발생합니다.
 
 ### 4. 환경 변수가 적용되지 않는 경우
 
