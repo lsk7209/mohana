@@ -96,7 +96,6 @@ export function LeadDetail({ leadId }: { leadId: string }) {
       toast({
         title: '오류',
         description: networkError.message,
-        description: '저장에 실패했습니다.',
         variant: 'destructive',
       })
     } finally {
