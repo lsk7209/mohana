@@ -36,47 +36,99 @@ export function NewReviewsSection() {
   ]
 
   return (
-    <section className="py-16 md:py-24" id="reviews" aria-labelledby="reviews-heading">
-      <ScrollAnimate animation="slide-up" className="text-center px-4 pb-8 pt-5">
-        <h2 id="reviews-heading" className="text-dark-slate-gray dark:text-white text-3xl font-bold leading-tight tracking-[-0.015em]">
-          이미 많은 기업들이 신뢰하고 있습니다
-        </h2>
-        <p className="text-primary text-lg font-medium mt-2">
-          지난달 37개 기업 중 82% 재의뢰
-        </p>
-      </ScrollAnimate>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
-        {reviews.map((review, index) => (
-          <ScrollAnimate 
-            key={review.id}
-            animation="slide-up"
-            delay={index * 100}
-            className="flex flex-col gap-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark p-6"
-          >
-            <div className="flex items-center gap-4">
-              <div className="relative h-10 w-10 rounded-full overflow-hidden flex-shrink-0">
-                <Image
-                  alt={review.logoAlt}
-                  src={review.logo}
-                  fill
-                  className="object-cover"
-                  sizes="40px"
-                />
-              </div>
-              <div>
-                <h4 className="font-bold text-dark-slate-gray dark:text-white">
-                  {review.companyName}
-                </h4>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {review.role}
-                </p>
-              </div>
+    <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-background-dark" id="reviews" aria-labelledby="reviews-heading">
+      <div className="max-w-6xl mx-auto">
+        <ScrollAnimate animation="slide-up" className="text-center px-4 pb-12 pt-5">
+          <span className="inline-block px-4 py-1 rounded-full bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-sm font-semibold mb-4">
+            ⭐ 검증된 성과
+          </span>
+          <h2 id="reviews-heading" className="text-dark-slate-gray dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.015em] mb-4">
+            이미 <span className="text-primary">130개 기업</span>이<br />신뢰하고 있습니다
+          </h2>
+          <div className="flex flex-wrap items-center justify-center gap-6 mb-8">
+            <div className="text-center">
+              <div className="text-4xl font-black text-primary mb-1">82%</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">재의뢰율</div>
             </div>
-            <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-              {review.content}
-            </p>
-          </ScrollAnimate>
-        ))}
+            <div className="w-px h-12 bg-gray-300 dark:bg-gray-600"></div>
+            <div className="text-center">
+              <div className="text-4xl font-black text-primary mb-1">4.9/5</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">평균 만족도</div>
+            </div>
+            <div className="w-px h-12 bg-gray-300 dark:bg-gray-600"></div>
+            <div className="text-center">
+              <div className="text-4xl font-black text-primary mb-1">130+</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">검증된 기업</div>
+            </div>
+          </div>
+        </ScrollAnimate>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
+          {reviews.map((review, index) => (
+            <ScrollAnimate 
+              key={review.id}
+              animation="slide-up"
+              delay={index * 100}
+              className="flex flex-col gap-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark p-6 hover:shadow-xl hover:border-primary/30 transition-all group"
+            >
+              {/* 별점 */}
+              <div className="flex gap-1 mb-2">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-yellow-400 text-lg">★</span>
+                ))}
+              </div>
+              
+              <p className="text-gray-700 dark:text-gray-200 text-base leading-relaxed flex-grow italic">
+                "{review.content}"
+              </p>
+              
+              <div className="flex items-center gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div className="relative h-12 w-12 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all">
+                  <Image
+                    alt={review.logoAlt}
+                    src={review.logo}
+                    fill
+                    className="object-cover"
+                    sizes="48px"
+                  />
+                </div>
+                <div>
+                  <h4 className="font-black text-dark-slate-gray dark:text-white">
+                    {review.companyName}
+                  </h4>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {review.role}
+                  </p>
+                </div>
+              </div>
+            </ScrollAnimate>
+          ))}
+        </div>
+        
+        {/* 추가 신뢰 요소 */}
+        <ScrollAnimate animation="fade" delay={400} className="mt-12 px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-xl bg-white dark:bg-gray-900 border-2 border-primary/20">
+            <div className="text-center">
+              <div className="text-2xl mb-2">🏆</div>
+              <div className="text-sm font-bold text-dark-slate-gray dark:text-white">업계 1위</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">만족도 기준</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl mb-2">✅</div>
+              <div className="text-sm font-bold text-dark-slate-gray dark:text-white">100% 보장</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">효과 보장</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl mb-2">💼</div>
+              <div className="text-sm font-bold text-dark-slate-gray dark:text-white">대기업 인증</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">삼성, LG 등</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl mb-2">📈</div>
+              <div className="text-sm font-bold text-dark-slate-gray dark:text-white">지속 성장</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">후속 관리</div>
+            </div>
+          </div>
+        </ScrollAnimate>
       </div>
     </section>
   )
