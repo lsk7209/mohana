@@ -1,4 +1,4 @@
-name = "healingwork-platform"
+name = "mohana-worker"
 main = "workers/index.ts"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
@@ -57,7 +57,7 @@ database_id = "90b1045e-372e-417b-bdea-b77853138f93"
 [[durable_objects.bindings]]
 name = "SEQUENCE_SCHEDULER"
 class_name = "SequenceScheduler"
-script_name = "healingwork-platform"
+script_name = "mohana-worker"
 
 [[migrations]]
 tag = "v1"
