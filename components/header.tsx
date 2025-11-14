@@ -47,13 +47,6 @@ export function Header() {
             >
               이용후기
             </Link>
-            <Link 
-              href="/contact" 
-              className="text-sm font-medium leading-normal hover:text-primary transition-colors"
-              aria-label="문의하기로 이동"
-            >
-              문의하기
-            </Link>
           </div>
           <Link href="/contact">
             <Button 
@@ -85,7 +78,6 @@ export function Header() {
               <Link href="/about" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>서비스 소개</Link>
               <Link href="/programs" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>프로그램</Link>
               <Link href="#reviews" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>이용후기</Link>
-              <Link href="/contact" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>문의하기</Link>
               <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
                 <Button 
                   className="w-full rounded-full h-10 px-4 bg-primary text-white dark:text-background-dark text-sm font-bold"
