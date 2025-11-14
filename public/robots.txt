@@ -11,3 +11,4 @@ Disallow: /(admin)/
 # Disallow API routes (handled by Cloudflare Workers)
 Disallow: /api/
 
+

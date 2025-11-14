@@ -1,35 +1,26 @@
 import { PublicLayout } from "@/components/public-layout"
-import { HeroSection } from "@/components/hero-section"
-import { PainPointsSection } from "@/components/pain-points-section"
-import { SolutionSection } from "@/components/solution-section"
-import { ProgramsSection } from "@/components/programs-section"
-import { DataSection } from "@/components/data-section"
-import { TestimonialSection } from "@/components/testimonial-section"
-import { FinalCTASection } from "@/components/final-cta-section"
-import { ScrollAnimate } from "@/components/scroll-animate"
+import { NewHeroSection } from "@/components/new-hero-section"
+import { ConcernsSection } from "@/components/concerns-section"
+import { ValuesSection } from "@/components/values-section"
+import { NewProgramsSection } from "@/components/new-programs-section"
+import { NewReviewsSection } from "@/components/new-reviews-section"
+import { NewCTASection } from "@/components/new-cta-section"
 
+/**
+ * 메인 페이지 컴포넌트
+ * 새로운 디자인에 맞춘 힐링워크 메인 페이지
+ */
 export default function Home() {
   return (
     <PublicLayout>
-      <HeroSection />
-      <ScrollAnimate animation="slide-up" delay={0} className="w-full">
-        <PainPointsSection />
-      </ScrollAnimate>
-      <ScrollAnimate animation="slide-up" delay={100} className="w-full">
-        <SolutionSection />
-      </ScrollAnimate>
-      <ScrollAnimate animation="fade" delay={200} className="w-full">
-        <ProgramsSection />
-      </ScrollAnimate>
-      <ScrollAnimate animation="scale" delay={100} className="w-full">
-        <DataSection />
-      </ScrollAnimate>
-      <ScrollAnimate animation="slide-up" delay={200} className="w-full">
-        <TestimonialSection />
-      </ScrollAnimate>
-      <ScrollAnimate animation="fade" delay={100} className="w-full">
-        <FinalCTASection />
-      </ScrollAnimate>
+      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <NewHeroSection />
+        <ConcernsSection />
+        <ValuesSection />
+        <NewProgramsSection />
+        <NewReviewsSection />
+        <NewCTASection />
+      </main>
     </PublicLayout>
   )
 }
