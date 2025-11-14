@@ -239,7 +239,6 @@ waitForOutput((outputDir) => {
     
     // 빌드 출력 크기 확인 (경고만, 에러 아님)
     try {
-      const stats = require('fs').statSync(outputDir)
       const sizeInMB = (getDirectorySize(outputDir) / 1024 / 1024).toFixed(2)
       console.log(`📊 Build output size: ${sizeInMB} MB`)
       if (parseFloat(sizeInMB) > 100) {
@@ -247,6 +246,7 @@ waitForOutput((outputDir) => {
       }
     } catch (err) {
       // 크기 확인 실패는 무시
+      console.warn(`⚠ Warning: Could not calculate build output size: ${err.message}`)
     }
     
   } catch (error) {
