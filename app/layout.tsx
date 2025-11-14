@@ -1,9 +1,21 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Analytics } from "@vercel/analytics/next"
 import { RootStructuredData } from "./structured-data"
 import { ErrorBoundary } from "@/components/error-boundary"
 import "./globals.css"
+
+// Vercel Analytics는 Cloudflare Pages에서 작동하지 않으므로 조건부로 로드
+// 환경 변수로 제어 가능 (선택사항)
+let Analytics: React.ComponentType | null = null
+if (process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === 'true') {
+  try {
+    const analyticsModule = require("@vercel/analytics/next")
+    Analytics = analyticsModule.Analytics
+  } catch (error) {
+    // Analytics 모듈이 없거나 로드 실패 시 무시
+    console.warn('Analytics module not available:', error)
+  }
+}
 
 export const metadata: Metadata = {
   title: "모하나 - 우리 팀의 성장을 위한 최고의 힐링·워크샵 솔루션",
@@ -98,7 +110,7 @@ export default function RootLayout({
         <ErrorBoundary>
           {children}
         </ErrorBoundary>
-        <Analytics />
+        {Analytics && <Analytics />}
       </body>
     </html>
   )
