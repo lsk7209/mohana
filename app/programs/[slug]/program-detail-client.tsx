@@ -25,6 +25,14 @@ interface ProgramDetail {
   goals?: Array<{ icon: string; title: string; description: string }>
   reviews?: Array<{ name: string; role: string; content: string; rating: number }>
   relatedPrograms?: Array<{ slug: string; title: string; image: string }>
+  instructor?: {
+    name: string
+    title: string
+    bio: string
+    quote: string
+    photo: string
+    skills: string[]
+  }
 }
 
 export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
@@ -128,26 +136,28 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
             </div>
 
             {/* Goals Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-              {program.goals.map((goal: any, idx: number) => (
-                <div
-                  key={idx}
-                  className="flex flex-1 gap-4 rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-6 flex-col"
-                >
-                  <div className="text-primary">
-                    <span className="material-symbols-outlined text-3xl">{goal.icon}</span>
+            {program.goals && program.goals.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                {program.goals.map((goal: any, idx: number) => (
+                  <div
+                    key={idx}
+                    className="flex flex-1 gap-4 rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-6 flex-col"
+                  >
+                    <div className="text-primary">
+                      <span className="material-symbols-outlined text-3xl">{goal.icon}</span>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <h2 className="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight">
+                        {goal.title}
+                      </h2>
+                      <p className="text-text-light-secondary dark:text-text-dark-secondary text-sm font-normal leading-normal">
+                        {goal.description}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-1">
-                    <h2 className="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight">
-                      {goal.title}
-                    </h2>
-                    <p className="text-text-light-secondary dark:text-text-dark-secondary text-sm font-normal leading-normal">
-                      {goal.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
             {/* Instructor Section */}
             {program.instructor && (
