@@ -20,13 +20,13 @@ export function Footer() {
           </div>
           <div className="flex flex-col items-start md:items-end">
             <div className="flex gap-6 mb-4">
-              <Link href="#services" className="text-sm text-gray-600 dark:text-gray-300 hover:text-primary transition-colors">
+              <Link href="/about" className="text-sm text-gray-600 dark:text-gray-300 hover:text-primary transition-colors" aria-label="서비스 소개 페이지로 이동">
                 서비스 소개
               </Link>
-              <Link href="#programs" className="text-sm text-gray-600 dark:text-gray-300 hover:text-primary transition-colors">
+              <Link href="/programs" className="text-sm text-gray-600 dark:text-gray-300 hover:text-primary transition-colors" aria-label="프로그램 목록 페이지로 이동">
                 프로그램
               </Link>
-              <Link href="/contact" className="text-sm text-gray-600 dark:text-gray-300 hover:text-primary transition-colors">
+              <Link href="/contact" className="text-sm text-gray-600 dark:text-gray-300 hover:text-primary transition-colors" aria-label="문의하기 페이지로 이동">
                 문의하기
               </Link>
             </div>
@@ -45,9 +45,11 @@ export function Footer() {
         </div>
       </div>
       <a
-        className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-[#FEE500] shadow-lg transition-transform duration-300 hover:scale-110"
-        href="#"
-        aria-label="카카오톡 상담"
+        className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-[#FEE500] shadow-lg transition-transform duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        href="https://pf.kakao.com/_your_kakao_channel"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="카카오톡 상담 채널로 이동 (새 창)"
       >
         <svg className="h-8 w-8 text-black" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M12.833 9.428L10.33 12.421C10.15 12.645 9.873 12.75 9.613 12.695L5.798 11.907C5.234 11.79 4.8 11.24 4.863 10.669L5.59 4.1C5.642 3.63 6.075 3.275 6.54 3.328L8.91 3.585C9.408 3.64 9.774 4.09 9.71 4.588L9.202 8.783L11.528 6.02C11.912 5.568 12.583 5.518 13.04 5.908L17.712 9.82C18.17 10.21 18.22 10.884 17.818 11.346L12.833 9.428Z"></path>

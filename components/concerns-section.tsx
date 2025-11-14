@@ -53,18 +53,18 @@ export function ConcernsSection() {
         
         {/* 통계 배너 */}
         <ScrollAnimate animation="slide-up" delay={100} className="mb-12">
-          <div className="mx-4 p-6 rounded-xl bg-red-50 dark:bg-red-900/10 border-2 border-red-200 dark:border-red-800">
+          <div className="mx-4 p-6 rounded-xl bg-red-50 dark:bg-red-900/10 border-2 border-red-200 dark:border-red-800" role="region" aria-label="기업 고민 통계">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-3xl font-black text-red-600 dark:text-red-400 mb-1">73%</div>
+                <div className="text-3xl font-black text-red-600 dark:text-red-400 mb-1" aria-label="73퍼센트">73%</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">직원들이 업무 스트레스로 고민</div>
               </div>
               <div>
-                <div className="text-3xl font-black text-red-600 dark:text-red-400 mb-1">58%</div>
+                <div className="text-3xl font-black text-red-600 dark:text-red-400 mb-1" aria-label="58퍼센트">58%</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">팀 내 소통 문제로 인한 갈등</div>
               </div>
               <div>
-                <div className="text-3xl font-black text-red-600 dark:text-red-400 mb-1">65%</div>
+                <div className="text-3xl font-black text-red-600 dark:text-red-400 mb-1" aria-label="65퍼센트">65%</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">번아웃으로 인한 이직 고려</div>
               </div>
             </div>

@@ -103,7 +103,7 @@ export function VideoWithFallback({
           role="status"
           aria-label="비디오 로딩 중"
         >
-          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" aria-hidden="true" />
         </div>
       )}
       <video

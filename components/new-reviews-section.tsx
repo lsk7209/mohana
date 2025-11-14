@@ -71,9 +71,9 @@ export function NewReviewsSection() {
               className="flex flex-col gap-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark p-6 hover:shadow-xl hover:border-primary/30 transition-all group"
             >
               {/* 별점 */}
-              <div className="flex gap-1 mb-2">
+              <div className="flex gap-1 mb-2" role="img" aria-label="5점 만점">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-yellow-400 text-lg">★</span>
+                  <span key={i} className="text-yellow-400 text-lg" aria-hidden="true">★</span>
                 ))}
               </div>
               

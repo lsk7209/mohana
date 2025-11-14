@@ -60,7 +60,12 @@ export function NewProgramsSection() {
         </ScrollAnimate>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
           {programs.map((program, index) => (
-            <Link key={program.id} href={`/programs/${program.id}`}>
+            <Link 
+              key={program.id} 
+              href={`/programs/${program.id}`}
+              aria-label={`${program.title} 프로그램 상세 페이지로 이동`}
+              className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-xl"
+            >
               <ScrollAnimate 
                 animation="slide-up"
                 delay={index * 100}
@@ -82,7 +87,7 @@ export function NewProgramsSection() {
                     {program.effect}
                   </span>
                 </div>
-                <div className="mt-2 flex items-center gap-2 text-primary text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="mt-2 flex items-center gap-2 text-primary text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true">
                   <span>자세히 보기</span>
                   <span className="material-symbols-outlined text-base">arrow_forward</span>
                 </div>
@@ -93,8 +98,12 @@ export function NewProgramsSection() {
         
         {/* 전체 프로그램 보기 */}
         <ScrollAnimate animation="fade" delay={500} className="mt-8 text-center px-4">
-          <Link href="/programs">
-            <button className="px-8 py-3 rounded-full border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">
+          <Link href="/programs" className="inline-block">
+            <button 
+              type="button"
+              className="px-8 py-3 rounded-full border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              aria-label="전체 프로그램 목록 페이지로 이동"
+            >
               전체 프로그램 보기 →
             </button>
           </Link>
