@@ -87,12 +87,21 @@ pnpm dev:worker
 
 ### Cloudflare Pages + Workers 배포
 
-```bash
-# Workers 배포
-pnpm deploy
+**중요**: Cloudflare Pages가 이미 있는 경우, [Workers 생성 가이드](./docs/WORKER_SETUP_GUIDE.md)를 먼저 확인하세요.
 
-# Pages 배포는 Cloudflare Dashboard에서 연결
+```bash
+# 1. Cloudflare 로그인
+npm run wrangler login
+
+# 2. Workers 배포
+npm run deploy
+
+# 3. 배포 후 Worker URL을 복사하여 Pages 환경 변수에 설정
+# Cloudflare Dashboard → Pages → Settings → Environment Variables
+# WORKER_URL = https://healingwork-platform.your-account.workers.dev
 ```
+
+**Pages 배포는 Cloudflare Dashboard에서 GitHub 연결로 자동 배포됩니다.**
 
 **중요**: 배포 전에 [배포 체크리스트](./docs/DEPLOYMENT_CHECKLIST.md)와 [배포 문제 해결 가이드](./docs/DEPLOYMENT_TROUBLESHOOTING.md)를 확인하세요.
 
