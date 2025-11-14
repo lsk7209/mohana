@@ -89,6 +89,8 @@ export function VideoWithFallback({
           fill
           className="object-cover"
           sizes="100vw"
+          priority={false}
+          loading="lazy"
           aria-label={`${alt} (비디오 로딩 실패로 이미지로 대체)`}
         />
       </div>
@@ -120,7 +122,15 @@ export function VideoWithFallback({
         <source src={src} type="video/mp4" />
         {/* 브라우저가 비디오를 지원하지 않을 경우 fallback */}
         <div className="absolute inset-0">
-          <Image src={fallbackImage} alt={alt} fill className="object-cover" sizes="100vw" />
+          <Image 
+            src={fallbackImage} 
+            alt={alt} 
+            fill 
+            className="object-cover" 
+            sizes="100vw"
+            priority={false}
+            loading="lazy"
+          />
         </div>
       </video>
     </div>

@@ -89,6 +89,8 @@ export function NewReviewsSection() {
                     fill
                     className="object-cover"
                     sizes="48px"
+                    loading="lazy"
+                    priority={false}
                   />
                 </div>
                 <div>
