@@ -104,8 +104,11 @@
   ```
 
 ### Pages 배포
+- [ ] `wrangler.toml`에 `pages_build_output_dir = "out"` 설정 확인
+- [ ] Cloudflare Pages Dashboard에서 Build output directory가 `out`으로 설정되어 있는지 확인
 - [ ] GitHub에 푸시하여 자동 배포 확인
-- [ ] 빌드 로그 확인
+- [ ] 빌드 로그에서 "Found build output at: .../out" 메시지 확인
+- [ ] 빌드 로그에서 "Error: Output directory" 에러가 없는지 확인
 - [ ] 사이트 접속 테스트
 - [ ] 모든 페이지 라우팅 확인
 

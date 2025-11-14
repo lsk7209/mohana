@@ -72,30 +72,35 @@
      NODE_OPTIONS = "--max-old-space-size=4096"
      ```
 
-### 3. 정적 파일이 로드되지 않는 경우
+### 3. 빌드 출력 디렉토리를 찾을 수 없는 경우
 
-**증상**: 이미지, CSS, JS 파일이 404 에러
+**증상**: `Error: Output directory ".next/out" not found.` 또는 `Failed: build output directory not found`
 
 **원인**:
-- `output_directory` 설정 오류
-- 빌드 출력 디렉토리 불일치
+- Cloudflare Pages가 기본값인 `.next/out`을 찾고 있음
+- 실제 빌드 출력은 `out` 디렉토리에 생성됨
+- `wrangler.toml` 또는 `cloudflare-pages.toml` 설정이 인식되지 않음
 
 **해결 방법**:
 
-1. **`cloudflare-pages.toml` 확인**:
+1. **`wrangler.toml`에 Pages 설정 추가** (권장):
    ```toml
-   [build]
-   output_directory = "out"
+   # Cloudflare Pages 설정 (BETA)
+   pages_build_output_dir = "out"
    ```
-   `output_directory`가 `out`으로 설정되어 있는지 확인하세요
+   이 설정이 가장 확실하게 인식됩니다.
 
-2. **Cloudflare Pages Dashboard 설정 확인**:
+2. **Cloudflare Pages Dashboard에서 설정**:
+   - Cloudflare Dashboard → Pages → 프로젝트 선택
    - Settings → Builds & deployments
-   - Build output directory가 `out`으로 설정되어 있는지 확인
+   - Build output directory를 `out`으로 설정
+   - Save 후 재배포
 
 3. **빌드 출력 확인**:
    - 로컬에서 `npm run build` 실행 후 `out` 디렉토리 확인
-   - 필요한 파일들이 모두 포함되어 있는지 확인
+   - 빌드 로그에서 `Found build output at: .../out` 메시지 확인
+
+**참고**: `cloudflare-pages.toml` 파일도 있지만, `wrangler.toml`의 `pages_build_output_dir` 설정이 더 확실하게 작동합니다.
 
 ### 4. 환경 변수가 적용되지 않는 경우
 
