@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo, useCallback } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -100,15 +100,17 @@ export function LeadsBoard() {
     return <LoadingState message="리드를 불러오는 중..." />
   }
 
-  function handleClearFilters() {
+  const handleClearFilters = useCallback(() => {
     setStatusFilter('all')
     setSearchQuery('')
-  }
+  }, [])
 
-  const leadsByStatus = kanbanColumns.reduce((acc, column) => {
-    acc[column.key] = leads.filter((lead) => lead.status === column.key)
-    return acc
-  }, {} as Record<string, Lead[]>)
+  const leadsByStatus = useMemo(() => {
+    return kanbanColumns.reduce((acc, column) => {
+      acc[column.key] = leads.filter((lead) => lead.status === column.key)
+      return acc
+    }, {} as Record<string, Lead[]>)
+  }, [leads])
 
   return (
     <div className="space-y-6">
