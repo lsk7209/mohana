@@ -3,12 +3,12 @@
 # 참고: Cloudflare Pages Dashboard에서도 이 설정을 확인하세요
 
 [build]
-command = "npm run build"
+command = "npm install && npm run build"
 cwd = "."
 output_directory = "out"  # Next.js output: 'export'가 생성하는 디렉토리
 
-# pnpm-lock.yaml 동기화 문제 해결을 위해 npm 사용
-# 또는 pnpm install --no-frozen-lockfile 사용
+# npm을 명시적으로 사용하여 pnpm-lock.yaml 문제 방지
+# package.json에 packageManager 필드 추가로 npm 사용 명시
 
 [build.environment_variables]
 NODE_VERSION = "22"
