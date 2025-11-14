@@ -14,6 +14,8 @@ import { toast } from '@/hooks/use-toast'
 import { SendMessageDialog } from '@/components/admin/send-message-dialog'
 import { MessageDetailDialog } from '@/components/admin/message-detail-dialog'
 import type { Lead, Message, MessageEvent } from '@/workers/types'
+import { getApiUrl } from '@/lib/env'
+import { handleFetchError, handleNetworkError } from '@/lib/error-handler'
 
 interface LeadDetailData {
   lead: Lead
@@ -70,14 +72,16 @@ export function LeadDetail({ leadId }: { leadId: string }) {
   async function handleUpdate() {
     setSaving(true)
     try {
-      const response = await fetch(`/api/admin/leads/${leadId}`, {
+      const apiUrl = getApiUrl(`/api/admin/leads/${leadId}`)
+      const response = await fetch(apiUrl, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status, memo }),
       })
 
       if (!response.ok) {
-        throw new Error('Failed to update')
+        const errorMessage = await handleFetchError(response)
+        throw new Error(errorMessage)
       }
 
       const updated = await response.json() as LeadDetailData

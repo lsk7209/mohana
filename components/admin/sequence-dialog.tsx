@@ -18,6 +18,8 @@ import { Card } from '@/components/ui/card'
 import { Plus, Trash2, Loader2 } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 import type { Template } from '@/workers/types'
+import { getApiUrl } from '@/lib/env'
+import { handleFetchError, handleNetworkError } from '@/lib/error-handler'
 
 interface SequenceStep {
   delay_hours: number
@@ -167,7 +169,8 @@ export function SequenceDialog({
         ? `/api/sequences/${sequence.id}`
         : '/api/sequences'
 
-      const response = await fetch(url, {
+      const apiUrl = getApiUrl(url)
+      const response = await fetch(apiUrl, {
         method: sequence ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -177,8 +180,8 @@ export function SequenceDialog({
       })
 
       if (!response.ok) {
-        const error = await response.json() as { error?: string }
-        throw new Error(error.error || '저장 실패')
+        const errorMessage = await handleFetchError(response)
+        throw new Error(errorMessage)
       }
 
       toast({
@@ -189,9 +192,10 @@ export function SequenceDialog({
       onSuccess?.()
       onOpenChange(false)
     } catch (error) {
+      const networkError = handleNetworkError(error)
       toast({
         title: '오류',
-        description: error instanceof Error ? error.message : '저장에 실패했습니다.',
+        description: networkError.message,
         variant: 'destructive',
       })
     } finally {
