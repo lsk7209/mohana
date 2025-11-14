@@ -127,7 +127,6 @@ export async function unsubscribeHandler(request: Request, env: Env): Promise<Re
   }
 
   // HMAC 서명 검증 (선택적 - 토큰이 제공된 경우에만)
-  const token = url.searchParams.get('token')
   if (token) {
     const isValid = await verifySignature(env, email, token)
     if (!isValid) {

@@ -108,13 +108,13 @@
 
 ## 배포 체크리스트
 
-- [ ] D1 데이터베이스 생성 및 마이그레이션
-- [ ] KV Namespace 생성
-- [ ] Queue 생성
-- [ ] 환경 변수 설정
-- [ ] SPF/DKIM/DMARC 설정
+- [x] D1 데이터베이스 생성 및 마이그레이션 ✅
+- [x] KV Namespace 생성 ✅
+- [x] Queue 생성 ✅
+- [ ] 환경 변수 설정 (Cloudflare Dashboard에서 설정 필요)
+- [ ] SPF/DKIM/DMARC 설정 (이메일 도메인)
 - [ ] 도메인 연결
-- [ ] Workers 배포
-- [ ] Pages 배포
+- [x] Workers 배포 ✅
+- [x] Pages 배포 ✅
 - [ ] 모니터링 설정
 
