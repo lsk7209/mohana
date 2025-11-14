@@ -6,14 +6,19 @@ import "./globals.css"
 
 // Vercel Analytics는 Cloudflare Pages에서 작동하지 않으므로 조건부로 로드
 // 환경 변수로 제어 가능 (선택사항)
-let Analytics: React.ComponentType | null = null
-if (process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === 'true') {
+// 정적 생성 호환성을 위해 dynamic import 사용
+async function loadAnalytics() {
+  if (process.env.NEXT_PUBLIC_ENABLE_ANALYTICS !== 'true') {
+    return null
+  }
+  
   try {
-    const analyticsModule = require("@vercel/analytics/next")
-    Analytics = analyticsModule.Analytics
+    // dynamic import를 사용하여 정적 생성 시 안전성 확보
+    const analyticsModule = await import("@vercel/analytics/next")
+    return analyticsModule.Analytics
   } catch (error) {
     // Analytics 모듈이 없거나 로드 실패 시 무시
-    console.warn('Analytics module not available:', error)
+    return null
   }
 }
 
@@ -82,11 +87,14 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // Analytics 컴포넌트를 비동기로 로드
+  const AnalyticsComponent = await loadAnalytics()
+  
   return (
     <html lang="ko">
       <head>
@@ -110,7 +118,7 @@ export default function RootLayout({
         <ErrorBoundary>
           {children}
         </ErrorBoundary>
-        {Analytics && <Analytics />}
+        {AnalyticsComponent && <AnalyticsComponent />}
       </body>
     </html>
   )
