@@ -129,16 +129,25 @@ waitForOutput((outputDir) => {
     
     let redirectsContent = ''
     if (workerUrl) {
-      // Worker URL이 제공된 경우: API 요청을 Worker로 프록시
-      const cleanWorkerUrl = workerUrl.replace(/\/$/, '') // 끝의 슬래시 제거
-      redirectsContent = `# Cloudflare Pages Redirects\n/api/*  ${cleanWorkerUrl}/api/:splat  200\n`
-      console.log(`Generated _redirects with Worker URL: ${cleanWorkerUrl}`)
+      // Cloudflare Pages는 200 프록시가 외부 URL을 지원하지 않으므로
+      // 클라이언트 측에서 직접 Worker URL로 요청하도록 안내
+      // 또는 Cloudflare Pages Functions를 사용해야 합니다
+      redirectsContent = `# Cloudflare Pages Redirects
+# 참고: Cloudflare Pages는 200 프록시가 외부 URL을 지원하지 않습니다
+# API 요청은 클라이언트 측에서 직접 Worker URL로 전송됩니다
+# 또는 Cloudflare Pages Functions를 사용하여 프록시할 수 있습니다
+`
+      console.log(`Worker URL detected: ${workerUrl}`)
+      console.log('Note: Cloudflare Pages does not support external URLs in 200 proxy redirects.')
+      console.log('API requests will be made directly to the Worker URL from the client.')
     } else {
-      // Worker URL이 없는 경우: 상대 경로 사용 (Cloudflare Pages Functions 사용)
-      // 또는 사용자에게 환경 변수 설정 안내
-      redirectsContent = `# Cloudflare Pages Redirects\n# API 요청은 Cloudflare Pages Functions 또는 Workers로 처리됩니다\n# WORKER_URL 환경 변수를 설정하면 자동으로 프록시됩니다\n/api/*  /api/:splat  200\n`
-      console.warn('Warning: WORKER_URL not set. Using relative path for API routes.')
-      console.warn('To proxy API requests to Cloudflare Workers, set WORKER_URL environment variable.')
+      // Worker URL이 없는 경우
+      redirectsContent = `# Cloudflare Pages Redirects
+# API 요청은 Cloudflare Pages Functions 또는 Workers로 처리됩니다
+# WORKER_URL 환경 변수를 설정하면 클라이언트에서 직접 Worker로 요청합니다
+`
+      console.warn('Warning: WORKER_URL not set.')
+      console.warn('API requests will not work without a Worker URL.')
     }
     
     // _redirects 파일 작성

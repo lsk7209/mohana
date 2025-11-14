@@ -29,18 +29,33 @@ export const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 export const IS_DEVELOPMENT = process.env.NODE_ENV === 'development'
 
 /**
+ * Worker URL (프로덕션에서 API 요청을 위한 외부 Worker URL)
+ * Cloudflare Pages Dashboard에서 환경 변수로 설정해야 합니다
+ */
+const WORKER_URL = process.env.NEXT_PUBLIC_WORKER_URL || ''
+
+/**
  * 전체 API URL 생성
  * @param path - API 경로
  * @returns 전체 API URL
  */
 export function getApiUrl(path: string): string {
-  // 프로덕션에서는 상대 경로 사용 (Cloudflare Pages _redirects가 처리)
-  if (IS_PRODUCTION || !API_URL) {
-    return path.startsWith('/') ? path : `/${path}`
+  // 프로덕션에서 Worker URL이 설정된 경우: 직접 Worker로 요청
+  if (IS_PRODUCTION && WORKER_URL) {
+    const baseUrl = WORKER_URL.replace(/\/$/, '')
+    const apiPath = path.startsWith('/') ? path : `/${path}`
+    return `${baseUrl}${apiPath}`
   }
-  // 개발 환경에서는 절대 URL 사용
-  const baseUrl = API_URL.replace(/\/$/, '')
-  const apiPath = path.startsWith('/') ? path : `/${path}`
-  return `${baseUrl}${apiPath}`
+  
+  // 개발 환경 또는 Worker URL이 없는 경우
+  if (API_URL) {
+    const baseUrl = API_URL.replace(/\/$/, '')
+    const apiPath = path.startsWith('/') ? path : `/${path}`
+    return `${baseUrl}${apiPath}`
+  }
+  
+  // 기본값: 상대 경로 (로컬 개발용)
+  return path.startsWith('/') ? path : `/${path}`
 }
+
 
