@@ -25,33 +25,27 @@ database_id = "90b1045e-372e-417b-bdea-b77853138f93"
 # id = "" # 배포 시 생성된 ID로 교체
 
 # Queues
-# Queue 생성 후 아래 주석을 해제하세요
-# Queue 생성 명령어:
-#   npx wrangler queues create email-dispatch
-#   npx wrangler queues create sms-dispatch
-#   npx wrangler queues create retry-dispatch
+[[queues.producers]]
+queue = "email-dispatch"
+binding = "EMAIL_QUEUE"
 
-# [[queues.producers]]
-# queue = "email-dispatch"
-# binding = "EMAIL_QUEUE"
+[[queues.consumers]]
+queue = "email-dispatch"
+max_batch_size = 10
+max_batch_timeout = 30
 
-# [[queues.consumers]]
-# queue = "email-dispatch"
-# max_batch_size = 10
-# max_batch_timeout = 30
+[[queues.producers]]
+queue = "sms-dispatch"
+binding = "SMS_QUEUE"
 
-# [[queues.producers]]
-# queue = "sms-dispatch"
-# binding = "SMS_QUEUE"
+[[queues.consumers]]
+queue = "sms-dispatch"
+max_batch_size = 10
+max_batch_timeout = 30
 
-# [[queues.consumers]]
-# queue = "sms-dispatch"
-# max_batch_size = 10
-# max_batch_timeout = 30
-
-# [[queues.producers]]
-# queue = "retry-dispatch"
-# binding = "RETRY_QUEUE"
+[[queues.producers]]
+queue = "retry-dispatch"
+binding = "RETRY_QUEUE"
 
 # Durable Objects
 [[durable_objects.bindings]]
