@@ -16,6 +16,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { Loader2 } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 import { TemplatePreview } from '@/components/admin/template-preview'
+import { getApiUrl } from '@/lib/env'
+import { handleFetchError, handleNetworkError } from '@/lib/error-handler'
 
 interface Template {
   id: string
