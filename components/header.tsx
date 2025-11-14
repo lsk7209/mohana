@@ -27,9 +27,9 @@ export function Header() {
         <nav className="hidden md:flex flex-1 justify-end gap-8" aria-label="주요 네비게이션">
           <div className="flex items-center gap-9">
             <Link 
-              href="#services" 
+              href="/about" 
               className="text-sm font-medium leading-normal hover:text-primary transition-colors"
-              aria-label="서비스 소개로 이동"
+              aria-label="서비스 소개 페이지로 이동"
             >
               서비스 소개
             </Link>
@@ -82,7 +82,7 @@ export function Header() {
             aria-label="모바일 네비게이션"
           >
             <div className="flex flex-col gap-4">
-              <Link href="#services" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>서비스 소개</Link>
+              <Link href="/about" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>서비스 소개</Link>
               <Link href="/programs" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>프로그램</Link>
               <Link href="#reviews" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>이용후기</Link>
               <Link href="/contact" className="text-sm font-medium text-dark-slate-gray dark:text-white hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>문의하기</Link>
