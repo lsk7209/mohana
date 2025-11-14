@@ -35,6 +35,8 @@ export function DataSection() {
                     fill
                     className="object-contain"
                     sizes="160px"
+                    loading="lazy"
+                    priority={false}
                   />
                 </div>
               ))}
@@ -47,6 +49,8 @@ export function DataSection() {
                     fill
                     className="object-contain"
                     sizes="160px"
+                    loading="lazy"
+                    priority={false}
                   />
                 </div>
               ))}

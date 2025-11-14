@@ -56,6 +56,8 @@ export function SolutionSection() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 384px"
+                loading="lazy"
+                priority={false}
               />
             </div>
           </div>
