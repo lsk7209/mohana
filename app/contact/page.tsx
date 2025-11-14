@@ -5,11 +5,12 @@
  */
 'use client'
 
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from '@/hooks/use-toast'
 import { handleNetworkError, handleFetchError } from '@/lib/error-handler'
+import { getApiUrl } from '@/lib/env'
 import { useRouter } from 'next/navigation'
 import { PublicLayout } from '@/components/public-layout'
 import { ScrollAnimate } from '@/components/scroll-animate'
@@ -20,6 +21,16 @@ export default function ContactPage() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [step, setStep] = useState(1)
+  const redirectTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  
+  // 컴포넌트 언마운트 시 타임아웃 정리
+  useEffect(() => {
+    return () => {
+      if (redirectTimeoutRef.current) {
+        clearTimeout(redirectTimeoutRef.current)
+      }
+    }
+  }, [])
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -72,11 +83,16 @@ export default function ContactPage() {
   const onSubmit = useCallback(
     async (data: ContactFormValues) => {
       setIsSubmitting(true)
+      const controller = new AbortController()
+      let timeoutId: NodeJS.Timeout | null = null
+      
       try {
-        const controller = new AbortController()
-        const timeoutId = setTimeout(() => controller.abort(), 30000) // 30초 타임아웃
+        timeoutId = setTimeout(() => controller.abort(), 30000) // 30초 타임아웃
 
-        const response = await fetch('/api/leads', {
+        // getApiUrl을 사용하여 프로덕션에서 Worker URL로 요청
+        const apiUrl = getApiUrl('/api/leads')
+        
+        const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -98,7 +114,10 @@ export default function ContactPage() {
           signal: controller.signal,
         })
 
-        clearTimeout(timeoutId)
+        if (timeoutId) {
+          clearTimeout(timeoutId)
+          timeoutId = null
+        }
 
         if (!response.ok) {
           const errorMessage = await handleFetchError(response)
@@ -114,10 +133,27 @@ export default function ContactPage() {
         setStep(1)
 
         // 성공 후 2초 뒤 홈페이지로 리다이렉트
-        setTimeout(() => {
+        redirectTimeoutRef.current = setTimeout(() => {
           router.push('/')
+          redirectTimeoutRef.current = null
         }, 2000)
       } catch (error) {
+        // 타임아웃 정리
+        if (timeoutId) {
+          clearTimeout(timeoutId)
+          timeoutId = null
+        }
+        
+        // AbortError는 타임아웃 또는 취소된 요청
+        if (error instanceof Error && error.name === 'AbortError') {
+          toast({
+            title: '요청 시간 초과',
+            description: '요청 시간이 초과되었습니다. 네트워크 연결을 확인하고 다시 시도해주세요.',
+            variant: 'destructive',
+          })
+          return
+        }
+        
         const networkError = handleNetworkError(error)
         
         toast({
