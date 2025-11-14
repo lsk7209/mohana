@@ -37,19 +37,26 @@ export function LeadDetail({ leadId }: { leadId: string }) {
   useEffect(() => {
     async function fetchLead() {
       try {
-        const response = await fetch(`/api/admin/leads/${leadId}`)
+        const apiUrl = getApiUrl(`/api/admin/leads/${leadId}`)
+        const response = await fetch(apiUrl)
         if (!response.ok) {
-          throw new Error('Failed to fetch lead')
+          const errorMessage = await handleFetchError(response)
+          toast({
+            title: '오류',
+            description: errorMessage,
+            variant: 'destructive',
+          })
+          return
         }
         const result = await response.json() as LeadDetailData
         setData(result)
         setStatus(result.lead.status)
         setMemo(result.lead.memo || '')
       } catch (error) {
-        console.error('Error fetching lead:', error)
+        const networkError = handleNetworkError(error)
         toast({
-          title: '오류',
-          description: '리드 정보를 불러오는데 실패했습니다.',
+          title: '네트워크 오류',
+          description: networkError.message,
           variant: 'destructive',
         })
       } finally {

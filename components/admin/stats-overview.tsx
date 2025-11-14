@@ -3,6 +3,9 @@
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Users, Mail, MousePointerClick, TrendingUp } from 'lucide-react'
+import { getApiUrl } from '@/lib/env'
+import { handleFetchError, handleNetworkError } from '@/lib/error-handler'
+import { toast } from '@/hooks/use-toast'
 
 interface Stats {
   totalLeads: number
@@ -27,16 +30,26 @@ export function StatsOverview() {
   useEffect(() => {
     async function fetchStats() {
       try {
-        const response = await fetch('/api/admin/stats/overview')
+        const apiUrl = getApiUrl('/api/admin/stats/overview')
+        const response = await fetch(apiUrl)
         if (response.ok) {
           const data = await response.json() as Stats
           setStats(data)
         } else {
-          throw new Error('Failed to fetch stats')
+          const errorMessage = await handleFetchError(response)
+          toast({
+            title: '오류',
+            description: errorMessage,
+            variant: 'destructive',
+          })
         }
       } catch (error) {
-        console.error('Error fetching stats:', error)
-        // 에러 발생 시 기본값 유지
+        const networkError = handleNetworkError(error)
+        toast({
+          title: '네트워크 오류',
+          description: networkError.message,
+          variant: 'destructive',
+        })
       } finally {
         setLoading(false)
       }

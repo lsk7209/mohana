@@ -78,7 +78,8 @@ export function SequencesList() {
   async function handleRun(sequenceId: string, leadId: string) {
     setRunningSequence(sequenceId)
     try {
-      const response = await fetch('/api/sequences/run', {
+      const apiUrl = getApiUrl('/api/sequences/run')
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -77,8 +77,10 @@ export function SequenceDialog({
   async function loadTemplates() {
     setLoadingTemplates(true)
     try {
-      const emailResponse = await fetch('/api/templates?channel=email')
-      const smsResponse = await fetch('/api/templates?channel=sms')
+      const emailApiUrl = getApiUrl('/api/templates?channel=email')
+      const smsApiUrl = getApiUrl('/api/templates?channel=sms')
+      const emailResponse = await fetch(emailApiUrl)
+      const smsResponse = await fetch(smsApiUrl)
       
       const emailData = await emailResponse.json() as { templates?: Template[] }
       const smsData = await smsResponse.json() as { templates?: Template[] }
