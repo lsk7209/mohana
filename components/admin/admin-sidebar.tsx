@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface NavItem {
   href: string
@@ -20,6 +20,15 @@ const navItems: NavItem[] = [
 
 export function AdminSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
+
+  const handleLogout = () => {
+    // 쿠키 삭제
+    document.cookie = 'admin_auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+    // 로그인 페이지로 리다이렉트
+    router.push('/admin/login')
+    router.refresh()
+  }
 
   return (
     <aside 
@@ -74,10 +83,7 @@ export function AdminSidebar() {
         </Link>
         <button 
           aria-label="로그아웃"
-          onClick={() => {
-            // TODO: 로그아웃 로직 구현
-            console.log('로그아웃')
-          }}
+          onClick={handleLogout}
           className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-dark-gray-text dark:text-gray-300 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
           <span className="material-symbols-outlined" aria-hidden="true">logout</span>

@@ -1,26 +1,70 @@
-import { redirect } from 'next/navigation'
+'use client'
+
+import { useEffect, useState } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
 import { AdminSidebar } from '@/components/admin/admin-sidebar'
 
+/**
+ * 관리자 레이아웃 컴포넌트
+ * 인증 확인 및 사이드바 포함
+ */
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  /**
-   * Cloudflare Access 인증
-   * 
-   * 프로덕션 환경에서는 Cloudflare Access를 통해 Admin 페이지 접근을 제어합니다.
-   * Cloudflare Dashboard에서 Access 애플리케이션을 생성하고 /admin/* 경로를 보호하세요.
-   * 
-   * 로컬 개발 환경에서는 이 검증을 비활성화할 수 있습니다.
-   * 
-   * @see https://developers.cloudflare.com/cloudflare-one/policies/access/
-   */
-  // const isAuthenticated = checkAccess(request)
-  // if (!isAuthenticated) {
-  //   redirect('/login')
-  // }
+  const router = useRouter()
+  const pathname = usePathname()
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
 
+  useEffect(() => {
+    // 로그인 페이지는 인증 확인 제외
+    if (pathname === '/admin/login') {
+      setIsAuthenticated(true)
+      return
+    }
+
+    // 쿠키에서 인증 토큰 확인
+    const checkAuth = () => {
+      const cookies = document.cookie.split(';')
+      const authCookie = cookies.find(cookie => 
+        cookie.trim().startsWith('admin_auth=')
+      )
+      
+      if (authCookie && authCookie.includes('authenticated')) {
+        setIsAuthenticated(true)
+      } else {
+        setIsAuthenticated(false)
+        router.push('/admin/login')
+      }
+    }
+
+    checkAuth()
+  }, [pathname, router])
+
+  // 로그인 페이지는 그대로 렌더링
+  if (pathname === '/admin/login') {
+    return <>{children}</>
+  }
+
+  // 인증 확인 중
+  if (isAuthenticated === null) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-500">인증 확인 중...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // 인증되지 않은 경우 (리다이렉트 중)
+  if (!isAuthenticated) {
+    return null
+  }
+
+  // 인증된 경우 관리자 레이아웃 렌더링
   return (
     <div className="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden bg-light-gray-bg dark:bg-background-dark font-display">
       <div className="flex h-full grow flex-row">
@@ -32,4 +76,3 @@ export default function AdminLayout({
     </div>
   )
 }
-
