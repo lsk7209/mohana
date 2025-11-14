@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { ReactNode, CSSProperties } from 'react'
 import { useScrollAnimation } from '@/hooks/use-scroll-animation'
 
 /**
@@ -12,6 +12,8 @@ import { useScrollAnimation } from '@/hooks/use-scroll-animation'
  * @param {string} rootMargin - Intersection Observer rootMargin
  * @param {boolean} once - 한 번만 애니메이션 실행할지 여부
  * @param {string} className - 추가 CSS 클래스
+ * @param {number} delay - 애니메이션 지연 시간 (ms)
+ * @param {CSSProperties} style - 인라인 스타일
  * 
  * @example
  * <ScrollAnimate animation="slide-up">
@@ -26,6 +28,7 @@ interface ScrollAnimateProps {
   once?: boolean
   className?: string
   delay?: number
+  style?: CSSProperties
 }
 
 export function ScrollAnimate({
@@ -36,6 +39,7 @@ export function ScrollAnimate({
   once = true,
   className = '',
   delay = 0,
+  style,
 }: ScrollAnimateProps) {
   const { ref, isVisible } = useScrollAnimation({ threshold, rootMargin, once })
 
@@ -75,6 +79,7 @@ export function ScrollAnimate({
         // 레이아웃에 영향을 주지 않도록 설정
         width: '100%',
         height: 'auto',
+        ...style, // 전달된 style prop 병합
       }}
     >
       {children}
