@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/badge'
 import { Plus, Edit, Play, Loader2 } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 import { SequenceDialog } from '@/components/admin/sequence-dialog'
+import { getApiUrl } from '@/lib/env'
+import { handleFetchError, handleNetworkError } from '@/lib/error-handler'
 
 interface Sequence {
   id: string
@@ -38,16 +40,24 @@ export function SequencesList() {
   async function fetchSequences() {
     setLoading(true)
     try {
-      const response = await fetch('/api/sequences')
+      const apiUrl = getApiUrl('/api/sequences')
+      const response = await fetch(apiUrl)
       if (response.ok) {
         const data = await response.json() as { sequences?: Sequence[] }
         setSequences(data.sequences || [])
+      } else {
+        const errorMessage = await handleFetchError(response)
+        toast({
+          title: '오류',
+          description: errorMessage,
+          variant: 'destructive',
+        })
       }
     } catch (error) {
-      console.error('Error fetching sequences:', error)
+      const networkError = handleNetworkError(error)
       toast({
-        title: '오류',
-        description: '시퀀스를 불러오는데 실패했습니다.',
+        title: '네트워크 오류',
+        description: networkError.message,
         variant: 'destructive',
       })
     } finally {

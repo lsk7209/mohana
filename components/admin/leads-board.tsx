@@ -12,6 +12,9 @@ import { Pagination } from '@/components/admin/pagination'
 import { Users } from 'lucide-react'
 import Link from 'next/link'
 import type { Lead } from '@/workers/types'
+import { getApiUrl } from '@/lib/env'
+import { handleFetchError, handleNetworkError } from '@/lib/error-handler'
+import { toast } from '@/hooks/use-toast'
 
 const statusColors = {
   new: 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300',
@@ -64,12 +67,27 @@ export function LeadsBoard() {
         params.set('offset', String((currentPage - 1) * 100))
 
         const url = `/api/admin/leads${params.toString() ? '?' + params.toString() : ''}`
-        const response = await fetch(url)
+        const apiUrl = getApiUrl(url)
+        const response = await fetch(apiUrl)
+        if (!response.ok) {
+          const errorMessage = await handleFetchError(response)
+          toast({
+            title: '오류',
+            description: errorMessage,
+            variant: 'destructive',
+          })
+          return
+        }
         const data = await response.json() as { leads?: Lead[]; total?: number }
         setLeads(data.leads || [])
         setTotalPages(Math.ceil((data.total || 0) / 100))
       } catch (error) {
-        console.error('Error fetching leads:', error)
+        const networkError = handleNetworkError(error)
+        toast({
+          title: '네트워크 오류',
+          description: networkError.message,
+          variant: 'destructive',
+        })
       } finally {
         setLoading(false)
       }

@@ -8,6 +8,9 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, LineChart, Line } from 'recharts'
+import { getApiUrl } from '@/lib/env'
+import { handleFetchError, handleNetworkError } from '@/lib/error-handler'
+import { toast } from '@/hooks/use-toast'
 
 interface DailyStats {
   date: string
@@ -24,7 +27,8 @@ export function StatsChart() {
   useEffect(() => {
     async function fetchStats() {
       try {
-        const response = await fetch('/api/admin/stats/daily?days=7')
+        const apiUrl = getApiUrl('/api/admin/stats/daily?days=7')
+        const response = await fetch(apiUrl)
         if (response.ok) {
           const result = await response.json() as { data?: DailyStats[] }
           // 날짜 포맷팅
@@ -34,10 +38,20 @@ export function StatsChart() {
           }))
           setData(formattedData)
         } else {
-          throw new Error('Failed to fetch stats')
+          const errorMessage = await handleFetchError(response)
+          toast({
+            title: '오류',
+            description: errorMessage,
+            variant: 'destructive',
+          })
         }
       } catch (error) {
-        console.error('Error fetching stats:', error)
+        const networkError = handleNetworkError(error)
+        toast({
+          title: '네트워크 오류',
+          description: networkError.message,
+          variant: 'destructive',
+        })
         // 에러 발생 시 빈 데이터
         setData([])
       } finally {

@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { toast } from '@/hooks/use-toast'
 import { handleNetworkError, handleFetchError } from '@/lib/error-handler'
+import { getApiUrl } from '@/lib/env'
 
 const leadFormSchema = z.object({
   company: z.string().min(1, '회사명을 입력해주세요'),
@@ -52,7 +53,8 @@ export function LeadForm({ onSuccess, defaultTheme, className }: LeadFormProps) 
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 30000) // 30초 타임아웃
 
-      const response = await fetch('/api/leads', {
+      const apiUrl = getApiUrl('/api/leads')
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -5,6 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Mail, MessageSquare, TrendingUp, Users } from 'lucide-react'
+import { getApiUrl } from '@/lib/env'
+import { handleFetchError, handleNetworkError } from '@/lib/error-handler'
+import { toast } from '@/hooks/use-toast'
 
 interface SequencePerformance {
   sequence_id: string
@@ -35,13 +38,26 @@ export function SequencePerformance() {
 
   async function fetchSequences() {
     try {
-      const response = await fetch('/api/sequences')
+      const apiUrl = getApiUrl('/api/sequences')
+      const response = await fetch(apiUrl)
       if (response.ok) {
         const data = await response.json() as { sequences?: Sequence[] }
         setAvailableSequences(data.sequences || [])
+      } else {
+        const errorMessage = await handleFetchError(response)
+        toast({
+          title: '오류',
+          description: errorMessage,
+          variant: 'destructive',
+        })
       }
     } catch (error) {
-      console.error('Error fetching sequences:', error)
+      const networkError = handleNetworkError(error)
+      toast({
+        title: '네트워크 오류',
+        description: networkError.message,
+        variant: 'destructive',
+      })
     }
   }
 
@@ -51,14 +67,27 @@ export function SequencePerformance() {
       const url = selectedSequence
         ? `/api/admin/sequences/performance?sequence_id=${selectedSequence}`
         : '/api/admin/sequences/performance'
+      const apiUrl = getApiUrl(url)
       
-      const response = await fetch(url)
+      const response = await fetch(apiUrl)
       if (response.ok) {
         const data = await response.json() as { performance?: SequencePerformance[] }
         setPerformance(data.performance || [])
+      } else {
+        const errorMessage = await handleFetchError(response)
+        toast({
+          title: '오류',
+          description: errorMessage,
+          variant: 'destructive',
+        })
       }
     } catch (error) {
-      console.error('Error fetching performance:', error)
+      const networkError = handleNetworkError(error)
+      toast({
+        title: '네트워크 오류',
+        description: networkError.message,
+        variant: 'destructive',
+      })
     } finally {
       setLoading(false)
     }
