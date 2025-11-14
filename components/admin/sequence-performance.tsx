@@ -34,7 +34,8 @@ export function SequencePerformance() {
   useEffect(() => {
     fetchSequences()
     fetchPerformance()
-  }, [selectedSequence])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSequence]) // fetchSequences와 fetchPerformance는 안정적이므로 의존성 배열에서 제외
 
   async function fetchSequences() {
     try {

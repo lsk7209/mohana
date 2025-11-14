@@ -81,8 +81,9 @@ export function TemplateDialog({
       const url = template
         ? `/api/templates/${template.id}`
         : '/api/templates'
+      const apiUrl = getApiUrl(url)
 
-      const response = await fetch(url, {
+      const response = await fetch(apiUrl, {
         method: template ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -94,8 +95,8 @@ export function TemplateDialog({
       })
 
       if (!response.ok) {
-        const error = await response.json() as { error?: string }
-        throw new Error(error.error || '저장 실패')
+        const errorMessage = await handleFetchError(response)
+        throw new Error(errorMessage)
       }
 
       toast({

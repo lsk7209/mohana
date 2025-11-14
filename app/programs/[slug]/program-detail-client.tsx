@@ -6,7 +6,28 @@ import { Button } from '@/components/ui/button'
 import { PublicLayout } from '@/components/public-layout'
 import { FileText, ListChecks, Sparkles, HelpCircle, ShieldCheck } from 'lucide-react'
 
-export function ProgramDetailClient({ program }: { program: any }) {
+interface ProgramDetail {
+  id: string
+  slug: string
+  title: string
+  subtitle?: string
+  summary?: string
+  description?: string
+  heroImage?: string
+  duration?: number
+  headcount?: string
+  price?: string
+  theme?: string
+  curriculum?: string[]
+  effects?: string[]
+  faq?: Array<{ question: string; answer: string }>
+  skills?: string[]
+  goals?: Array<{ icon: string; title: string; description: string }>
+  reviews?: Array<{ name: string; role: string; content: string; rating: number }>
+  relatedPrograms?: Array<{ slug: string; title: string; image: string }>
+}
+
+export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
   const [activeTab, setActiveTab] = useState('overview')
   const overviewRef = useRef<HTMLDivElement>(null)
   const curriculumRef = useRef<HTMLDivElement>(null)

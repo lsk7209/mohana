@@ -8,6 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Mail, MessageSquare, Plus, Edit, Trash2 } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 import { TemplateDialog } from '@/components/admin/template-dialog'
+import { getApiUrl } from '@/lib/env'
+import { handleFetchError, handleNetworkError } from '@/lib/error-handler'
 
 interface Template {
   id: string
@@ -33,16 +35,24 @@ export function TemplatesList() {
   async function fetchTemplates() {
     setLoading(true)
     try {
-      const response = await fetch(`/api/templates?channel=${channel}`)
+      const apiUrl = getApiUrl(`/api/templates?channel=${channel}`)
+      const response = await fetch(apiUrl)
       if (response.ok) {
         const data = await response.json() as { templates?: Template[] }
         setTemplates(data.templates || [])
+      } else {
+        const errorMessage = await handleFetchError(response)
+        toast({
+          title: '오류',
+          description: errorMessage,
+          variant: 'destructive',
+        })
       }
     } catch (error) {
-      console.error('Error fetching templates:', error)
+      const networkError = handleNetworkError(error)
       toast({
-        title: '오류',
-        description: '템플릿을 불러오는데 실패했습니다.',
+        title: '네트워크 오류',
+        description: networkError.message,
         variant: 'destructive',
       })
     } finally {
@@ -64,12 +74,14 @@ export function TemplatesList() {
     if (!confirm('정말 삭제하시겠습니까?')) return
 
     try {
-      const response = await fetch(`/api/templates/${id}`, {
+      const apiUrl = getApiUrl(`/api/templates/${id}`)
+      const response = await fetch(apiUrl, {
         method: 'DELETE',
       })
 
       if (!response.ok) {
-        throw new Error('삭제 실패')
+        const errorMessage = await handleFetchError(response)
+        throw new Error(errorMessage)
       }
 
       toast({
@@ -79,9 +91,10 @@ export function TemplatesList() {
 
       fetchTemplates()
     } catch (error) {
+      const networkError = handleNetworkError(error)
       toast({
         title: '오류',
-        description: '삭제에 실패했습니다.',
+        description: networkError.message,
         variant: 'destructive',
       })
     }

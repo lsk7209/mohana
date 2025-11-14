@@ -18,6 +18,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Mail, MessageSquare, Loader2 } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 import type { Template } from '@/workers/types'
+import { getApiUrl } from '@/lib/env'
+import { handleFetchError, handleNetworkError } from '@/lib/error-handler'
 
 interface SendMessageDialogProps {
   open: boolean
@@ -115,7 +117,8 @@ export function SendMessageDialog({
     setLoading(true)
     try {
       const endpoint = channel === 'email' ? '/api/messages/send-email' : '/api/messages/send-sms'
-      const response = await fetch(endpoint, {
+      const apiUrl = getApiUrl(endpoint)
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -128,8 +131,8 @@ export function SendMessageDialog({
       })
 
       if (!response.ok) {
-        const error = await response.json() as { error?: string }
-        throw new Error(error.error || '발송 실패')
+        const errorMessage = await handleFetchError(response)
+        throw new Error(errorMessage)
       }
 
       toast({
@@ -143,9 +146,10 @@ export function SendMessageDialog({
       onSuccess?.()
       onOpenChange(false)
     } catch (error) {
+      const networkError = handleNetworkError(error)
       toast({
         title: '오류',
-        description: error instanceof Error ? error.message : '발송에 실패했습니다.',
+        description: networkError.message,
         variant: 'destructive',
       })
     } finally {

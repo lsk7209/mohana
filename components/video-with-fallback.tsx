@@ -77,7 +77,8 @@ export function VideoWithFallback({
       video.removeEventListener('loadstart', handleLoadStart)
       video.removeEventListener('loadeddata', handleLoadedData)
     }
-  }, [onError, onLoadStart, onLoadedData])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // 콜백 함수들은 안정적이므로 의존성 배열에서 제외
 
   // 에러 발생 시 fallback 이미지 표시
   if (hasError) {
