@@ -20,26 +20,40 @@ const tempTDir = join(tempDir, 't')
 const leadsIdDir = join(__dirname, '..', 'app', '(admin)', 'leads', '[id]')
 const tempLeadsIdDir = join(tempDir, 'leads-id')
 
+console.log('🔧 Pre-build script: Preparing for static export...')
+
 // 임시 디렉토리 생성
 if (!existsSync(tempDir)) {
   mkdirSync(tempDir, { recursive: true })
+  console.log(`✓ Created temp directory: ${tempDir}`)
 }
 
 // API 디렉토리가 존재하고 아직 이동되지 않은 경우에만 이동
 if (existsSync(apiDir) && !existsSync(tempApiDir)) {
-  console.log('Moving API routes to temp directory for build...')
+  console.log('📦 Moving API routes to temp directory for build...')
   renameSync(apiDir, tempApiDir)
+  console.log('✓ API routes moved')
+} else if (existsSync(tempApiDir)) {
+  console.log('ℹ API routes already moved')
 }
 
 // t 디렉토리가 존재하고 아직 이동되지 않은 경우에만 이동
 if (existsSync(tDir) && !existsSync(tempTDir)) {
-  console.log('Moving t routes to temp directory for build...')
+  console.log('📦 Moving t routes to temp directory for build...')
   renameSync(tDir, tempTDir)
+  console.log('✓ t routes moved')
+} else if (existsSync(tempTDir)) {
+  console.log('ℹ t routes already moved')
 }
 
 // leads/[id] 페이지가 존재하고 아직 이동되지 않은 경우에만 이동
 if (existsSync(leadsIdDir) && !existsSync(tempLeadsIdDir)) {
-  console.log('Moving leads/[id] page to temp directory for build...')
+  console.log('📦 Moving leads/[id] page to temp directory for build...')
   renameSync(leadsIdDir, tempLeadsIdDir)
+  console.log('✓ leads/[id] page moved')
+} else if (existsSync(tempLeadsIdDir)) {
+  console.log('ℹ leads/[id] page already moved')
 }
+
+console.log('✅ Pre-build script completed')
 

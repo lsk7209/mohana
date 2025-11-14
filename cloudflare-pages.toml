@@ -7,6 +7,11 @@ command = "npm install && npm run build"
 cwd = "."
 output_directory = "out"  # Next.js output: 'export'가 생성하는 디렉토리
 
+# 빌드 출력 디렉토리 확인:
+# - Next.js는 output: 'export' 설정으로 프로젝트 루트의 'out' 디렉토리에 빌드 출력을 생성합니다
+# - post-build.js 스크립트가 _redirects와 _headers 파일을 out 디렉토리로 복사합니다
+# - Cloudflare Pages Dashboard에서 Build output directory를 'out'으로 설정해야 합니다
+
 # npm을 명시적으로 사용하여 pnpm-lock.yaml 문제 방지
 # package.json에 packageManager 필드 추가로 npm 사용 명시
 

@@ -3,9 +3,15 @@ main = "workers/index.ts"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
-# 참고: Cloudflare Pages 빌드 출력 디렉토리는 cloudflare-pages.toml 또는 Dashboard에서 설정하세요
-# wrangler.toml은 Workers 전용 설정 파일입니다
-# Pages 설정은 cloudflare-pages.toml 파일을 사용하거나 Dashboard에서 설정해야 합니다
+# ⚠️ 중요: 이 파일은 Cloudflare Workers 전용 설정 파일입니다
+# Cloudflare Pages 설정은 cloudflare-pages.toml 파일을 사용하세요
+# 
+# Pages 빌드 출력 디렉토리는 cloudflare-pages.toml의 output_directory로 설정됩니다
+# wrangler.toml에 pages_build_output_dir을 추가하면 에러가 발생할 수 있습니다
+# 
+# 참고:
+# - Workers 배포: wrangler deploy (이 파일 사용)
+# - Pages 배포: GitHub 연결 또는 cloudflare-pages.toml 사용
 
 # D1 Database
 [[d1_databases]]

@@ -123,9 +123,27 @@ waitForOutput((outputDir) => {
   const headersDest = join(outputDir, '_headers')
   
   try {
+    // 출력 디렉토리 존재 확인
+    if (!existsSync(outputDir)) {
+      console.error(`Error: Output directory does not exist: ${outputDir}`)
+      process.exit(1)
+    }
+    
+    // 출력 디렉토리 내용 확인
+    try {
+      const outputContents = readdirSync(outputDir)
+      if (outputContents.length === 0) {
+        console.warn(`Warning: Output directory is empty: ${outputDir}`)
+      } else {
+        console.log(`Output directory contains ${outputContents.length} items`)
+      }
+    } catch (err) {
+      console.warn(`Warning: Could not read output directory: ${err.message}`)
+    }
+    
     // _redirects 파일 동적 생성
     // Worker URL은 환경 변수에서 가져오거나, 상대 경로 사용
-    const workerUrl = process.env.WORKER_URL || process.env.CLOUDFLARE_WORKER_URL
+    const workerUrl = process.env.WORKER_URL || process.env.CLOUDFLARE_WORKER_URL || process.env.NEXT_PUBLIC_WORKER_URL
     
     let redirectsContent = ''
     if (workerUrl) {
@@ -136,28 +154,31 @@ waitForOutput((outputDir) => {
 # 참고: Cloudflare Pages는 200 프록시가 외부 URL을 지원하지 않습니다
 # API 요청은 클라이언트 측에서 직접 Worker URL로 전송됩니다
 # 또는 Cloudflare Pages Functions를 사용하여 프록시할 수 있습니다
+# Worker URL: ${workerUrl}
 `
-      console.log(`Worker URL detected: ${workerUrl}`)
+      console.log(`✓ Worker URL detected: ${workerUrl}`)
       console.log('Note: Cloudflare Pages does not support external URLs in 200 proxy redirects.')
       console.log('API requests will be made directly to the Worker URL from the client.')
     } else {
       // Worker URL이 없는 경우
       redirectsContent = `# Cloudflare Pages Redirects
 # API 요청은 Cloudflare Pages Functions 또는 Workers로 처리됩니다
-# WORKER_URL 환경 변수를 설정하면 클라이언트에서 직접 Worker로 요청합니다
+# NEXT_PUBLIC_WORKER_URL 환경 변수를 Cloudflare Pages Dashboard에서 설정하세요
+# 예: NEXT_PUBLIC_WORKER_URL=https://mohana-worker.your-account.workers.dev
 `
-      console.warn('Warning: WORKER_URL not set.')
+      console.warn('⚠ Warning: NEXT_PUBLIC_WORKER_URL not set.')
       console.warn('API requests will not work without a Worker URL.')
+      console.warn('Please set NEXT_PUBLIC_WORKER_URL in Cloudflare Pages Dashboard → Settings → Environment Variables')
     }
     
     // _redirects 파일 작성
     writeFileSync(redirectsDest, redirectsContent, 'utf-8')
-    console.log('_redirects file generated in output directory')
+    console.log(`✓ _redirects file generated at: ${redirectsDest}`)
     
     // _headers 파일 복사
     if (existsSync(headersSource)) {
       cpSync(headersSource, headersDest, { force: true })
-      console.log('_headers file copied to output directory')
+      console.log(`✓ _headers file copied to: ${headersDest}`)
     } else {
       // _headers 파일이 없으면 기본 보안 헤더 생성
       const defaultHeaders = `# Cloudflare Pages Headers
@@ -171,16 +192,35 @@ waitForOutput((outputDir) => {
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://vercel.live https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; img-src 'self' data: https: blob:; media-src 'self' https: blob:; connect-src 'self' https://vercel.live https://*.vercel-scripts.com https://*.workers.dev wss://*.vercel.live; frame-ancestors 'none'; base-uri 'self'; form-action 'self';
 `
       writeFileSync(headersDest, defaultHeaders, 'utf-8')
-      console.log('_headers file generated with default security headers')
+      console.log(`✓ _headers file generated with default security headers at: ${headersDest}`)
     }
+    
+    // 빌드 출력 검증
+    const indexHtml = join(outputDir, 'index.html')
+    if (!existsSync(indexHtml)) {
+      console.warn('⚠ Warning: index.html not found in output directory')
+      console.warn('This may indicate a build issue.')
+    } else {
+      console.log('✓ index.html found in output directory')
+    }
+    
   } catch (error) {
-    console.error('Error: Could not create _redirects or _headers:', error.message)
+    console.error('❌ Error: Could not create _redirects or _headers:', error.message)
+    console.error('Stack trace:', error.stack)
     process.exit(1)
   }
   
   // Cloudflare Pages는 'out' 디렉토리를 직접 사용하므로 추가 복사 불필요
   // cloudflare-pages.toml에서 output_directory = "out"으로 설정되어 있음
-  console.log(`Build output ready at: ${outputDir}`)
-  console.log('Cloudflare Pages will use this directory as the output directory.')
+  console.log('')
+  console.log('✅ Build output ready!')
+  console.log(`   Output directory: ${outputDir}`)
+  console.log('   Cloudflare Pages will use this directory as the output directory.')
+  console.log('')
+  console.log('📋 Deployment Checklist:')
+  console.log('   1. Verify NEXT_PUBLIC_WORKER_URL is set in Cloudflare Pages Dashboard')
+  console.log('   2. Verify Build output directory is set to "out" in Dashboard')
+  console.log('   3. Check deployment logs for any errors')
+  console.log('')
 })
 
