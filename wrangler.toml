@@ -8,12 +8,10 @@ compatibility_flags = ["nodejs_compat"]
 # Pages 설정은 cloudflare-pages.toml 파일을 사용하거나 Dashboard에서 설정해야 합니다
 
 # D1 Database
-# Pages 빌드에서는 필요하지 않으므로 주석 처리
-# Workers 배포 시 아래 주석을 해제하고 ID를 입력하세요
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "healingwork-db"
-# database_id = "" # 배포 시 생성된 ID로 교체
+[[d1_databases]]
+binding = "DB"
+database_name = "mohana-db"
+database_id = "90b1045e-372e-417b-bdea-b77853138f93"
 
 # KV Namespaces
 # Pages 빌드에서는 필요하지 않으므로 주석 처리
