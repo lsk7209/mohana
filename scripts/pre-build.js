@@ -4,7 +4,7 @@
  * 빌드 전에 이를 임시로 다른 위치로 이동합니다.
  */
 
-import { existsSync, mkdirSync, renameSync } from 'fs'
+import { existsSync, mkdirSync, renameSync, rmSync } from 'fs'
 import { join } from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
@@ -21,6 +21,8 @@ const leadsIdDir = join(__dirname, '..', 'app', '(admin)', 'leads', '[id]')
 const tempLeadsIdDir = join(tempDir, 'leads-id')
 const adminProgramsEditDir = join(__dirname, '..', 'app', 'admin', 'programs', '[slug]', 'edit')
 const tempAdminProgramsEditDir = join(tempDir, 'admin-programs-edit')
+const adminLeadsIdDir = join(__dirname, '..', 'app', 'admin', 'leads', '[id]')
+const tempAdminLeadsIdDir = join(tempDir, 'admin-leads-id')
 
 console.log('🔧 Pre-build script: Preparing for static export...')
 
@@ -58,12 +60,33 @@ if (existsSync(leadsIdDir) && !existsSync(tempLeadsIdDir)) {
 }
 
 // admin/programs/[slug]/edit 페이지가 존재하고 아직 이동되지 않은 경우에만 이동
-if (existsSync(adminProgramsEditDir) && !existsSync(tempAdminProgramsEditDir)) {
-  console.log('📦 Moving admin/programs/[slug]/edit page to temp directory for build...')
-  renameSync(adminProgramsEditDir, tempAdminProgramsEditDir)
-  console.log('✓ admin/programs/[slug]/edit page moved')
+if (existsSync(adminProgramsEditDir)) {
+  if (!existsSync(tempAdminProgramsEditDir)) {
+    console.log('📦 Moving admin/programs/[slug]/edit page to temp directory for build...')
+    renameSync(adminProgramsEditDir, tempAdminProgramsEditDir)
+    console.log('✓ admin/programs/[slug]/edit page moved')
+  } else {
+    // 이미 이동된 경우 원본 디렉토리만 삭제
+    rmSync(adminProgramsEditDir, { recursive: true, force: true })
+    console.log('✓ admin/programs/[slug]/edit page removed (already in temp)')
+  }
 } else if (existsSync(tempAdminProgramsEditDir)) {
   console.log('ℹ admin/programs/[slug]/edit page already moved')
+}
+
+// admin/leads/[id] 페이지가 존재하고 아직 이동되지 않은 경우에만 이동
+if (existsSync(adminLeadsIdDir)) {
+  if (!existsSync(tempAdminLeadsIdDir)) {
+    console.log('📦 Moving admin/leads/[id] page to temp directory for build...')
+    renameSync(adminLeadsIdDir, tempAdminLeadsIdDir)
+    console.log('✓ admin/leads/[id] page moved')
+  } else {
+    // 이미 이동된 경우 원본 디렉토리만 삭제
+    rmSync(adminLeadsIdDir, { recursive: true, force: true })
+    console.log('✓ admin/leads/[id] page removed (already in temp)')
+  }
+} else if (existsSync(tempAdminLeadsIdDir)) {
+  console.log('ℹ admin/leads/[id] page already moved')
 }
 
 console.log('✅ Pre-build script completed')

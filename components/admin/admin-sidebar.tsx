@@ -11,8 +11,10 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { href: '/admin/dashboard', icon: 'dashboard', label: '대시보드' },
+  { href: '/admin/stats', icon: 'analytics', label: '통계 상세' },
   { href: '/admin/leads', icon: 'leaderboard', label: '리드 관리' },
   { href: '/admin/inquiries', icon: 'forum', label: '문의 관리' },
+  { href: '/admin/messages', icon: 'history', label: '발송 이력' },
   { href: '/admin/programs', icon: 'play_lesson', label: '강의 관리' },
   { href: '/admin/instructors', icon: 'school', label: '강사 관리' },
   { href: '/admin/sequences', icon: 'schedule', label: '시퀀스 관리' },
