@@ -759,6 +759,75 @@ function getProgram(slug: string) {
         { slug: 'art-therapy', title: '아트 테라피', image: 'https://via.placeholder.com/400x225' },
       ],
     },
+    'self-discovery': {
+      id: 'self-discovery',
+      slug: 'self-discovery',
+      title: '나를 찾아가는 자기변화 레슨 – 명상·상담',
+      subtitle: '일과 관계 속에서 흔들리는 나를 돌아보고, 진짜 내가 원하는 삶의 방향을 함께 찾아가는 내면 성장 프로그램입니다.',
+      summary: '일과 관계 속에서 흔들리는 나를 돌아보고, 진짜 내가 원하는 삶의 방향을 함께 찾아가는 내면 성장 프로그램입니다.',
+      description:
+        '빠르게 변하는 환경 속에서 많은 직장인들이 "열심히는 사는데, 내가 정말 원하는 삶인지"를 고민합니다. 하지만 정작 나 자신을 진지하게 돌아볼 시간과 구조는 부족합니다. 이 프로그램은 잠시 멈춰 서서 지금 이 순간의 나를 바라보고, 철학·심리·명상이라는 렌즈를 통해 "나는 누구인지, 앞으로 어떻게 살고 싶은지"를 스스로 정리해보는 내면 변화 레슨입니다.',
+      heroImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDrqhBqXIQzPsK1lK3pywejEUvmuyXssPaLQopMeAc51HrDPH3Xb1ihtyIdEahGfBVrTIYO6BXmp41_gzdYtxo4JCXuTfcQBRzCXetFlq6dpb8hIQPAmh6XDuDtpIVRKbWnLMiNopw6H8HreWlhx2g-TjRjlIjSC_p1D3IJwIfDFCY-9zd-jEnFyyybTaeOvjeLw0dFyGU4aKhV2Og9Ziv5g_ntVTbrm2NTlxqpjXPt2ayNTMGG8byZny9iPg1HB8H_aJxSxj76W0iN',
+      duration: 4,
+      headcount: '10-30명',
+      price: '1인당 12만원 ~',
+      theme: '자기계발',
+      curriculum: [
+        '1시간: 나를 비추는 거울 - 아이스브레이킹, "요즘 나를 한 단어로 표현하기", 일·관계·건강·성장 등 삶의 영역을 간단 워크시트로 진단',
+        '1시간: 철학·심리로 보는 "나" - 동서양 철학·심리가 말하는 나·행복·관계 개념 소개, 짧은 영상·텍스트를 보고 느낌·생각 나누기',
+        '1시간: 수사학적 글쓰기와 대화 - "지금까지의 나" / "앞으로 되고 싶은 나"를 글로 써보는 시간, 짝 또는 소그룹과 함께 공감적 대화(원하는 범위에서만 공유)',
+        '1시간: 명상과 실행 계획 - 호흡·이미지 명상으로 마음을 가라앉히고 내면의 목소리 듣기, 앞으로 1개월간 실천할 작은 변화 2~3가지 정리 및 마무리 나눔',
+      ],
+      effects: [
+        '내 감정·생각·가치를 언어로 정리하는 메타인지 능력 향상',
+        '관계·일·미래에 대한 관점을 재구성하며 심리적 여유와 안정감 확보',
+        '명상·글쓰기·대화를 통한 감정 정리와, 현실적인 실행 계획 초안 마련',
+      ],
+      faq: [
+        {
+          question: '명상이나 철학 공부를 해본 적이 없어도 괜찮나요?',
+          answer: '네. 어려운 이론 강의가 아니라, 일상 언어로 풀어 설명하고 간단한 명상·실습 중심으로 진행합니다.',
+        },
+        {
+          question: '개인적인 이야기를 꼭 나누어야 하나요?',
+          answer: '아닙니다. 나눔은 전적으로 선택 사항이며, 편안한 수준에서만 이야기하도록 구조를 설계합니다.',
+        },
+        {
+          question: '한 번 참여해도 도움이 될까요, 아니면 연속 과정이어야 하나요?',
+          answer: '한 번만으로도 "지금의 나를 정리하는 경험"을 할 수 있고, 원할 경우 연속 과정으로 확장해 더 깊게 다루는 것도 가능합니다.',
+        },
+      ],
+      instructor: {
+        name: '김상완',
+        title: '나를 찾아가는 여행의 멘토 | 명상·철학·심리 결합 강의',
+        bio: '동서양 철학, 종교, 심리, 명상 등을 바탕으로 "나를 인지하고 찾아가는" 수업을 다수 진행해온 내면 성장 특화 강사입니다. 금융·교육·청년 아카데미 등 다양한 현장에서 강의와 상담을 병행해 왔습니다.',
+        quote: '내 마음을 이해하는 순간, 삶의 방향도 함께 보입니다.',
+        photo: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBFh3uoqHzFgKNmBye5VqXUI1AmTbcNWltAeg9JK5qh_qw0t-tZSW67tA3lZTfKrTkN0KtWb10o2EhXNJrTFz-9Infsxs_U2WibjlvPkQ-AtGJ_DW0uVF_RYNd7HMhp72A5W6T3OkTNAkaI8QrzZ2wPBbbN2A6or1Zk5Begnd-_QchWhszXf-c3CLbfa9HqTHmWseixkq6HPven-ajOgNk7B1oCriqd_2vifzSz7Wu2VXPVaTi_dVBlQ75ykDtvyzlpbYHjuembJwsP',
+        skills: ['심리', '자기계발', '명상'],
+      },
+      goals: [
+        {
+          icon: 'workspace_premium',
+          title: '주요 목표',
+          description: '나의 감정·생각·가치를 정리하고, 스스로 삶의 방향을 설계할 수 있는 기반을 만듭니다. 동서양 철학·심리·명상 관점을 통해 나를 더 깊이 이해하도록 돕습니다.',
+        },
+        {
+          icon: 'groups',
+          title: '추천 대상',
+          description: '번아웃·혼란감으로 마음 정리가 필요한 직장인, "나는 누구인가, 어떻게 살아야 하지?"를 자주 떠올리는 조직 구성원, 팀원들의 정서적 회복과 자기이해를 돕고 싶은 조직, HR·교육 담당자',
+        },
+        {
+          icon: 'trending_up',
+          title: '기대 효과',
+          description: '자신에 대한 이해와 자존감 향상, 관계와 일에 대한 관점을 재정리하며 정서적 여유 확보, 삶의 우선순위·가치 재정렬을 통해 현실적인 실행 계획 수립',
+        },
+      ],
+      reviews: [],
+      relatedPrograms: [
+        { slug: 'healing', title: '스트레스 클리닉', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDrqhBqXIQzPsK1lK3pywejEUvmuyXssPaLQopMeAc51HrDPH3Xb1ihtyIdEahGfBVrTIYO6BXmp41_gzdYtxo4JCXuTfcQBRzCXetFlq6dpb8hIQPAmh6XDuDtpIVRKbWnLMiNopw6H8HreWlhx2g-TjRjlIjSC_p1D3IJwIfDFCY-9zd-jEnFyyybTaeOvjeLw0dFyGU4aKhV2Og9Ziv5g_ntVTbrm2NTlxqpjXPt2ayNTMGG8byZny9iPg1HB8H_aJxSxj76W0iN' },
+        { slug: 'growth', title: '성장 마인드셋', image: 'https://via.placeholder.com/400x225' },
+      ],
+    },
   }
 
   return programs[slug] || null
@@ -777,6 +846,7 @@ export async function generateStaticParams() {
     { slug: 'teambuilding' },
     { slug: 'innovation' },
     { slug: 'healing' },
+    { slug: 'self-discovery' },
     { slug: 'digital' },
     { slug: 'art-therapy' },
     { slug: 'cooking' },
