@@ -1,10 +1,13 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { PublicLayout } from '@/components/public-layout'
 import { FileText, ListChecks, Sparkles, HelpCircle, ShieldCheck } from 'lucide-react'
+
+// PublicLayout 컴포넌트 타입 확인
+type PublicLayoutType = typeof PublicLayout
 
 interface ProgramDetail {
   id: string
@@ -37,13 +40,13 @@ interface ProgramDetail {
 
 export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
   const [activeTab, setActiveTab] = useState('overview')
-  const overviewRef = useRef<HTMLDivElement>(null)
-  const curriculumRef = useRef<HTMLDivElement>(null)
-  const effectsRef = useRef<HTMLDivElement>(null)
-  const faqRef = useRef<HTMLDivElement>(null)
+  const overviewRef = useRef<HTMLElement>(null)
+  const curriculumRef = useRef<HTMLElement>(null)
+  const effectsRef = useRef<HTMLElement>(null)
+  const faqRef = useRef<HTMLElement>(null)
 
   const scrollToSection = (section: string) => {
-    let targetRef: React.RefObject<HTMLDivElement | null> | null = null
+    let targetRef: React.RefObject<HTMLElement | null> | null = null
     
     switch (section) {
       case 'overview':
