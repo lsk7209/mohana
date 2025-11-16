@@ -268,12 +268,47 @@ export default function AdminProgramsPage() {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <Link
-                      href={`/admin/programs/${program.slug || program.id}/edit`}
-                      className="text-primary hover:text-primary/80 text-sm font-medium"
-                    >
-                      편집
-                    </Link>
+                    <div className="flex items-center gap-2">
+                      <Link
+                        href={`/admin/programs/${program.slug || program.id}/edit`}
+                        className="text-primary hover:text-primary/80 text-sm font-medium"
+                      >
+                        편집
+                      </Link>
+                      <button
+                        className="text-red-500 hover:text-red-700 text-sm font-medium"
+                        onClick={async () => {
+                          if (!confirm('정말 삭제하시겠습니까?')) return
+                          try {
+                            const apiUrl = getApiUrl(`/api/admin/programs/${program.slug || program.id}`)
+                            const response = await fetch(apiUrl, {
+                              method: 'DELETE',
+                            })
+
+                            if (response.ok) {
+                              toast({
+                                title: '삭제 완료',
+                                description: '프로그램이 삭제되었습니다.',
+                              })
+                              // 목록 새로고침
+                              const programsResponse = await fetch(getApiUrl('/api/admin/programs'))
+                              if (programsResponse.ok) {
+                                const data = await programsResponse.json() as { programs?: any[] }
+                                setPrograms(data.programs || staticPrograms as any)
+                              }
+                            }
+                          } catch (error) {
+                            toast({
+                              title: '오류',
+                              description: '삭제에 실패했습니다.',
+                              variant: 'destructive',
+                            })
+                          }
+                        }}
+                      >
+                        삭제
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
