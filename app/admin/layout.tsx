@@ -24,6 +24,18 @@ export default function AdminLayout({
       return
     }
 
+    // 개발 단계: 인증 우회
+    const isDevelopment = typeof window !== 'undefined' && (
+      process.env.NODE_ENV === 'development' ||
+      window.location.hostname === 'localhost' ||
+      window.location.hostname.includes('.pages.dev')
+    )
+    
+    if (isDevelopment) {
+      setIsAuthenticated(true)
+      return
+    }
+
     // 쿠키에서 인증 토큰 확인
     const checkAuth = () => {
       const cookies = document.cookie.split(';')

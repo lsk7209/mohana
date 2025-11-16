@@ -1,18 +1,36 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 
 /**
  * 관리자 로그인 페이지
- * 비밀번호: 1234
+ * 개발 단계: 자동 로그인 (비밀번호 불필요)
+ * 프로덕션: 비밀번호: 1234
  */
 export default function AdminLoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+
+  // 개발 단계: 자동 로그인
+  useEffect(() => {
+    const isDevelopment = typeof window !== 'undefined' && (
+      process.env.NODE_ENV === 'development' ||
+      window.location.hostname === 'localhost' ||
+      window.location.hostname.includes('.pages.dev')
+    )
+    
+    if (isDevelopment) {
+      const expires = new Date()
+      expires.setTime(expires.getTime() + 7 * 24 * 60 * 60 * 1000) // 7일
+      document.cookie = `admin_auth=authenticated; expires=${expires.toUTCString()}; path=/`
+      router.push('/admin')
+      router.refresh()
+    }
+  }, [router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
