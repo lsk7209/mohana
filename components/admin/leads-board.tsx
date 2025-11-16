@@ -52,49 +52,50 @@ export function LeadsBoard() {
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
   const [viewMode, setViewMode] = useState<'kanban' | 'table'>('kanban')
 
-  useEffect(() => {
-    async function fetchLeads() {
-      try {
-        const params = new URLSearchParams()
-        if (statusFilter !== 'all') {
-          params.set('status', statusFilter)
-        }
-        if (searchQuery.trim()) {
-          params.set('search', searchQuery.trim())
-        }
+  const fetchLeads = useCallback(async () => {
+    setLoading(true)
+    try {
+      const params = new URLSearchParams()
+      if (statusFilter !== 'all') {
+        params.set('status', statusFilter)
+      }
+      if (searchQuery.trim()) {
+        params.set('search', searchQuery.trim())
+      }
 
-        params.set('limit', '100')
-        params.set('offset', String((currentPage - 1) * 100))
+      params.set('limit', '100')
+      params.set('offset', String((currentPage - 1) * 100))
 
-        const url = `/api/admin/leads${params.toString() ? '?' + params.toString() : ''}`
-        const apiUrl = getApiUrl(url)
-        const response = await fetch(apiUrl)
-        if (!response.ok) {
-          const errorMessage = await handleFetchError(response)
-          toast({
-            title: '오류',
-            description: errorMessage,
-            variant: 'destructive',
-          })
-          return
-        }
-        const data = await response.json() as { leads?: Lead[]; total?: number }
-        setLeads(data.leads || [])
-        setTotalPages(Math.ceil((data.total || 0) / 100))
-      } catch (error) {
-        const networkError = handleNetworkError(error)
+      const url = `/api/admin/leads${params.toString() ? '?' + params.toString() : ''}`
+      const apiUrl = getApiUrl(url)
+      const response = await fetch(apiUrl)
+      if (!response.ok) {
+        const errorMessage = await handleFetchError(response)
         toast({
-          title: '네트워크 오류',
-          description: networkError.message,
+          title: '오류',
+          description: errorMessage,
           variant: 'destructive',
         })
-      } finally {
-        setLoading(false)
+        return
       }
+      const data = await response.json() as { leads?: Lead[]; total?: number }
+      setLeads(data.leads || [])
+      setTotalPages(Math.ceil((data.total || 0) / 100))
+    } catch (error) {
+      const networkError = handleNetworkError(error)
+      toast({
+        title: '네트워크 오류',
+        description: networkError.message,
+        variant: 'destructive',
+      })
+    } finally {
+      setLoading(false)
     }
-
-    fetchLeads()
   }, [statusFilter, searchQuery, currentPage])
+
+  useEffect(() => {
+    fetchLeads()
+  }, [fetchLeads])
 
   if (loading) {
     return <LoadingState message="리드를 불러오는 중..." />

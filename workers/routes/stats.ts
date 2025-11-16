@@ -119,8 +119,13 @@ export async function getDailyStats(request: Request, env: Env): Promise<Respons
     )
   } catch (error) {
     console.error('Error fetching daily stats:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
+      JSON.stringify({ 
+        error: 'Internal server error',
+        message: errorMessage,
+        details: process.env.ENVIRONMENT === 'development' ? String(error) : undefined
+      }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     )
   }
@@ -184,8 +189,13 @@ export async function getOverviewStats(request: Request, env: Env): Promise<Resp
     )
   } catch (error) {
     console.error('Error fetching overview stats:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
+      JSON.stringify({ 
+        error: 'Internal server error',
+        message: errorMessage,
+        details: process.env.ENVIRONMENT === 'development' ? String(error) : undefined
+      }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     )
   }
