@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { PublicLayout } from '@/components/public-layout'
-import { FileText, ListChecks, Sparkles, HelpCircle, ShieldCheck } from 'lucide-react'
+import { FileText, ListChecks, Sparkles, HelpCircle, ShieldCheck, Clock } from 'lucide-react'
 
 interface ProgramDetail {
   id: string
@@ -302,24 +302,67 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                 aria-labelledby="curriculum-tab"
                 className="scroll-mt-24 rounded-lg bg-surface-light dark:bg-surface-dark shadow-sm p-6 sm:p-8"
               >
-                <h2 id="curriculum-heading" className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6 flex items-center gap-2">
+                <h2 id="curriculum-heading" className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-8 flex items-center gap-2">
                   <ListChecks className="w-6 h-6 text-primary" aria-hidden="true" />
                   어떻게 진행되나 (커리큘럼)
                 </h2>
                 <div className="space-y-4">
                   {program.curriculum && program.curriculum.length > 0 ? (
-                    <ul className="space-y-4">
-                      {program.curriculum.map((item: string, idx: number) => (
-                        <li key={idx} className="flex items-start gap-4">
-                          <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-bold mt-0.5">
-                            {idx + 1}
-                          </span>
-                          <p className="text-text-light-primary dark:text-text-dark-primary text-base font-normal leading-relaxed flex-1">
-                            {item}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="space-y-4">
+                      {program.curriculum.map((item: string, idx: number) => {
+                        // 커리큘럼 항목 파싱: "시간: 제목 - 설명" 형식
+                        const timeMatch = item.match(/^(\d+시간):\s*(.+?)(?:\s*-\s*(.+))?$/)
+                        const time = timeMatch ? timeMatch[1] : null
+                        const title = timeMatch ? timeMatch[2].trim() : null
+                        const description = timeMatch && timeMatch[3] ? timeMatch[3].trim() : item
+                        const curriculumLength = program.curriculum?.length || 0
+
+                        return (
+                          <article
+                            key={idx}
+                            className="group relative rounded-xl border border-border-light dark:border-border-dark bg-white dark:bg-gray-900/50 p-6 transition-all hover:shadow-md hover:border-primary/30"
+                          >
+                            <div className="flex gap-4">
+                              {/* 단계 번호 및 시간 */}
+                              <div className="flex flex-col items-center gap-2 flex-shrink-0">
+                                <div className="relative">
+                                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center border-2 border-primary/30 group-hover:border-primary/50 transition-colors">
+                                    <span className="text-primary font-bold text-lg">{idx + 1}</span>
+                                  </div>
+                                  {idx < curriculumLength - 1 && (
+                                    <div className="absolute left-1/2 top-full w-0.5 h-8 bg-gradient-to-b from-primary/30 to-transparent transform -translate-x-1/2 mt-2" />
+                                  )}
+                                </div>
+                                {time && (
+                                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold whitespace-nowrap">
+                                    <Clock className="w-3 h-3" aria-hidden="true" />
+                                    <span>{time}</span>
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* 내용 */}
+                              <div className="flex-1 pt-1">
+                                {title ? (
+                                  <>
+                                    <h3 className="text-lg font-bold text-text-light-primary dark:text-text-dark-primary mb-2 leading-tight">
+                                      {title}
+                                    </h3>
+                                    <p className="text-text-light-secondary dark:text-text-dark-secondary text-sm leading-relaxed">
+                                      {description}
+                                    </p>
+                                  </>
+                                ) : (
+                                  <p className="text-text-light-primary dark:text-text-dark-primary text-base leading-relaxed">
+                                    {item}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                          </article>
+                        )
+                      })}
+                    </div>
                   ) : (
                     <p className="text-text-light-secondary dark:text-text-dark-secondary text-base font-normal leading-relaxed">
                       커리큘럼 정보를 준비 중입니다.
