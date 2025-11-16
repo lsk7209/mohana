@@ -14,7 +14,7 @@ interface DailyStats {
   emails: number
   opens: number
   clicks: number
-  messages?: number // UI 호환성을 위한 선택적 필드
+  messages: number // UI 호환성을 위한 필드 (항상 포함됨)
 }
 
 /**
@@ -38,7 +38,7 @@ export default function AdminStatsPage() {
         const stats = data.data || []
         
         // emails 필드를 messages로 매핑 (UI 호환성)
-        const mappedStats = stats.map(stat => ({
+        const mappedStats: DailyStats[] = stats.map(stat => ({
           ...stat,
           messages: stat.emails || 0,
         }))
