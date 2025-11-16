@@ -42,7 +42,7 @@ export function ValuesSection() {
 
   return (
     <section className="py-16 md:py-24 bg-gradient-to-b from-white via-primary/5 to-white dark:from-background-dark dark:via-primary/10 dark:to-background-dark" id="values" aria-labelledby="values-heading">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-10 px-4 py-10">
           <ScrollAnimate animation="slide-up" className="text-center">
             <span className="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4">

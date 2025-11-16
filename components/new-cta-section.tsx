@@ -12,7 +12,7 @@ import { ScrollAnimate } from "@/components/scroll-animate"
 export function NewCTASection() {
   return (
     <section className="py-20 md:py-32 my-16" aria-labelledby="cta-heading">
-      <div className="max-w-5xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollAnimate animation="scale" className="relative rounded-2xl p-10 md:p-16 text-center overflow-hidden" style={{ backgroundImage: 'linear-gradient(135deg, #B2C7E5 0%, #A8D8C9 100%)' }}>
           {/* 배경 패턴 */}
           <div className="absolute inset-0 opacity-10">

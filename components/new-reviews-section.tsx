@@ -37,7 +37,7 @@ export function NewReviewsSection() {
 
   return (
     <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-background-dark" id="reviews" aria-labelledby="reviews-heading">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollAnimate animation="slide-up" className="text-center px-4 pb-12 pt-5">
           <span className="inline-block px-4 py-1 rounded-full bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-sm font-semibold mb-4">
             ⭐ 검증된 성과

@@ -13,7 +13,7 @@ import { NewCTASection } from "@/components/new-cta-section"
 export default function Home() {
   return (
     <PublicLayout>
-      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <NewHeroSection />
         <ConcernsSection />
         <ValuesSection />

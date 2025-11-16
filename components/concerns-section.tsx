@@ -36,7 +36,7 @@ export function ConcernsSection() {
 
   return (
     <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-background-dark" id="concerns" aria-labelledby="concerns-heading">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollAnimate animation="slide-up" className="px-4 pb-12 pt-5">
           <div className="text-center mb-4">
             <span className="inline-block px-4 py-1 rounded-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm font-semibold mb-4">
