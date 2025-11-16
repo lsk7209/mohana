@@ -6,9 +6,6 @@ import { Button } from '@/components/ui/button'
 import { PublicLayout } from '@/components/public-layout'
 import { FileText, ListChecks, Sparkles, HelpCircle, ShieldCheck } from 'lucide-react'
 
-// PublicLayout 컴포넌트 타입 확인
-type PublicLayoutType = typeof PublicLayout
-
 interface ProgramDetail {
   id: string
   slug: string
@@ -284,7 +281,6 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                 role="tabpanel"
                 aria-labelledby="overview-tab"
                 className="scroll-mt-24 rounded-lg bg-surface-light dark:bg-surface-dark shadow-sm p-6 sm:p-8"
-                aria-labelledby="overview-heading"
               >
                 <h2 id="overview-heading" className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6 flex items-center gap-2">
                   <FileText className="w-6 h-6 text-primary" aria-hidden="true" />
@@ -305,7 +301,6 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                 role="tabpanel"
                 aria-labelledby="curriculum-tab"
                 className="scroll-mt-24 rounded-lg bg-surface-light dark:bg-surface-dark shadow-sm p-6 sm:p-8"
-                aria-labelledby="curriculum-heading"
               >
                 <h2 id="curriculum-heading" className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6 flex items-center gap-2">
                   <ListChecks className="w-6 h-6 text-primary" aria-hidden="true" />
@@ -341,7 +336,6 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                 role="tabpanel"
                 aria-labelledby="effects-tab"
                 className="scroll-mt-24 rounded-lg bg-surface-light dark:bg-surface-dark shadow-sm p-6 sm:p-8"
-                aria-labelledby="effects-heading"
               >
                 <h2 id="effects-heading" className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6 flex items-center gap-2">
                   <Sparkles className="w-6 h-6 text-primary" aria-hidden="true" />
@@ -375,7 +369,6 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                 role="tabpanel"
                 aria-labelledby="faq-tab"
                 className="scroll-mt-24 rounded-lg bg-surface-light dark:bg-surface-dark shadow-sm p-6 sm:p-8"
-                aria-labelledby="faq-heading"
               >
                 <h2 id="faq-heading" className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6 flex items-center gap-2">
                   <HelpCircle className="w-6 h-6 text-primary" aria-hidden="true" />
@@ -402,7 +395,7 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                     </p>
                   )}
                 </div>
-              </div>
+              </section>
             </div>
 
             {/* Reviews Section */}

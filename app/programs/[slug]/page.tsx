@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import ProgramDetailClient from './program-detail-client'
+import { ProgramDetailClient } from './program-detail-client'
 import { StructuredData } from '@/components/structured-data'
 
 /**
