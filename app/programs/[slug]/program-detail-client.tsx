@@ -113,27 +113,31 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
   return (
     <PublicLayout>
       <main className="flex flex-1 justify-center py-5 sm:py-8 md:py-12">
-          <div className="layout-content-container flex flex-col max-w-[960px] flex-1 px-4 sm:px-6 lg:px-8 space-y-12 md:space-y-16">
+          <article className="layout-content-container flex flex-col max-w-[960px] flex-1 px-4 sm:px-6 lg:px-8 space-y-12 md:space-y-16">
             {/* Hero Section */}
-            <div className="@container">
+            <header className="@container">
               <div className="@[480px]:p-0">
                 <div
                   className="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 rounded-xl items-start justify-end px-6 pb-10 @[480px]:px-10"
                   style={{
                     backgroundImage: `linear-gradient(to top, rgba(16, 34, 29, 0.7) 0%, rgba(16, 34, 29, 0) 100%), url('${program.heroImage}')`,
                   }}
+                  role="img"
+                  aria-label={`${program.title} 프로그램 히어로 이미지`}
                 >
                   <div className="flex flex-col gap-2 text-left">
                     <h1 className="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
                       {program.title}
                     </h1>
-                    <h2 className="text-gray-200 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
-                      {program.subtitle}
-                    </h2>
+                    {program.subtitle && (
+                      <p className="text-gray-200 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
+                        {program.subtitle}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
-            </div>
+            </header>
 
             {/* Goals Cards */}
             {program.goals && program.goals.length > 0 && (
