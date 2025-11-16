@@ -14,6 +14,8 @@ const navItems: NavItem[] = [
   { href: '/admin/leads', icon: 'leaderboard', label: '리드 관리' },
   { href: '/admin/inquiries', icon: 'forum', label: '문의 관리' },
   { href: '/admin/programs', icon: 'play_lesson', label: '강의 관리' },
+  { href: '/admin/instructors', icon: 'school', label: '강사 관리' },
+  { href: '/admin/sequences', icon: 'schedule', label: '시퀀스 관리' },
   { href: '/admin/templates', icon: 'mail', label: '템플릿 관리' },
   { href: '/admin/settings', icon: 'settings', label: '발송 설정' },
 ]

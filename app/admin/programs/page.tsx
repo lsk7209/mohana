@@ -3,6 +3,44 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import type { Program } from '@/workers/types'
+import { getApiUrl } from '@/lib/env'
+import { toast } from '@/hooks/use-toast'
+
+// 정적 프로그램 데이터 (임시)
+const staticPrograms = [
+  {
+    id: 'communication-skill',
+    slug: 'communication-skill',
+    title: '[소통 레벨업] 우리 팀을 하나로 만드는 커뮤니케이션 스킬',
+    instructor_id: '김민준',
+    theme: '소통',
+    is_published: true,
+  },
+  {
+    id: 'leadership',
+    slug: 'leadership',
+    title: '[리더십 강화] 성공하는 리더의 핵심 역량',
+    instructor_id: '이수진',
+    theme: '리더십',
+    is_published: true,
+  },
+  {
+    id: 'teambuilding',
+    slug: 'teambuilding',
+    title: '[팀빌딩 어드벤처] 함께 성장하는 우리 팀',
+    instructor_id: '박서준',
+    theme: '팀워크',
+    is_published: true,
+  },
+  {
+    id: 'self-discovery',
+    slug: 'self-discovery',
+    title: '[나를 찾아가는 자기변화 레슨 – 명상·상담]',
+    instructor_id: '김상완',
+    theme: '명상',
+    is_published: true,
+  },
+]
 
 export default function AdminProgramsPage() {
   const [programs, setPrograms] = useState<Program[]>([])
@@ -11,28 +49,27 @@ export default function AdminProgramsPage() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 
   useEffect(() => {
-    /**
-     * 프로그램 목록 API 연동
-     * 
-     * 현재는 정적 데이터를 사용하고 있습니다.
-     * 실제 API 연동 시 아래와 같이 구현하세요:
-     * 
-     * async function fetchPrograms() {
-     *   try {
-     *     const response = await fetch('/api/admin/programs')
-     *     if (response.ok) {
-     *       const data = await response.json()
-     *       setPrograms(data.programs || [])
-     *     }
-     *   } catch (error) {
-     *     console.error('Error fetching programs:', error)
-     *   } finally {
-     *     setLoading(false)
-     *   }
-     * }
-     * fetchPrograms()
-     */
-    setLoading(false)
+    async function fetchPrograms() {
+      try {
+        const apiUrl = getApiUrl('/api/admin/programs')
+        const response = await fetch(apiUrl)
+        
+        if (response.ok) {
+          const data = await response.json() as { programs?: any[] }
+          setPrograms(data.programs || staticPrograms as any)
+        } else {
+          // API가 없으면 정적 데이터 사용
+          setPrograms(staticPrograms as any)
+        }
+      } catch (error) {
+        // 에러 발생 시 정적 데이터 사용
+        setPrograms(staticPrograms as any)
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    fetchPrograms()
   }, [])
 
   const filteredPrograms = programs.filter((program) => {
@@ -159,7 +196,42 @@ export default function AdminProgramsPage() {
                     >
                       편집
                     </Link>
-                    <button className="flex-1 h-9 rounded-lg bg-status-gray/10 text-status-gray text-sm font-semibold hover:bg-status-gray/20">
+                    <button
+                      className="flex-1 h-9 rounded-lg bg-status-gray/10 text-status-gray text-sm font-semibold hover:bg-status-gray/20"
+                      onClick={async () => {
+                        try {
+                          const apiUrl = getApiUrl(`/api/admin/programs/${program.slug || program.id}`)
+                          const response = await fetch(apiUrl, {
+                            method: 'PUT',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              is_published: !program.is_published,
+                            }),
+                          })
+
+                          if (response.ok) {
+                            toast({
+                              title: '변경 완료',
+                              description: `프로그램이 ${program.is_published ? '비공개' : '공개'}로 변경되었습니다.`,
+                            })
+                            // 목록 새로고침
+                            const programsResponse = await fetch(getApiUrl('/api/admin/programs'))
+                            if (programsResponse.ok) {
+                              const data = await programsResponse.json() as { programs?: any[] }
+                              setPrograms(data.programs || staticPrograms as any)
+                            }
+                          }
+                        } catch (error) {
+                          toast({
+                            title: '오류',
+                            description: '상태 변경에 실패했습니다.',
+                            variant: 'destructive',
+                          })
+                        }
+                      }}
+                    >
                       {program.is_published ? '비공개' : '공개'}
                     </button>
                   </div>

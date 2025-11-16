@@ -12,6 +12,7 @@ import { handleAdmin } from './routes/admin'
 import { handleTemplates } from './routes/templates'
 import { handleStats } from './routes/stats'
 import * as handlePrograms from './routes/programs'
+import * as handleInstructors from './routes/instructors'
 import { handleWebhooks } from './routes/webhooks'
 import { handleABTests } from './routes/ab-tests'
 import { handleCron } from './cron'
@@ -57,6 +58,12 @@ router.post('/api/admin/programs', handlePrograms.createProgram)
 router.post('/api/admin/programs/new', handlePrograms.createProgram)
 router.put('/api/admin/programs/:slug', handlePrograms.updateProgram)
 router.delete('/api/admin/programs/:slug', handlePrograms.deleteProgram)
+
+router.get('/api/admin/instructors', handleInstructors.listInstructors)
+router.get('/api/admin/instructors/:id', handleInstructors.getInstructor)
+router.post('/api/admin/instructors', handleInstructors.createInstructor)
+router.put('/api/admin/instructors/:id', handleInstructors.updateInstructor)
+router.delete('/api/admin/instructors/:id', handleInstructors.deleteInstructor)
 
 router.post('/api/webhooks/bounce', handleWebhooks.bounce)
 router.post('/api/webhooks/delivery', handleWebhooks.delivery)
