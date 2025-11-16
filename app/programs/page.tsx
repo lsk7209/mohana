@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Card, CardContent } from "@/components/ui/card"
-import { Heart, Users, MessageSquare, GraduationCap, Palette, UtensilsCrossed, Lightbulb, TrendingUp, Shield, Music } from "lucide-react"
+import { Heart, Users, MessageSquare, GraduationCap, Palette, UtensilsCrossed, Lightbulb, TrendingUp, Shield, Music, Sparkles } from "lucide-react"
 import Link from "next/link"
 import { PublicLayout } from "@/components/public-layout"
 import { ScrollAnimate } from "@/components/scroll-animate"
@@ -91,6 +91,23 @@ const programs = [
     instructor: "정현우",
     color: "bg-pink-50 dark:bg-pink-900/20",
     iconColor: "text-pink-600 dark:text-pink-400",
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDrqhBqXIQzPsK1lK3pywejEUvmuyXssPaLQopMeAc51HrDPH3Xb1ihtyIdEahGfBVrTIYO6BXmp41_gzdYtxo4JCXuTfcQBRzCXetFlq6dpb8hIQPAmh6XDuDtpIVRKbWnLMiNopw6H8HreWlhx2g-TjRjlIjSC_p1D3IJwIfDFCY-9zd-jEnFyyybTaeOvjeLw0dFyGU4aKhV2Og9Ziv5g_ntVTbrm2NTlxqpjXPt2ayNTMGG8byZny9iPg1HB8H_aJxSxj76W0iN",
+  },
+  {
+    id: "self-discovery",
+    slug: "self-discovery",
+    icon: Sparkles,
+    title: "나를 찾아가는 자기변화 레슨 – 명상·상담",
+    summary: "일과 관계 속에서 흔들리는 나를 돌아보고, 진짜 내가 원하는 삶의 방향을 함께 찾아가는 내면 성장 프로그램입니다.",
+    description: "동서양 철학·심리·명상 관점을 통해 나를 더 깊이 이해하고, 삶의 방향을 스스로 설계할 수 있는 기반을 만듭니다.",
+    theme: "자기계발",
+    tags: ["명상", "자기계발", "심리"],
+    duration: 4,
+    headcount: "10-30명",
+    format: "오프라인",
+    instructor: "김상완",
+    color: "bg-violet-50 dark:bg-violet-900/20",
+    iconColor: "text-violet-600 dark:text-violet-400",
     image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDrqhBqXIQzPsK1lK3pywejEUvmuyXssPaLQopMeAc51HrDPH3Xb1ihtyIdEahGfBVrTIYO6BXmp41_gzdYtxo4JCXuTfcQBRzCXetFlq6dpb8hIQPAmh6XDuDtpIVRKbWnLMiNopw6H8HreWlhx2g-TjRjlIjSC_p1D3IJwIfDFCY-9zd-jEnFyyybTaeOvjeLw0dFyGU4aKhV2Og9Ziv5g_ntVTbrm2NTlxqpjXPt2ayNTMGG8byZny9iPg1HB8H_aJxSxj76W0iN",
   },
   {
