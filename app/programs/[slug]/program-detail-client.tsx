@@ -206,54 +206,70 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
             )}
 
             {/* Tab Section - 헤더 아래에 고정 */}
-            <div className="sticky top-[57px] z-40 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark shadow-md -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 backdrop-blur-sm">
-              <div className="flex border-b border-border-light dark:border-border-dark sm:gap-2 overflow-x-auto">
+            <nav className="sticky top-[57px] z-40 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark shadow-md -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 backdrop-blur-sm" aria-label="프로그램 상세 정보 네비게이션">
+              <div className="flex border-b border-border-light dark:border-border-dark sm:gap-2 overflow-x-auto" role="tablist">
                 <button
                   onClick={() => scrollToSection('overview')}
+                  role="tab"
+                  aria-selected={activeTab === 'overview'}
+                  aria-controls="overview-section"
+                  id="overview-tab"
                   className={`flex items-center gap-2 whitespace-nowrap py-3 px-4 rounded-t-lg transition-colors ${
                     activeTab === 'overview'
                       ? 'bg-primary text-white'
                       : 'text-text-light-secondary dark:text-text-dark-secondary hover:bg-surface-light dark:hover:bg-surface-dark/50'
                   }`}
                 >
-                  <FileText className="w-4 h-4" />
-                  <p className="text-sm font-bold leading-normal tracking-[0.015em]">왜 필요한가 (개요)</p>
+                  <FileText className="w-4 h-4" aria-hidden="true" />
+                  <span className="text-sm font-bold leading-normal tracking-[0.015em]">왜 필요한가 (개요)</span>
                 </button>
                 <button
                   onClick={() => scrollToSection('curriculum')}
+                  role="tab"
+                  aria-selected={activeTab === 'curriculum'}
+                  aria-controls="curriculum-section"
+                  id="curriculum-tab"
                   className={`flex items-center gap-2 whitespace-nowrap py-3 px-4 rounded-t-lg transition-colors ${
                     activeTab === 'curriculum'
                       ? 'bg-primary text-white'
                       : 'text-text-light-secondary dark:text-text-dark-secondary hover:bg-surface-light dark:hover:bg-surface-dark/50'
                   }`}
                 >
-                  <ListChecks className="w-4 h-4" />
-                  <p className="text-sm font-bold leading-normal tracking-[0.015em]">어떻게 진행되나 (커리큘럼)</p>
+                  <ListChecks className="w-4 h-4" aria-hidden="true" />
+                  <span className="text-sm font-bold leading-normal tracking-[0.015em]">어떻게 진행되나 (커리큘럼)</span>
                 </button>
                 <button
                   onClick={() => scrollToSection('effects')}
+                  role="tab"
+                  aria-selected={activeTab === 'effects'}
+                  aria-controls="effects-section"
+                  id="effects-tab"
                   className={`flex items-center gap-2 whitespace-nowrap py-3 px-4 rounded-t-lg transition-colors ${
                     activeTab === 'effects'
                       ? 'bg-primary text-white'
                       : 'text-text-light-secondary dark:text-text-dark-secondary hover:bg-surface-light dark:hover:bg-surface-dark/50'
                   }`}
                 >
-                  <Sparkles className="w-4 h-4" />
-                  <p className="text-sm font-bold leading-normal tracking-[0.015em]">무엇을 얻나 (주요 효과)</p>
+                  <Sparkles className="w-4 h-4" aria-hidden="true" />
+                  <span className="text-sm font-bold leading-normal tracking-[0.015em]">무엇을 얻나 (주요 효과)</span>
                 </button>
                 <button
                   onClick={() => scrollToSection('faq')}
+                  role="tab"
+                  aria-selected={activeTab === 'faq'}
+                  aria-controls="faq-section"
+                  id="faq-tab"
                   className={`flex items-center gap-2 whitespace-nowrap py-3 px-4 rounded-t-lg transition-colors ${
                     activeTab === 'faq'
                       ? 'bg-primary text-white'
                       : 'text-text-light-secondary dark:text-text-dark-secondary hover:bg-surface-light dark:hover:bg-surface-dark/50'
                   }`}
                 >
-                  <HelpCircle className="w-4 h-4" />
-                  <p className="text-sm font-bold leading-normal tracking-[0.015em]">자주 묻는 질문 (FAQ)</p>
+                  <HelpCircle className="w-4 h-4" aria-hidden="true" />
+                  <span className="text-sm font-bold leading-normal tracking-[0.015em]">자주 묻는 질문 (FAQ)</span>
                 </button>
               </div>
-            </div>
+            </nav>
 
             {/* Content Sections - All displayed in order */}
             <div className="space-y-12 md:space-y-16">
