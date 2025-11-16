@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { getApiUrl } from '@/lib/env'
@@ -11,9 +11,10 @@ import { Users, Mail, MousePointerClick, TrendingUp, Calendar } from 'lucide-rea
 interface DailyStats {
   date: string
   leads: number
-  messages: number
+  emails: number
   opens: number
   clicks: number
+  messages?: number // UI 호환성을 위한 선택적 필드
 }
 
 /**
@@ -25,44 +26,49 @@ export default function AdminStatsPage() {
   const [loading, setLoading] = useState(true)
   const [period, setPeriod] = useState<'7days' | '30days' | '90days'>('30days')
 
-  useEffect(() => {
-    fetchStats()
-  }, [period])
-
-  async function fetchStats() {
+  const fetchStats = useCallback(async () => {
     setLoading(true)
     try {
-      const apiUrl = getApiUrl('/api/admin/stats/daily')
+      const days = period === '7days' ? 7 : period === '30days' ? 30 : 90
+      const apiUrl = getApiUrl(`/api/admin/stats/daily?days=${days}`)
       const response = await fetch(apiUrl)
       
       if (response.ok) {
-        const data = await response.json() as { stats?: DailyStats[] }
-        const stats = data.stats || []
+        const data = await response.json() as { data?: DailyStats[] }
+        const stats = data.data || []
         
-        // 기간 필터링
-        const now = Date.now()
-        const periodMs = {
-          '7days': 7 * 24 * 60 * 60 * 1000,
-          '30days': 30 * 24 * 60 * 60 * 1000,
-          '90days': 90 * 24 * 60 * 60 * 1000,
-        }[period]
+        // emails 필드를 messages로 매핑 (UI 호환성)
+        const mappedStats = stats.map(stat => ({
+          ...stat,
+          messages: stat.emails || 0,
+        }))
         
-        const filteredStats = stats.filter(stat => {
-          const statDate = new Date(stat.date).getTime()
-          return statDate >= now - periodMs
-        })
-        
-        setDailyStats(filteredStats)
+        setDailyStats(mappedStats)
       } else {
+        const errorMessage = await handleFetchError(response)
+        toast({
+          title: '오류',
+          description: errorMessage,
+          variant: 'destructive',
+        })
         setDailyStats([])
       }
     } catch (error) {
-      console.error('Error fetching stats:', error)
+      const networkError = handleNetworkError(error)
+      toast({
+        title: '네트워크 오류',
+        description: networkError.message,
+        variant: 'destructive',
+      })
       setDailyStats([])
     } finally {
       setLoading(false)
     }
-  }
+  }, [period])
+
+  useEffect(() => {
+    fetchStats()
+  }, [fetchStats])
 
   const totalLeads = dailyStats.reduce((sum, stat) => sum + stat.leads, 0)
   const totalMessages = dailyStats.reduce((sum, stat) => sum + stat.messages, 0)
