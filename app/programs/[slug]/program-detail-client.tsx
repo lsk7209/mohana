@@ -132,11 +132,11 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                   aria-label={`${program.title} 프로그램 히어로 이미지`}
                 >
                   <div className="flex flex-col gap-1.5 sm:gap-2 text-left w-full">
-                    <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-[1.2] tracking-[-0.02em] sm:tracking-[-0.033em] break-words">
+                    <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.2] tracking-[-0.02em] sm:tracking-[-0.033em] break-words">
                       {program.title}
                     </h1>
                     {program.subtitle && (
-                      <p className="text-gray-100 sm:text-gray-200 text-xs sm:text-sm md:text-base font-normal leading-relaxed break-words">
+                      <p className="text-gray-100 sm:text-gray-200 text-sm sm:text-base md:text-lg font-normal leading-relaxed break-words">
                         {program.subtitle}
                       </p>
                     )}
@@ -196,11 +196,11 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
             {/* Keywords Section */}
             {program.keywords && program.keywords.length > 0 && (
               <section aria-label="프로그램 키워드" className="flex flex-wrap items-center gap-1.5 sm:gap-2 md:gap-3 -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8 px-3 sm:px-4 md:px-6 lg:px-8">
-                <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary mr-0.5 sm:mr-1 whitespace-nowrap">KEYWORD</span>
+                <span className="text-xs sm:text-xs md:text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary mr-0.5 sm:mr-1 whitespace-nowrap">KEYWORD</span>
                 {program.keywords.map((keyword: string, idx: number) => (
                   <span
                     key={idx}
-                    className="px-2 sm:px-2.5 py-0.5 sm:py-1 md:py-1.5 rounded-full bg-primary/10 text-primary text-[10px] sm:text-[11px] md:text-xs lg:text-sm font-medium border border-primary/20 whitespace-nowrap"
+                    className="px-2.5 sm:px-3 py-1 sm:py-1 md:py-1.5 rounded-full bg-primary/10 text-primary text-xs sm:text-xs md:text-sm lg:text-base font-medium border border-primary/20 whitespace-nowrap"
                   >
                     #{keyword}
                   </span>
@@ -211,15 +211,15 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
             {/* Program Points Section */}
             {program.points && program.points.length > 0 && (
               <section aria-label="프로그램 핵심 포인트" className="rounded-lg border border-border-light dark:border-border-dark bg-gradient-to-br from-primary/5 to-primary/10 p-4 sm:p-6 md:p-8">
-                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-3 sm:mb-4 md:mb-6 flex items-center gap-2">
-                  <Star className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary flex-shrink-0" aria-hidden="true" />
+                <h2 className="text-xl sm:text-xl md:text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-3 sm:mb-4 md:mb-6 flex items-center gap-2">
+                  <Star className="w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary flex-shrink-0" aria-hidden="true" />
                   프로그램 핵심 포인트
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 md:gap-4">
                   {program.points.map((point: string, idx: number) => (
                     <div key={idx} className="flex items-start gap-2 sm:gap-3">
-                      <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
-                      <p className="text-xs sm:text-sm md:text-base text-text-light-primary dark:text-text-dark-primary leading-relaxed">
+                      <CheckCircle2 className="w-5 h-5 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
+                      <p className="text-sm sm:text-sm md:text-base text-text-light-primary dark:text-text-dark-primary leading-relaxed">
                         {point}
                       </p>
                     </div>
@@ -271,10 +271,10 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                       <span className="material-symbols-outlined text-xl sm:text-2xl md:text-3xl">{goal.icon}</span>
                     </div>
                     <div className="flex flex-col gap-0.5 sm:gap-1">
-                      <h2 className="text-text-light-primary dark:text-text-dark-primary text-sm sm:text-base md:text-lg font-bold leading-tight">
+                      <h2 className="text-text-light-primary dark:text-text-dark-primary text-base sm:text-base md:text-lg font-bold leading-tight">
                         {goal.title}
                       </h2>
-                      <p className="text-text-light-secondary dark:text-text-dark-secondary text-[11px] sm:text-xs md:text-sm font-normal leading-normal">
+                      <p className="text-text-light-secondary dark:text-text-dark-secondary text-xs sm:text-xs md:text-sm font-normal leading-normal">
                         {goal.description}
                       </p>
                     </div>
@@ -294,14 +294,14 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                       className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-18 w-18 sm:h-22 sm:w-22 md:h-28 md:w-28 lg:h-32 lg:w-32 flex-shrink-0 mx-auto sm:mx-0 object-cover"
                     />
                     <div className="flex flex-col justify-center space-y-1.5 sm:space-y-2 md:space-y-3 text-center sm:text-left w-full">
-                      <blockquote className="text-xs sm:text-sm md:text-base lg:text-lg italic text-text-light-secondary dark:text-text-dark-secondary leading-relaxed break-words">
+                      <blockquote className="text-sm sm:text-base md:text-base lg:text-lg italic text-text-light-secondary dark:text-text-dark-secondary leading-relaxed break-words">
                         "{program.instructor.quote}"
                       </blockquote>
                       <div>
-                        <h2 className="text-text-light-primary dark:text-text-dark-primary text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-tight tracking-[-0.015em] break-words">
+                        <h2 className="text-text-light-primary dark:text-text-dark-primary text-lg sm:text-lg md:text-xl lg:text-2xl font-bold leading-tight tracking-[-0.015em] break-words">
                           {program.instructor.name} 강사
                         </h2>
-                        <p className="text-text-light-secondary dark:text-text-dark-secondary text-[11px] sm:text-xs md:text-sm lg:text-base font-normal leading-normal mt-0.5 break-words">
+                        <p className="text-text-light-secondary dark:text-text-dark-secondary text-xs sm:text-sm md:text-sm lg:text-base font-normal leading-normal mt-0.5 break-words">
                           {program.instructor.title}
                         </p>
                       </div>
@@ -310,7 +310,7 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                           <span
                             key={skillIdx}
                             role="listitem"
-                            className="text-[10px] sm:text-[11px] md:text-xs lg:text-sm font-medium bg-primary/20 text-text-light-primary dark:text-text-dark-primary py-0.5 px-1.5 sm:py-0.5 sm:px-2 md:py-1 md:px-2.5 lg:px-3 rounded-full whitespace-nowrap"
+                            className="text-xs sm:text-xs md:text-sm lg:text-sm font-medium bg-primary/20 text-text-light-primary dark:text-text-dark-primary py-0.5 px-2 sm:py-0.5 sm:px-2.5 md:py-1 md:px-2.5 lg:px-3 rounded-full whitespace-nowrap"
                           >
                             #{skill}
                           </span>
@@ -318,7 +318,7 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                       </div>
                     </div>
                   </div>
-                  <div className="border-t border-border-light dark:border-border-dark pt-3 sm:pt-4 md:pt-6 text-text-light-secondary dark:text-text-dark-secondary text-[11px] sm:text-xs md:text-sm leading-relaxed break-words">
+                  <div className="border-t border-border-light dark:border-border-dark pt-3 sm:pt-4 md:pt-6 text-text-light-secondary dark:text-text-dark-secondary text-xs sm:text-sm md:text-sm leading-relaxed break-words">
                     <p>{program.instructor.bio}</p>
                   </div>
                 </div>
@@ -334,13 +334,13 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                   aria-selected={activeTab === 'overview'}
                   aria-controls="overview-section"
                   id="overview-tab"
-                  className={`flex items-center gap-1 sm:gap-1.5 md:gap-2 whitespace-nowrap py-2.5 sm:py-2.5 md:py-3 px-2.5 sm:px-3 md:px-4 rounded-t-md sm:rounded-t-lg transition-colors text-[11px] sm:text-xs md:text-sm min-w-fit ${
+                  className={`flex items-center gap-1 sm:gap-1.5 md:gap-2 whitespace-nowrap py-2.5 sm:py-2.5 md:py-3 px-2.5 sm:px-3 md:px-4 rounded-t-md sm:rounded-t-lg transition-colors text-xs sm:text-sm md:text-sm min-w-fit ${
                     activeTab === 'overview'
                       ? 'bg-primary text-white'
                       : 'text-text-light-secondary dark:text-text-dark-secondary hover:bg-surface-light dark:hover:bg-surface-dark/50'
                   }`}
                 >
-                  <FileText className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 flex-shrink-0" aria-hidden="true" />
+                  <FileText className="w-4 h-4 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 flex-shrink-0" aria-hidden="true" />
                   <span className="font-bold leading-normal tracking-[0.01em] sm:tracking-[0.015em]">
                     <span className="hidden md:inline">왜 필요한가 (개요)</span>
                     <span className="hidden sm:inline md:hidden">개요</span>
@@ -353,13 +353,13 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                   aria-selected={activeTab === 'curriculum'}
                   aria-controls="curriculum-section"
                   id="curriculum-tab"
-                  className={`flex items-center gap-1 sm:gap-1.5 md:gap-2 whitespace-nowrap py-2.5 sm:py-2.5 md:py-3 px-2.5 sm:px-3 md:px-4 rounded-t-md sm:rounded-t-lg transition-colors text-[11px] sm:text-xs md:text-sm min-w-fit ${
+                  className={`flex items-center gap-1 sm:gap-1.5 md:gap-2 whitespace-nowrap py-2.5 sm:py-2.5 md:py-3 px-2.5 sm:px-3 md:px-4 rounded-t-md sm:rounded-t-lg transition-colors text-xs sm:text-sm md:text-sm min-w-fit ${
                     activeTab === 'curriculum'
                       ? 'bg-primary text-white'
                       : 'text-text-light-secondary dark:text-text-dark-secondary hover:bg-surface-light dark:hover:bg-surface-dark/50'
                   }`}
                 >
-                  <ListChecks className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 flex-shrink-0" aria-hidden="true" />
+                  <ListChecks className="w-4 h-4 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 flex-shrink-0" aria-hidden="true" />
                   <span className="font-bold leading-normal tracking-[0.01em] sm:tracking-[0.015em]">
                     <span className="hidden md:inline">어떻게 진행되나 (커리큘럼)</span>
                     <span className="hidden sm:inline md:hidden">커리큘럼</span>
@@ -372,13 +372,13 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                   aria-selected={activeTab === 'effects'}
                   aria-controls="effects-section"
                   id="effects-tab"
-                  className={`flex items-center gap-1 sm:gap-1.5 md:gap-2 whitespace-nowrap py-2.5 sm:py-2.5 md:py-3 px-2.5 sm:px-3 md:px-4 rounded-t-md sm:rounded-t-lg transition-colors text-[11px] sm:text-xs md:text-sm min-w-fit ${
+                  className={`flex items-center gap-1 sm:gap-1.5 md:gap-2 whitespace-nowrap py-2.5 sm:py-2.5 md:py-3 px-2.5 sm:px-3 md:px-4 rounded-t-md sm:rounded-t-lg transition-colors text-xs sm:text-sm md:text-sm min-w-fit ${
                     activeTab === 'effects'
                       ? 'bg-primary text-white'
                       : 'text-text-light-secondary dark:text-text-dark-secondary hover:bg-surface-light dark:hover:bg-surface-dark/50'
                   }`}
                 >
-                  <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 flex-shrink-0" aria-hidden="true" />
+                  <Sparkles className="w-4 h-4 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 flex-shrink-0" aria-hidden="true" />
                   <span className="font-bold leading-normal tracking-[0.01em] sm:tracking-[0.015em]">
                     <span className="hidden md:inline">무엇을 얻나 (주요 효과)</span>
                     <span className="hidden sm:inline md:hidden">효과</span>
@@ -391,13 +391,13 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                   aria-selected={activeTab === 'faq'}
                   aria-controls="faq-section"
                   id="faq-tab"
-                  className={`flex items-center gap-1 sm:gap-1.5 md:gap-2 whitespace-nowrap py-2.5 sm:py-2.5 md:py-3 px-2.5 sm:px-3 md:px-4 rounded-t-md sm:rounded-t-lg transition-colors text-[11px] sm:text-xs md:text-sm min-w-fit ${
+                  className={`flex items-center gap-1 sm:gap-1.5 md:gap-2 whitespace-nowrap py-2.5 sm:py-2.5 md:py-3 px-2.5 sm:px-3 md:px-4 rounded-t-md sm:rounded-t-lg transition-colors text-xs sm:text-sm md:text-sm min-w-fit ${
                     activeTab === 'faq'
                       ? 'bg-primary text-white'
                       : 'text-text-light-secondary dark:text-text-dark-secondary hover:bg-surface-light dark:hover:bg-surface-dark/50'
                   }`}
                 >
-                  <HelpCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 flex-shrink-0" aria-hidden="true" />
+                  <HelpCircle className="w-4 h-4 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 flex-shrink-0" aria-hidden="true" />
                   <span className="font-bold leading-normal tracking-[0.01em] sm:tracking-[0.015em]">
                     <span className="hidden md:inline">자주 묻는 질문 (FAQ)</span>
                     <span className="hidden sm:inline md:hidden">FAQ</span>
@@ -423,7 +423,7 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                   왜 필요한가 (개요)
                 </h2>
                 <div className="space-y-4 prose prose-slate dark:prose-invert max-w-none prose-sm sm:prose-base">
-                  <p className="text-text-light-primary dark:text-text-dark-primary text-sm sm:text-base font-normal leading-relaxed">
+                  <p className="text-text-light-primary dark:text-text-dark-primary text-base sm:text-base font-normal leading-relaxed">
                     {program.description}
                   </p>
                 </div>
@@ -484,12 +484,12 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                                     <h3 className="text-base sm:text-lg font-bold text-text-light-primary dark:text-text-dark-primary mb-1.5 sm:mb-2 leading-tight">
                                       {title}
                                     </h3>
-                                    <p className="text-text-light-secondary dark:text-text-dark-secondary text-xs sm:text-sm leading-relaxed">
+                                    <p className="text-text-light-secondary dark:text-text-dark-secondary text-sm sm:text-sm leading-relaxed">
                                       {description}
                                     </p>
                                   </>
                                 ) : (
-                                  <p className="text-text-light-primary dark:text-text-dark-primary text-sm sm:text-base leading-relaxed">
+                                  <p className="text-text-light-primary dark:text-text-dark-primary text-base sm:text-base leading-relaxed">
                                     {item}
                                   </p>
                                 )}
@@ -526,7 +526,7 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                       {program.effects.map((effect: string, idx: number) => (
                         <li key={idx} className="flex items-start gap-3 sm:gap-4">
                           <span className="material-symbols-outlined text-primary flex-shrink-0 mt-0.5 text-xl sm:text-2xl">check_circle</span>
-                          <p className="text-text-light-primary dark:text-text-dark-primary text-sm sm:text-base font-normal leading-relaxed flex-1">
+                          <p className="text-text-light-primary dark:text-text-dark-primary text-base sm:text-base font-normal leading-relaxed flex-1">
                             {effect}
                           </p>
                         </li>
@@ -558,11 +558,11 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                     <div className="space-y-3 sm:space-y-4">
                       {program.faq.map((item: { question: string; answer: string }, idx: number) => (
                         <details key={idx} className="group rounded-lg bg-surface-light dark:bg-surface-dark p-3 sm:p-4 border border-border-light dark:border-border-dark">
-                          <summary className="flex cursor-pointer items-center justify-between gap-3 font-medium text-sm sm:text-base text-text-light-primary dark:text-text-dark-primary">
+                          <summary className="flex cursor-pointer items-center justify-between gap-3 font-medium text-base sm:text-base text-text-light-primary dark:text-text-dark-primary">
                             <span className="flex-1">{item.question}</span>
                             <span className="material-symbols-outlined transition-transform group-open:rotate-180 text-text-light-secondary dark:text-text-dark-secondary flex-shrink-0">expand_more</span>
                           </summary>
-                          <div className="mt-3 text-text-light-secondary dark:text-text-dark-secondary text-xs sm:text-sm leading-relaxed pl-0 sm:pl-6">
+                          <div className="mt-3 text-text-light-secondary dark:text-text-dark-secondary text-sm sm:text-sm leading-relaxed pl-0 sm:pl-6">
                             {item.answer}
                           </div>
                         </details>
@@ -684,15 +684,15 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
             {/* Notes Section */}
             {program.notes && program.notes.length > 0 && (
               <section aria-label="안내사항" className="rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-3 sm:p-4 md:p-6 lg:p-8">
-                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-3 sm:mb-4 md:mb-6 flex items-center gap-2">
-                  <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary flex-shrink-0" aria-hidden="true" />
+                <h2 className="text-xl sm:text-xl md:text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-3 sm:mb-4 md:mb-6 flex items-center gap-2">
+                  <HelpCircle className="w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary flex-shrink-0" aria-hidden="true" />
                   안내사항
                 </h2>
                 <ul className="space-y-2 sm:space-y-2.5 md:space-y-3">
                   {program.notes.map((note: string, idx: number) => (
                     <li key={idx} className="flex items-start gap-2 sm:gap-2.5 md:gap-3">
-                      <span className="material-symbols-outlined text-primary flex-shrink-0 mt-0.5 text-base sm:text-lg md:text-xl">info</span>
-                      <p className="text-xs sm:text-sm md:text-base text-text-light-secondary dark:text-text-dark-secondary leading-relaxed flex-1">
+                      <span className="material-symbols-outlined text-primary flex-shrink-0 mt-0.5 text-lg sm:text-lg md:text-xl">info</span>
+                      <p className="text-sm sm:text-sm md:text-base text-text-light-secondary dark:text-text-dark-secondary leading-relaxed flex-1">
                         {note}
                       </p>
                     </li>
@@ -704,16 +704,16 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
             {/* Final CTA */}
             <aside className="w-full bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border-2 border-primary/30 dark:border-primary/20 rounded-lg sm:rounded-xl p-4 sm:p-6 md:p-8 lg:p-12 text-center flex flex-col items-center gap-3 sm:gap-4 md:gap-6 -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8 mx-3 sm:mx-4 md:mx-6 lg:mx-8" aria-label="프로그램 신청 안내">
               <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2 w-full">
-                <Star className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary flex-shrink-0" aria-hidden="true" />
-                <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-black text-text-light-primary dark:text-text-dark-primary max-w-lg leading-tight break-words">
+                <Star className="w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary flex-shrink-0" aria-hidden="true" />
+                <h2 className="text-lg sm:text-xl md:text-xl lg:text-2xl xl:text-3xl font-black text-text-light-primary dark:text-text-dark-primary max-w-lg leading-tight break-words">
                   이제 우리 팀도 회복할 차례입니다.
                 </h2>
               </div>
-              <p className="text-xs sm:text-sm md:text-base text-text-light-secondary dark:text-text-dark-secondary -mt-0.5 sm:-mt-1 md:-mt-2 px-2 break-words">
+              <p className="text-sm sm:text-sm md:text-base text-text-light-secondary dark:text-text-dark-secondary -mt-0.5 sm:-mt-1 md:-mt-2 px-2 break-words">
                 망설이는 순간, 팀의 에너지는 계속 소진됩니다. 지금 바로 변화를 시작하세요.
               </p>
               <Link href="/contact" aria-label="무료 제안서 받기 - 문의 페이지로 이동" className="w-full sm:w-auto group touch-manipulation">
-                <Button className="flex w-full sm:min-w-[84px] sm:max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 sm:h-12 md:h-13 px-4 sm:px-5 md:px-6 bg-primary text-text-light-primary text-sm sm:text-base md:text-lg font-bold leading-normal tracking-[0.015em] shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95 gap-2 touch-manipulation">
+                <Button className="flex w-full sm:min-w-[84px] sm:max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 sm:h-12 md:h-13 px-4 sm:px-5 md:px-6 bg-primary text-text-light-primary text-base sm:text-base md:text-lg font-bold leading-normal tracking-[0.015em] shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95 gap-2 touch-manipulation">
                   <span className="truncate">
                     <span className="hidden sm:inline">무료 제안서 받고 팀 에너지 충전하기</span>
                     <span className="sm:hidden">무료 제안서 받기</span>
@@ -721,7 +721,7 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                   <ArrowRight className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" aria-hidden="true" />
                 </Button>
               </Link>
-              <p className="text-[10px] sm:text-xs text-text-light-secondary dark:text-text-dark-secondary px-2 break-words">
+              <p className="text-xs sm:text-xs text-text-light-secondary dark:text-text-dark-secondary px-2 break-words">
                 *제안서 요청 시, 개인정보는 안전하게 보호되며 상담 외 목적으로 사용되지 않습니다.
               </p>
             </aside>
