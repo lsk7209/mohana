@@ -51,10 +51,13 @@ export default function AdminProgramsPage() {
             플랫폼에 등록된 모든 강의를 조회하고 관리합니다.
           </p>
         </div>
-        <button className="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold shadow-sm hover:bg-primary/90">
+        <Link
+          href="/admin/programs/new/edit"
+          className="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold shadow-sm hover:bg-primary/90"
+        >
           <span className="material-symbols-outlined text-base">add</span>
           <span className="truncate">새 강의 등록</span>
-        </button>
+        </Link>
       </header>
 
       {/* Toolbar */}
@@ -150,9 +153,12 @@ export default function AdminProgramsPage() {
                     )}
                   </div>
                   <div className="flex gap-2 mt-auto">
-                    <button className="flex-1 h-9 rounded-lg bg-background-light dark:bg-background-dark text-sm font-semibold hover:bg-border-light dark:hover:bg-border-dark/50">
+                    <Link
+                      href={`/admin/programs/${program.slug || program.id}/edit`}
+                      className="flex-1 h-9 rounded-lg bg-background-light dark:bg-background-dark text-sm font-semibold hover:bg-border-light dark:hover:bg-border-dark/50 flex items-center justify-center"
+                    >
                       편집
-                    </button>
+                    </Link>
                     <button className="flex-1 h-9 rounded-lg bg-status-gray/10 text-status-gray text-sm font-semibold hover:bg-status-gray/20">
                       {program.is_published ? '비공개' : '공개'}
                     </button>
@@ -190,7 +196,12 @@ export default function AdminProgramsPage() {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <button className="text-primary hover:text-primary/80 text-sm font-medium">편집</button>
+                    <Link
+                      href={`/admin/programs/${program.slug || program.id}/edit`}
+                      className="text-primary hover:text-primary/80 text-sm font-medium"
+                    >
+                      편집
+                    </Link>
                   </td>
                 </tr>
               ))}
