@@ -47,7 +47,7 @@ export function NewProgramsSection() {
   return (
     <section className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50 dark:from-background-dark dark:to-gray-900" id="programs" aria-labelledby="programs-heading">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollAnimate animation="slide-up" className="px-4 pb-12 pt-5 text-center">
+        <ScrollAnimate animation="slide-up" className="pb-12 pt-5 text-center">
           <span className="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4">
             🎯 검증된 솔루션
           </span>
