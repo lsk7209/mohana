@@ -137,13 +137,13 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
 
             {/* Goals Cards */}
             {program.goals && program.goals.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              <section aria-label="프로그램 목표 및 추천 대상" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {program.goals.map((goal: any, idx: number) => (
-                  <div
+                  <article
                     key={idx}
                     className="flex flex-1 gap-4 rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-6 flex-col"
                   >
-                    <div className="text-primary">
+                    <div className="text-primary" aria-hidden="true">
                       <span className="material-symbols-outlined text-3xl">{goal.icon}</span>
                     </div>
                     <div className="flex flex-col gap-1">
@@ -154,36 +154,38 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                         {goal.description}
                       </p>
                     </div>
-                  </div>
+                  </article>
                 ))}
-              </div>
+              </section>
             )}
 
             {/* Instructor Section */}
             {program.instructor && (
-              <div className="p-4 sm:p-6 rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark @container">
+              <section aria-label="강사 소개" className="p-4 sm:p-6 rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark @container">
                 <div className="flex w-full flex-col gap-6">
                   <div className="flex flex-col @[520px]:flex-row gap-8">
-                    <div
-                      className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 flex-shrink-0 mx-auto @[420px]:mx-0"
-                      style={{ backgroundImage: `url("${program.instructor.photo}")` }}
+                    <img
+                      src={program.instructor.photo}
+                      alt={`${program.instructor.name} 강사 프로필 사진`}
+                      className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 flex-shrink-0 mx-auto @[420px]:mx-0 object-cover"
                     />
                     <div className="flex flex-col justify-center space-y-3 text-center @[420px]:text-left">
-                      <p className="text-lg italic text-text-light-secondary dark:text-text-dark-secondary">
+                      <blockquote className="text-lg italic text-text-light-secondary dark:text-text-dark-secondary">
                         "{program.instructor.quote}"
-                      </p>
+                      </blockquote>
                       <div>
-                        <p className="text-text-light-primary dark:text-text-dark-primary text-2xl font-bold leading-tight tracking-[-0.015em]">
+                        <h2 className="text-text-light-primary dark:text-text-dark-primary text-2xl font-bold leading-tight tracking-[-0.015em]">
                           {program.instructor.name} 강사
-                        </p>
+                        </h2>
                         <p className="text-text-light-secondary dark:text-text-dark-secondary text-base font-normal leading-normal">
                           {program.instructor.title}
                         </p>
                       </div>
-                      <div className="flex gap-2 justify-center @[420px]:justify-start flex-wrap pt-1">
+                      <div className="flex gap-2 justify-center @[420px]:justify-start flex-wrap pt-1" role="list" aria-label="강사 전문 분야">
                         {program.instructor.skills.map((skill: string, skillIdx: number) => (
                           <span
                             key={skillIdx}
+                            role="listitem"
                             className="text-sm font-medium bg-primary/20 text-text-light-primary dark:text-text-dark-primary py-1 px-3 rounded-full"
                           >
                             #{skill}
@@ -196,7 +198,7 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                     <p>{program.instructor.bio}</p>
                   </div>
                 </div>
-              </div>
+              </section>
             )}
 
             {/* Tab Section - 헤더 아래에 고정 */}
@@ -252,33 +254,38 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
             {/* Content Sections - All displayed in order */}
             <div className="space-y-12 md:space-y-16">
               {/* Overview Section */}
-              <div
+              <section
                 ref={overviewRef}
                 data-section="overview"
+                id="overview-section"
+                role="tabpanel"
+                aria-labelledby="overview-tab"
                 className="scroll-mt-24 rounded-lg bg-surface-light dark:bg-surface-dark shadow-sm p-6 sm:p-8"
+                aria-labelledby="overview-heading"
               >
-                <h2 className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6 flex items-center gap-2">
-                  <FileText className="w-6 h-6 text-primary" />
+                <h2 id="overview-heading" className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6 flex items-center gap-2">
+                  <FileText className="w-6 h-6 text-primary" aria-hidden="true" />
                   왜 필요한가 (개요)
                 </h2>
-                <div className="space-y-4">
-                  <p className="text-text-light-secondary dark:text-text-dark-secondary text-base leading-relaxed">
-                    <strong className="text-text-light-primary dark:text-text-dark-primary">목적:</strong> 팀원 간의 깊은 공감과 신뢰를 바탕으로, 소통이 활발한 조직 문화를 구축하여 팀 시너지를 극대화합니다.
-                  </p>
+                <div className="space-y-4 prose prose-slate dark:prose-invert max-w-none">
                   <p className="text-text-light-primary dark:text-text-dark-primary text-base font-normal leading-relaxed">
                     {program.description}
                   </p>
                 </div>
-              </div>
+              </section>
 
               {/* Curriculum Section */}
-              <div
+              <section
                 ref={curriculumRef}
                 data-section="curriculum"
+                id="curriculum-section"
+                role="tabpanel"
+                aria-labelledby="curriculum-tab"
                 className="scroll-mt-24 rounded-lg bg-surface-light dark:bg-surface-dark shadow-sm p-6 sm:p-8"
+                aria-labelledby="curriculum-heading"
               >
-                <h2 className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6 flex items-center gap-2">
-                  <ListChecks className="w-6 h-6 text-primary" />
+                <h2 id="curriculum-heading" className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6 flex items-center gap-2">
+                  <ListChecks className="w-6 h-6 text-primary" aria-hidden="true" />
                   어떻게 진행되나 (커리큘럼)
                 </h2>
                 <div className="space-y-4">
@@ -301,16 +308,20 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                     </p>
                   )}
                 </div>
-              </div>
+              </section>
 
               {/* Effects Section */}
-              <div
+              <section
                 ref={effectsRef}
                 data-section="effects"
+                id="effects-section"
+                role="tabpanel"
+                aria-labelledby="effects-tab"
                 className="scroll-mt-24 rounded-lg bg-surface-light dark:bg-surface-dark shadow-sm p-6 sm:p-8"
+                aria-labelledby="effects-heading"
               >
-                <h2 className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6 flex items-center gap-2">
-                  <Sparkles className="w-6 h-6 text-primary" />
+                <h2 id="effects-heading" className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6 flex items-center gap-2">
+                  <Sparkles className="w-6 h-6 text-primary" aria-hidden="true" />
                   무엇을 얻나 (주요 효과)
                 </h2>
                 <div className="space-y-4">
@@ -331,16 +342,20 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
                     </p>
                   )}
                 </div>
-              </div>
+              </section>
 
               {/* FAQ Section */}
-              <div
+              <section
                 ref={faqRef}
                 data-section="faq"
+                id="faq-section"
+                role="tabpanel"
+                aria-labelledby="faq-tab"
                 className="scroll-mt-24 rounded-lg bg-surface-light dark:bg-surface-dark shadow-sm p-6 sm:p-8"
+                aria-labelledby="faq-heading"
               >
-                <h2 className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6 flex items-center gap-2">
-                  <HelpCircle className="w-6 h-6 text-primary" />
+                <h2 id="faq-heading" className="text-2xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6 flex items-center gap-2">
+                  <HelpCircle className="w-6 h-6 text-primary" aria-hidden="true" />
                   자주 묻는 질문 (FAQ)
                 </h2>
                 <div className="space-y-4">
@@ -472,14 +487,14 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
             )}
 
             {/* Final CTA */}
-            <div className="w-full bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl p-8 sm:p-12 text-center flex flex-col items-center gap-6">
+            <aside className="w-full bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl p-8 sm:p-12 text-center flex flex-col items-center gap-6" aria-label="프로그램 신청 안내">
               <h2 className="text-2xl sm:text-3xl font-black text-text-light-primary dark:text-text-dark-primary max-w-lg">
                 이제 우리 팀도 회복할 차례입니다.
               </h2>
               <p className="text-text-light-secondary dark:text-text-dark-secondary -mt-2">
                 망설이는 순간, 팀의 에너지는 계속 소진됩니다. 지금 바로 변화를 시작하세요.
               </p>
-              <Link href="/contact">
+              <Link href="/contact" aria-label="무료 제안서 받기 - 문의 페이지로 이동">
                 <Button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-text-light-primary text-base font-bold leading-normal tracking-[0.015em]">
                   <span className="truncate">무료 제안서 받고 팀 에너지 충전하기</span>
                 </Button>
@@ -487,15 +502,15 @@ export function ProgramDetailClient({ program }: { program: ProgramDetail }) {
               <p className="text-xs text-text-light-secondary dark:text-text-dark-secondary">
                 *제안서 요청 시, 개인정보는 안전하게 보호되며 상담 외 목적으로 사용되지 않습니다.
               </p>
-            </div>
-          </div>
+            </aside>
+          </article>
         </main>
 
       {/* Fixed CTA Button */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <Link href="/contact">
+      <div className="fixed bottom-6 right-6 z-50" aria-label="고정된 신청 버튼">
+        <Link href="/contact" aria-label="무료 제안서 받기 - 문의 페이지로 이동">
           <Button className="w-auto h-12 px-5 rounded-full bg-primary text-text-light-primary flex items-center justify-center shadow-lg hover:bg-primary/90 transition-all font-bold text-base gap-2">
-            <span className="material-symbols-outlined text-2xl">description</span>
+            <span className="material-symbols-outlined text-2xl" aria-hidden="true">description</span>
             <span>무료 제안서 받기</span>
           </Button>
         </Link>

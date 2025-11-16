@@ -1,5 +1,7 @@
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import { ProgramDetailClient } from './program-detail-client'
+import { StructuredData } from '@/components/structured-data'
 
 /**
  * 프로그램 정보 조회
@@ -837,6 +839,116 @@ export const dynamic = 'force-static'
 // Cloudflare Pages 호환성: 정적으로 생성되지 않은 경로에 대한 동적 요청 비활성화
 export const dynamicParams = false
 
+// SEO 메타데이터 생성
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const program = getProgram(slug)
+
+  if (!program) {
+    return {
+      title: '프로그램을 찾을 수 없습니다',
+    }
+  }
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mohana.kr'
+  const programUrl = `${siteUrl}/programs/${slug}`
+  const description = program.summary || program.subtitle || program.description || ''
+
+  return {
+    title: `${program.title} | 모하나`,
+    description: description.substring(0, 160),
+    keywords: [
+      program.theme || '',
+      '워크샵',
+      '힐링',
+      '기업교육',
+      '조직개발',
+      program.instructor?.name || '',
+      ...(program.instructor?.skills || []),
+    ].filter(Boolean),
+    authors: [{ name: program.instructor?.name || '모하나' }],
+    openGraph: {
+      type: 'website',
+      locale: 'ko_KR',
+      url: programUrl,
+      siteName: '모하나',
+      title: program.title,
+      description: description.substring(0, 200),
+      images: [
+        {
+          url: program.heroImage || `${siteUrl}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: program.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: program.title,
+      description: description.substring(0, 200),
+      images: [program.heroImage || `${siteUrl}/og-image.png`],
+    },
+    alternates: {
+      canonical: programUrl,
+    },
+  }
+}
+
+// 구조화된 데이터 생성 함수
+function getProgramStructuredData(program: any, slug: string) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mohana.kr'
+  const programUrl = `${siteUrl}/programs/${slug}`
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: program.title,
+    description: program.description || program.summary || program.subtitle,
+    provider: {
+      '@type': 'Organization',
+      name: '모하나',
+      url: siteUrl,
+    },
+    courseCode: program.slug,
+    educationalLevel: 'Professional',
+    teaches: program.theme || '자기계발',
+    coursePrerequisites: {
+      '@type': 'Course',
+      name: '기본적인 참여 의지',
+    },
+    ...(program.instructor && {
+      instructor: {
+        '@type': 'Person',
+        name: program.instructor.name,
+        jobTitle: program.instructor.title,
+        description: program.instructor.bio,
+        image: program.instructor.photo,
+      },
+    }),
+    ...(program.duration && {
+      timeRequired: `PT${program.duration}H`,
+    }),
+    ...(program.price && {
+      offers: {
+        '@type': 'Offer',
+        price: program.price,
+        priceCurrency: 'KRW',
+        availability: 'https://schema.org/InStock',
+      },
+    }),
+    image: program.heroImage,
+    url: programUrl,
+    ...(program.curriculum && program.curriculum.length > 0 && {
+      syllabusSections: program.curriculum.map((item: string, index: number) => ({
+        '@type': 'Syllabus',
+        name: `단계 ${index + 1}`,
+        description: item,
+      })),
+    }),
+  }
+}
+
 // 정적 내보내기를 위한 generateStaticParams
 export async function generateStaticParams() {
   // 모든 프로그램 slug 반환
@@ -864,5 +976,12 @@ export default async function ProgramDetailPage({ params }: { params: Promise<{ 
     notFound()
   }
 
-  return <ProgramDetailClient program={program} />
+  const structuredData = getProgramStructuredData(program, slug)
+
+  return (
+    <>
+      <StructuredData data={structuredData} />
+      <ProgramDetailClient program={program} />
+    </>
+  )
 }
