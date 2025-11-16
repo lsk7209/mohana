@@ -226,7 +226,7 @@ async function listMessages(request: Request, env: Env): Promise<Response> {
       const searchParam = `%${searchQuery}%`
       countParams.push(searchParam, searchParam, searchParam, searchParam, searchParam)
     }
-    const { results: countResult } = await env.DB.prepare(countQuery).bind(...countParams).first<{ total: number }>()
+    const countResult = await env.DB.prepare(countQuery).bind(...countParams).first<{ total: number }>()
     const total = countResult?.total || 0
 
     return new Response(
