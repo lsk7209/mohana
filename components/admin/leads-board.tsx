@@ -91,7 +91,7 @@ export function LeadsBoard() {
     } finally {
       setLoading(false)
     }
-  }, [statusFilter, searchQuery, currentPage])
+  }, [statusFilter, searchQuery, currentPage, toast])
 
   useEffect(() => {
     fetchLeads()

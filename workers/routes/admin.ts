@@ -114,8 +114,7 @@ export async function listLeads(request: Request, env: Env): Promise<Response> {
     return new Response(
       JSON.stringify({ 
         error: 'Internal server error',
-        message: errorMessage,
-        details: process.env.ENVIRONMENT === 'development' ? String(error) : undefined
+        message: errorMessage
       }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     )
