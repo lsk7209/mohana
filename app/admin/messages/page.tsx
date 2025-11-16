@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -42,11 +42,7 @@ export default function AdminMessagesPage() {
   const [totalPages, setTotalPages] = useState(1)
   const itemsPerPage = 20
 
-  useEffect(() => {
-    fetchMessages()
-  }, [currentPage, channelFilter, statusFilter])
-
-  async function fetchMessages() {
+  const fetchMessages = useCallback(async () => {
     setLoading(true)
     try {
       // 모든 리드의 메시지를 가져오기 위해 리드 목록을 먼저 가져옴
@@ -93,7 +89,11 @@ export default function AdminMessagesPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [currentPage, channelFilter, statusFilter])
+
+  useEffect(() => {
+    fetchMessages()
+  }, [fetchMessages])
 
   const statusColors = {
     pending: 'bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-300',

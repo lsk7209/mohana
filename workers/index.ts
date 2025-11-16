@@ -36,6 +36,44 @@ interface SMSQueueMessage {
 
 const router = Router()
 
+/**
+ * CORS 헤더 추가 헬퍼 함수
+ */
+function addCorsHeaders(response: Response, origin?: string | null): Response {
+  const headers = new Headers(response.headers)
+  
+  // 허용할 Origin 목록
+  const allowedOrigins = [
+    'https://mohana.pages.dev',
+    'https://mohana.kr',
+    'http://localhost:3000',
+    'http://localhost:3001',
+  ]
+  
+  // Origin이 허용 목록에 있거나 모든 Origin 허용 (개발 환경)
+  const requestOrigin = origin || '*'
+  const allowOrigin = allowedOrigins.includes(requestOrigin) ? requestOrigin : allowedOrigins[0]
+  
+  headers.set('Access-Control-Allow-Origin', allowOrigin)
+  headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  headers.set('Access-Control-Max-Age', '86400')
+  
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  })
+}
+
+/**
+ * OPTIONS 요청 처리 (CORS preflight)
+ */
+router.options('*', (request: Request) => {
+  const origin = request.headers.get('Origin')
+  return addCorsHeaders(new Response(null, { status: 204 }), origin)
+})
+
 // API Routes
 router.post('/api/leads', handleLeads)
 router.get('/api/leads/:id', handleAdmin.getLead)
@@ -78,6 +116,7 @@ router.post('/api/seed', async (request, env) => {
 
 router.post('/api/messages/send-email', handleMessages.sendEmail)
 router.post('/api/messages/send-sms', handleMessages.sendSMS)
+router.get('/api/admin/messages', handleMessages.listMessages)
 router.get('/api/messages/lead/:leadId', handleMessages.getMessages)
 router.get('/api/messages/:messageId', handleMessages.getMessage)
 
@@ -101,10 +140,27 @@ router.all('*', () => new Response('Not Found', { status: 404 }))
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    return router.handle(request, env, ctx).catch((err) => {
+    const origin = request.headers.get('Origin')
+    
+    try {
+      const response = await router.handle(request, env, ctx)
+      
+      // CORS 헤더 추가
+      return addCorsHeaders(response, origin)
+    } catch (err) {
       console.error('Unhandled error:', err)
-      return new Response('Internal Server Error', { status: 500 })
-    })
+      const errorResponse = new Response(
+        JSON.stringify({ 
+          error: 'Internal Server Error',
+          message: err instanceof Error ? err.message : 'Unknown error'
+        }),
+        { 
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      )
+      return addCorsHeaders(errorResponse, origin)
+    }
   },
 
   async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {

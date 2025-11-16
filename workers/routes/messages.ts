@@ -168,10 +168,85 @@ async function getMessage(request: Request, env: Env): Promise<Response> {
   }
 }
 
+async function listMessages(request: Request, env: Env): Promise<Response> {
+  const url = new URL(request.url)
+  const channelFilter = url.searchParams.get('channel')
+  const statusFilter = url.searchParams.get('status')
+  const searchQuery = url.searchParams.get('search')
+  const page = parseInt(url.searchParams.get('page') || '1')
+  const limit = parseInt(url.searchParams.get('limit') || '20')
+  const offset = (page - 1) * limit
+
+  try {
+    let query = `
+      SELECT m.*,
+             l.name as lead_name,
+             l.email as lead_email,
+             l.company as lead_company,
+             (SELECT COUNT(*) FROM message_events WHERE message_id = m.id AND type = 'open') as open_count,
+             (SELECT COUNT(*) FROM message_events WHERE message_id = m.id AND type = 'click') as click_count
+      FROM messages m
+      LEFT JOIN leads l ON m.lead_id = l.id
+      WHERE 1=1
+    `
+    const params: (string | number)[] = []
+
+    if (channelFilter && channelFilter !== 'all') {
+      query += ` AND m.channel = ?`
+      params.push(channelFilter)
+    }
+    if (statusFilter && statusFilter !== 'all') {
+      query += ` AND m.status = ?`
+      params.push(statusFilter)
+    }
+    if (searchQuery) {
+      query += ` AND (l.name LIKE ? OR l.email LIKE ? OR l.company LIKE ? OR m.subject LIKE ? OR m.body_text LIKE ?)`
+      const searchParam = `%${searchQuery}%`
+      params.push(searchParam, searchParam, searchParam, searchParam, searchParam)
+    }
+
+    query += ` ORDER BY m.created_at DESC LIMIT ? OFFSET ?`
+    params.push(limit, offset)
+
+    const { results: messages } = await env.DB.prepare(query).bind(...params).all()
+
+    // 전체 개수 조회
+    let countQuery = `SELECT COUNT(*) as total FROM messages m LEFT JOIN leads l ON m.lead_id = l.id WHERE 1=1`
+    const countParams: (string | number)[] = []
+    if (channelFilter && channelFilter !== 'all') {
+      countQuery += ` AND m.channel = ?`
+      countParams.push(channelFilter)
+    }
+    if (statusFilter && statusFilter !== 'all') {
+      countQuery += ` AND m.status = ?`
+      countParams.push(statusFilter)
+    }
+    if (searchQuery) {
+      countQuery += ` AND (l.name LIKE ? OR l.email LIKE ? OR l.company LIKE ? OR m.subject LIKE ? OR m.body_text LIKE ?)`
+      const searchParam = `%${searchQuery}%`
+      countParams.push(searchParam, searchParam, searchParam, searchParam, searchParam)
+    }
+    const { results: countResult } = await env.DB.prepare(countQuery).bind(...countParams).first<{ total: number }>()
+    const total = countResult?.total || 0
+
+    return new Response(
+      JSON.stringify({ messages, total }),
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+  } catch (error) {
+    console.error('Error listing messages:', error)
+    return new Response(
+      JSON.stringify({ error: 'Internal server error' }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    )
+  }
+}
+
 export const handleMessages = {
   sendEmail,
   sendSMS,
   getMessages,
   getMessage,
+  listMessages,
 }
 
